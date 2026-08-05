@@ -3,459 +3,307 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shourya Sharan | Builder · Researcher · Designer</title>
-    <meta name="description" content="Portfolio of Shourya Sharan — UI Architect, Computational Researcher, and community builder exploring the intersection of AI, behavioral economics, and design.">
+    <title>Shourya Sharan</title>
+    <meta name="description" content="Shourya Sharan — researcher, builder, designer. Exploring where cognition meets computation.">
     <meta name="author" content="Shourya Sharan">
-    <meta name="keywords" content="Shourya Sharan, Portfolio, UI Architect, Computational Researcher, Web Developer, AI, Design">
-    <meta property="og:title" content="Shourya Sharan | Builder · Researcher · Designer">
-    <meta property="og:description" content="Exploring the intersection of intelligence and design.">
+    <meta property="og:title" content="Shourya Sharan">
+    <meta property="og:description" content="Researcher, builder, designer. Exploring where cognition meets computation.">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-inner">
-            <div class="preloader-text">
-                <span class="preloader-line" data-text="SHOURYA">SHOURYA</span>
-                <span class="preloader-line sub" data-text="SHARAN">SHARAN</span>
-            </div>
-            <div class="preloader-bar">
-                <div class="preloader-progress" id="preloaderProgress"></div>
-            </div>
-            <span class="preloader-pct" id="preloaderPct">0</span>
-        </div>
-    </div>
 
-    <!-- Noise -->
-    <div class="noise"></div>
+    <!-- Grain -->
+    <div class="grain" aria-hidden="true"></div>
 
     <!-- Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-follower" id="cursorFollower"></div>
+    <div class="cur" id="cur" aria-hidden="true"></div>
+    <div class="cur-ring" id="curRing" aria-hidden="true"></div>
 
-    <!-- Interactive Grid Canvas BG -->
-    <canvas id="gridCanvas"></canvas>
-
-    <!-- Navigation -->
-    <header class="header" id="header">
-        <nav class="nav">
-            <a href="#" class="nav-logo" data-cursor="text">SS<span class="dot">.</span></a>
-            <div class="nav-center">
-                <a href="#about" class="nav-link" data-cursor="text"><span class="nav-idx">01</span>About</a>
-                <a href="#experience" class="nav-link" data-cursor="text"><span class="nav-idx">02</span>Experience</a>
-                <a href="#work" class="nav-link" data-cursor="text"><span class="nav-idx">03</span>Work</a>
-                <a href="#contact" class="nav-link" data-cursor="text"><span class="nav-idx">04</span>Contact</a>
-            </div>
-            <a href="mailto:shouryasharan27@gmail.com" class="nav-cta" data-cursor="text">
-                <span class="pulse-dot"></span>
-                Let's Talk
-            </a>
-            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" data-cursor="text">
-                <span></span><span></span><span></span>
-            </button>
-        </nav>
+    <!-- ====== NAV ====== -->
+    <header class="nav" id="nav">
+        <a href="#" class="nav__logo">Shourya<span>.</span></a>
+        <div class="nav__links" id="navLinks">
+            <a href="#about">About</a>
+            <a href="#path">Path</a>
+            <a href="#craft">Craft</a>
+            <a href="#recognitions">Recognitions</a>
+        </div>
+        <a href="mailto:shouryasharan27@gmail.com" class="nav__contact">Say hello →</a>
+        <button class="nav__burger" id="burger" aria-label="Menu">
+            <span></span><span></span>
+        </button>
     </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="#about" class="mobile-link">About</a>
-        <a href="#experience" class="mobile-link">Experience</a>
-        <a href="#work" class="mobile-link">Work</a>
-        <a href="#contact" class="mobile-link">Contact</a>
+    <!-- Mobile overlay -->
+    <div class="mob-menu" id="mobMenu">
+        <a href="#about">About</a>
+        <a href="#path">Path</a>
+        <a href="#craft">Craft</a>
+        <a href="#recognitions">Recognitions</a>
+        <a href="mailto:shouryasharan27@gmail.com">Say hello →</a>
     </div>
 
     <main>
-        <!-- ============================================================
-             HERO
-             ============================================================ -->
-        <section id="hero" class="hero">
-            <div class="hero-content">
-                <div class="hero-top reveal">
-                    <div class="hero-badge">
-                        <span class="pulse-dot"></span>
-                        <span>UI Architect & Computational Researcher</span>
-                    </div>
-                </div>
-                <h1 class="hero-heading">
-                    <div class="heading-line reveal"><span class="word" data-scramble>Building</span> <span class="word" data-scramble>the</span></div>
-                    <div class="heading-line reveal"><span class="word highlight-word" data-scramble>intersection</span> <span class="word" data-scramble>of</span></div>
-                    <div class="heading-line reveal"><span class="highlight-word word" data-scramble>Intelligence</span> <span class="word ampersand">&</span> <span class="highlight-word word" data-scramble>Design.</span></div>
+
+        <!-- ====== HERO ====== -->
+        <section class="hero" id="hero">
+            <div class="hero__inner">
+                <div class="hero__eyebrow anim-in">Researcher · Builder · Designer</div>
+                <h1 class="hero__h1">
+                    <span class="hero__line anim-in">
+                        <span class="hero__word">Shourya</span>
+                    </span>
+                    <span class="hero__line anim-in" style="--d:.08s">
+                        <span class="hero__word serif">Sharan</span>
+                    </span>
                 </h1>
-                <div class="hero-bottom reveal">
-                    <p class="hero-desc">I'm Shourya Sharan — I architect responsive platforms, train AI models, research behavioral economics, and scale communities. Based in Nagpur, India.</p>
-                    <div class="hero-actions">
-                        <a href="#work" class="btn-magnetic" data-cursor="text">
-                            <span class="btn-magnetic-text">View Work</span>
-                            <span class="btn-magnetic-icon">↓</span>
-                        </a>
-                        <a href="#contact" class="btn-ghost" data-cursor="text">Get In Touch</a>
-                    </div>
+                <p class="hero__blurb anim-in" style="--d:.2s">I sit at the overlap of cognitive science, computation, and visual design — building things that make complex ideas feel intuitive. Currently Chief Science Officer at The Walnut Initiative and a computational researcher at STEMinate.</p>
+                <div class="hero__row anim-in" style="--d:.3s">
+                    <a href="#craft" class="pill-btn">See my work</a>
+                    <span class="hero__location">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Nagpur, India
+                    </span>
                 </div>
             </div>
-            <div class="scroll-cue">
-                <div class="scroll-cue-line"></div>
-                <span>Scroll to explore</span>
+            <div class="hero__scroll anim-in" style="--d:.5s">
+                <span class="hero__scroll-line"></span>
             </div>
         </section>
 
-        <!-- ============================================================
-             MARQUEE DIVIDER
-             ============================================================ -->
-        <div class="marquee-section">
-            <div class="marquee-track">
-                <div class="marquee-content">
-                    <span>UI/UX DESIGN</span><span class="marquee-dot">◆</span>
-                    <span>COMPUTATIONAL RESEARCH</span><span class="marquee-dot">◆</span>
-                    <span>AI ENGINEERING</span><span class="marquee-dot">◆</span>
-                    <span>WEB DEVELOPMENT</span><span class="marquee-dot">◆</span>
-                    <span>BEHAVIORAL ECONOMICS</span><span class="marquee-dot">◆</span>
-                    <span>COMMUNITY BUILDING</span><span class="marquee-dot">◆</span>
-                    <span>UI/UX DESIGN</span><span class="marquee-dot">◆</span>
-                    <span>COMPUTATIONAL RESEARCH</span><span class="marquee-dot">◆</span>
-                    <span>AI ENGINEERING</span><span class="marquee-dot">◆</span>
-                    <span>WEB DEVELOPMENT</span><span class="marquee-dot">◆</span>
-                    <span>BEHAVIORAL ECONOMICS</span><span class="marquee-dot">◆</span>
-                    <span>COMMUNITY BUILDING</span><span class="marquee-dot">◆</span>
+        <!-- ====== ABOUT ====== -->
+        <section class="section" id="about">
+            <div class="wrap">
+                <div class="split">
+                    <div class="split__left">
+                        <span class="tag anim-in">About</span>
+                    </div>
+                    <div class="split__right">
+                        <h2 class="h2 anim-in">I don't think in disciplines — I think in problems.</h2>
+                        <p class="body-lg anim-in">Whether it's training ML models with TensorFlow, designing a mobile app for heritage preservation, or leading the tech operations of a 50+ member economics club — the approach is the same: understand the system deeply, then make it better.</p>
+                        <p class="body-md muted anim-in">I work across Python, JavaScript, React, Next.js, and design tools like Figma. My research uses Pandas and Scikit-Learn for computational analysis, while my design instinct shapes everything I build.</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- ============================================================
-             ABOUT — BENTO GRID
-             ============================================================ -->
-        <section id="about" class="section about">
-            <div class="container">
-                <div class="section-label reveal"><span class="label-num">01</span>About</div>
-                <div class="bento-grid">
-                    <!-- Main bio card -->
-                    <div class="bento-card bento-main reveal" data-tilt>
-                        <div class="bento-glow"></div>
-                        <h2 class="bento-title">Driven by cognitive science and computational efficiency.</h2>
-                        <p class="bento-text">My work spans across computational research, designing AI-assisted coding workflows, and building scalable web platforms. I believe in interfaces that feel alive and backend systems that operate flawlessly.</p>
-                        <p class="bento-text muted">I currently serve as Chief Science Officer at The Walnut Initiative and Head of Tech at ThinkEconomics Club.</p>
+                <div class="num-strip anim-in">
+                    <div class="num-item">
+                        <span class="num" data-count="200">0</span>
+                        <span class="num-label">user interactions driven</span>
                     </div>
-
-                    <!-- Stats card -->
-                    <div class="bento-card bento-stats reveal" data-tilt>
-                        <div class="bento-glow"></div>
-                        <div class="stat">
-                            <span class="stat-num" data-count="200">0</span><span class="stat-suffix">+</span>
-                            <span class="stat-label">User Interactions Driven</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-num" data-count="97">0</span><span class="stat-suffix">%</span>
-                            <span class="stat-label">Board Score (Top 1%)</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-num" data-count="50">0</span><span class="stat-suffix">+</span>
-                            <span class="stat-label">Community Members Led</span>
-                        </div>
+                    <div class="num-item">
+                        <span class="num" data-count="97">0</span>
+                        <span class="num-unit">%</span>
+                        <span class="num-label">board score · top 1%</span>
                     </div>
-
-                    <!-- Skills card -->
-                    <div class="bento-card bento-skills reveal" data-tilt>
-                        <div class="bento-glow"></div>
-                        <h3 class="bento-card-title">Stack</h3>
-                        <div class="skill-pills">
-                            <span class="pill">Python</span>
-                            <span class="pill">JavaScript</span>
-                            <span class="pill">React</span>
-                            <span class="pill">Next.js</span>
-                            <span class="pill">TensorFlow</span>
-                            <span class="pill">Pandas</span>
-                            <span class="pill">Scikit-Learn</span>
-                            <span class="pill">HTML/CSS</span>
-                            <span class="pill">UI/UX</span>
-                            <span class="pill">Figma</span>
-                        </div>
+                    <div class="num-item">
+                        <span class="num" data-count="50">0</span>
+                        <span class="num-unit">+</span>
+                        <span class="num-label">community members led</span>
                     </div>
-
-                    <!-- Location card -->
-                    <div class="bento-card bento-location reveal" data-tilt>
-                        <div class="bento-glow"></div>
-                        <div class="location-icon">📍</div>
-                        <h3 class="bento-card-title">Nagpur, India</h3>
-                        <p class="bento-text small">Building for the internet.</p>
-                    </div>
-
-                    <!-- Education card -->
-                    <div class="bento-card bento-edu reveal" data-tilt>
-                        <div class="bento-glow"></div>
-                        <h3 class="bento-card-title">Education</h3>
-                        <div class="edu-entry">
-                            <span class="edu-school">Centre Point School, Katol Road</span>
-                            <span class="edu-detail">Class 11-12 (CBSE) · 87%</span>
-                        </div>
-                        <div class="edu-entry">
-                            <span class="edu-school">Centre Point School, AB</span>
-                            <span class="edu-detail">Class 9-10 · Board: 97% (Top 1%)</span>
-                        </div>
+                    <div class="num-item">
+                        <span class="num" data-count="4">0</span>
+                        <span class="num-label">concurrent leadership roles</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============================================================
-             EXPERIENCE — TIMELINE
-             ============================================================ -->
-        <section id="experience" class="section experience">
-            <div class="container">
-                <div class="section-label reveal"><span class="label-num">02</span>Trajectory</div>
-                <h2 class="section-heading reveal">Where I've built<br>and led<span class="dot">.</span></h2>
+        <!-- ====== PATH (EXPERIENCE) ====== -->
+        <section class="section section--dark" id="path">
+            <div class="wrap">
+                <span class="tag anim-in">Path</span>
+                <h2 class="h2 anim-in">What I've been building.</h2>
 
-                <div class="timeline">
-                    <div class="timeline-item reveal" data-cursor="text">
-                        <div class="tl-left">
-                            <span class="tl-date">Jun 2026 — Present</span>
-                            <span class="tl-type">Remote</span>
+                <div class="exp-list">
+                    <article class="exp anim-in">
+                        <div class="exp__top">
+                            <h3 class="exp__role">Chief Science Officer</h3>
+                            <span class="exp__at">The Walnut Initiative</span>
                         </div>
-                        <div class="tl-center">
-                            <div class="tl-dot"></div>
-                            <div class="tl-line"></div>
+                        <div class="exp__meta">
+                            <span>Jun 2026 → Now</span>
+                            <span class="exp__dot"></span>
+                            <span>Remote</span>
                         </div>
-                        <div class="tl-right">
-                            <h3 class="tl-role">Chief Science Officer <span class="tl-at">at The Walnut Initiative</span></h3>
-                            <p class="tl-desc">Leading scientific content strategy and peer-review process for independent STEM publications. Designed comprehensive pedagogical reports for localized neuroscience workshops deployed in regional schools.</p>
-                            <div class="tl-tags">
-                                <span>Strategy</span><span>Research</span><span>Pedagogy</span>
-                            </div>
-                        </div>
-                    </div>
+                        <p class="exp__desc">Leading scientific content strategy and peer-review for independent STEM publications. Designed pedagogical reports for localized neuroscience workshops deployed in regional schools across India.</p>
+                    </article>
 
-                    <div class="timeline-item reveal" data-cursor="text">
-                        <div class="tl-left">
-                            <span class="tl-date">Apr 2026 — Present</span>
-                            <span class="tl-type">Freelance</span>
+                    <article class="exp anim-in">
+                        <div class="exp__top">
+                            <h3 class="exp__role">Web Architect & UI Lead</h3>
+                            <span class="exp__at">Descreened · LLPL AI Bootcamp</span>
                         </div>
-                        <div class="tl-center">
-                            <div class="tl-dot"></div>
-                            <div class="tl-line"></div>
+                        <div class="exp__meta">
+                            <span>Apr 2026 → Now</span>
+                            <span class="exp__dot"></span>
+                            <span>Freelance</span>
                         </div>
-                        <div class="tl-right">
-                            <h3 class="tl-role">Web Dev & UI Architect <span class="tl-at">at Descreened & LLPL AI Bootcamp</span></h3>
-                            <p class="tl-desc">Architected responsive web platforms using React, Next.js. Integrated AI-assisted coding workflows (Claude, Qoder) to accelerate frontend development, driving 200+ unique user interactions.</p>
-                            <div class="tl-tags">
-                                <span>React</span><span>Next.js</span><span>UI/UX</span><span>AI Integration</span>
-                            </div>
-                        </div>
-                    </div>
+                        <p class="exp__desc">Architected responsive web platforms with React and Next.js. Integrated AI-assisted coding workflows with Claude and Qoder, driving 200+ unique user interactions across projects.</p>
+                    </article>
 
-                    <div class="timeline-item reveal" data-cursor="text">
-                        <div class="tl-left">
-                            <span class="tl-date">May 2026 — Present</span>
-                            <span class="tl-type">Research</span>
+                    <article class="exp anim-in">
+                        <div class="exp__top">
+                            <h3 class="exp__role">Computational Researcher</h3>
+                            <span class="exp__at">STEMinate</span>
                         </div>
-                        <div class="tl-center">
-                            <div class="tl-dot"></div>
-                            <div class="tl-line"></div>
+                        <div class="exp__meta">
+                            <span>May 2026 → Now</span>
+                            <span class="exp__dot"></span>
+                            <span>Research</span>
                         </div>
-                        <div class="tl-right">
-                            <h3 class="tl-role">Computational Researcher <span class="tl-at">at STEMinate</span></h3>
-                            <p class="tl-desc">Co-authoring computational research papers leveraging Python, Pandas, and Scikit-Learn. Training basic predictive ML models using TensorFlow to analyze structured datasets.</p>
-                            <div class="tl-tags">
-                                <span>Python</span><span>TensorFlow</span><span>Scikit-Learn</span><span>Data Analysis</span>
-                            </div>
-                        </div>
-                    </div>
+                        <p class="exp__desc">Co-authoring computational research papers using Python, Pandas, and Scikit-Learn. Training predictive ML models with TensorFlow to analyze structured datasets for publishable findings.</p>
+                    </article>
 
-                    <div class="timeline-item reveal" data-cursor="text">
-                        <div class="tl-left">
-                            <span class="tl-date">May 2026 — Present</span>
-                            <span class="tl-type">Operations</span>
+                    <article class="exp anim-in">
+                        <div class="exp__top">
+                            <h3 class="exp__role">Head of Tech & Operations</h3>
+                            <span class="exp__at">ThinkEconomics Club</span>
                         </div>
-                        <div class="tl-center">
-                            <div class="tl-dot"></div>
-                            <div class="tl-line"></div>
+                        <div class="exp__meta">
+                            <span>May 2026 → Now</span>
+                            <span class="exp__dot"></span>
+                            <span>Operations</span>
                         </div>
-                        <div class="tl-right">
-                            <h3 class="tl-role">Head of Tech & Operations <span class="tl-at">at ThinkEconomics Club</span></h3>
-                            <p class="tl-desc">Managing digital infrastructure and technical integrations for a 50+ member community. Streamlined operations by combining economic frameworks with automated technical workflows.</p>
-                            <div class="tl-tags">
-                                <span>Automation</span><span>Operations</span><span>Community</span>
-                            </div>
-                        </div>
-                    </div>
+                        <p class="exp__desc">Managing digital infrastructure for a 50+ member community. Combining economic frameworks with automated workflows to streamline event coordination and internal operations.</p>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <!-- ============================================================
-             MARQUEE DIVIDER 2
-             ============================================================ -->
-        <div class="marquee-section reverse">
-            <div class="marquee-track">
-                <div class="marquee-content">
-                    <span>IGNICION</span><span class="marquee-dot">◆</span>
-                    <span>PROJECT CENQUITY</span><span class="marquee-dot">◆</span>
-                    <span>THE WALNUT INITIATIVE</span><span class="marquee-dot">◆</span>
-                    <span>STEMINATE</span><span class="marquee-dot">◆</span>
-                    <span>THINKECONOMICS</span><span class="marquee-dot">◆</span>
-                    <span>DESCREENED</span><span class="marquee-dot">◆</span>
-                    <span>IGNICION</span><span class="marquee-dot">◆</span>
-                    <span>PROJECT CENQUITY</span><span class="marquee-dot">◆</span>
-                    <span>THE WALNUT INITIATIVE</span><span class="marquee-dot">◆</span>
-                    <span>STEMINATE</span><span class="marquee-dot">◆</span>
-                    <span>THINKECONOMICS</span><span class="marquee-dot">◆</span>
-                    <span>DESCREENED</span><span class="marquee-dot">◆</span>
-                </div>
-            </div>
-        </div>
+        <!-- ====== CRAFT (PROJECTS) ====== -->
+        <section class="section" id="craft">
+            <div class="wrap">
+                <span class="tag anim-in">Craft</span>
+                <h2 class="h2 anim-in">Selected work.</h2>
 
-        <!-- ============================================================
-             WORK / PROJECTS
-             ============================================================ -->
-        <section id="work" class="section work">
-            <div class="container">
-                <div class="section-label reveal"><span class="label-num">03</span>Selected Work</div>
-                <h2 class="section-heading reveal">Case studies in<br>code & design<span class="dot">.</span></h2>
-
-                <div class="projects">
-                    <article class="project-card reveal" data-cursor="text">
-                        <div class="project-card-inner">
-                            <div class="project-glow"></div>
-                            <div class="project-header">
-                                <span class="project-idx">01</span>
-                                <div class="project-links">
-                                    <span class="project-arrow">↗</span>
-                                </div>
-                            </div>
-                            <h3 class="project-name">Ignicion</h3>
-                            <p class="project-type">Heritage-Tech Application · UI/UX Design</p>
-                            <p class="project-desc">Designed UI/UX for a mobile application bridging the youth-heritage knowledge gap. Presented prototype at IGNICION summit, showcasing cultural preservation through digital accessibility.</p>
-                            <div class="project-tech">
-                                <span>UI/UX Design</span>
-                                <span>Mobile App</span>
-                                <span>Prototyping</span>
-                                <span>Cultural Tech</span>
-                            </div>
+                <div class="craft-grid">
+                    <article class="craft-card anim-in">
+                        <div class="craft-card__top">
+                            <span class="craft-card__cat">UI/UX · Heritage Tech</span>
+                            <span class="craft-card__arrow">↗</span>
+                        </div>
+                        <h3 class="craft-card__name">Ignicion</h3>
+                        <p class="craft-card__desc">Designed the full UI/UX for a mobile application bridging the youth-heritage knowledge gap. Presented the working prototype at the IGNICION summit — showcasing how cultural preservation can be made digitally accessible to the next generation.</p>
+                        <div class="craft-card__stack">
+                            <span>UI/UX Design</span>
+                            <span>Mobile Prototyping</span>
+                            <span>Cultural Tech</span>
                         </div>
                     </article>
 
-                    <article class="project-card reveal" data-cursor="text">
-                        <div class="project-card-inner">
-                            <div class="project-glow"></div>
-                            <div class="project-header">
-                                <span class="project-idx">02</span>
-                                <div class="project-links">
-                                    <span class="project-arrow">↗</span>
-                                </div>
-                            </div>
-                            <h3 class="project-name">Project Cenquity</h3>
-                            <p class="project-type">Smart Wearables · Hardware & Tech Ideation</p>
-                            <p class="project-desc">Pitched a conceptual prototype for augmented reality (AR) smart glasses at a Shark Tank event, focusing on accessible computing and next-generation interfaces for everyday use.</p>
-                            <div class="project-tech">
-                                <span>AR/VR</span>
-                                <span>Hardware Design</span>
-                                <span>Product Pitch</span>
-                                <span>Innovation</span>
-                            </div>
+                    <article class="craft-card anim-in">
+                        <div class="craft-card__top">
+                            <span class="craft-card__cat">Hardware · AR/VR</span>
+                            <span class="craft-card__arrow">↗</span>
+                        </div>
+                        <h3 class="craft-card__name">Project Cenquity</h3>
+                        <p class="craft-card__desc">Pitched an AR smart glasses prototype at a Shark Tank-style event — the kind of accessible computing that's still years ahead of mainstream adoption. Focused on making next-generation interfaces wearable and practical for daily use.</p>
+                        <div class="craft-card__stack">
+                            <span>AR/VR</span>
+                            <span>Hardware Design</span>
+                            <span>Product Strategy</span>
                         </div>
                     </article>
 
-                    <article class="project-card reveal" data-cursor="text">
-                        <div class="project-card-inner">
-                            <div class="project-glow"></div>
-                            <div class="project-header">
-                                <span class="project-idx">03</span>
-                                <div class="project-links">
-                                    <span class="project-arrow">↗</span>
-                                </div>
-                            </div>
-                            <h3 class="project-name">TGELF Biosand Filter</h3>
-                            <p class="project-type">Social Impact · Engineering & Deployment</p>
-                            <p class="project-desc">National Finalist & Top 3% at TGELF. Deployed low-cost biosand water filters for clean water access in underserved communities. Engineering meets social impact.</p>
-                            <div class="project-tech">
-                                <span>Engineering</span>
-                                <span>Social Impact</span>
-                                <span>Water Filtration</span>
-                                <span>Deployment</span>
-                            </div>
+                    <article class="craft-card craft-card--accent anim-in">
+                        <div class="craft-card__top">
+                            <span class="craft-card__cat">Social Impact · Engineering</span>
+                            <span class="craft-card__arrow">↗</span>
+                        </div>
+                        <h3 class="craft-card__name">TGELF Biosand Filter</h3>
+                        <p class="craft-card__desc">National Finalist and Top 3% at TGELF. Deployed low-cost biosand water filtration systems for clean water access in underserved communities — engineering that serves real human need.</p>
+                        <div class="craft-card__stack">
+                            <span>Engineering</span>
+                            <span>Social Impact</span>
+                            <span>Water Filtration</span>
                         </div>
                     </article>
                 </div>
             </div>
         </section>
 
-        <!-- ============================================================
-             ACHIEVEMENTS
-             ============================================================ -->
-        <section id="achievements" class="section achievements">
-            <div class="container">
-                <div class="section-label reveal"><span class="label-num">04</span>Highlights</div>
-                <h2 class="section-heading reveal">Awards &<br>milestones<span class="dot">.</span></h2>
+        <!-- ====== RECOGNITIONS ====== -->
+        <section class="section section--dark" id="recognitions">
+            <div class="wrap">
+                <span class="tag anim-in">Recognitions</span>
+                <h2 class="h2 anim-in">Things I'm proud of.</h2>
 
-                <div class="awards-list">
-                    <div class="award-item reveal" data-cursor="text">
-                        <div class="award-icon">🏆</div>
-                        <div class="award-info">
-                            <h4>National Rank 2 & 5</h4>
-                            <p>CBSE Heritage India Quiz — Top 5 out of 2,300+ schools. Televised semi-finals on History TV18.</p>
+                <div class="rec-list">
+                    <div class="rec anim-in">
+                        <span class="rec__year">2024</span>
+                        <div class="rec__info">
+                            <h4>National Rank 2 & 5 — CBSE Heritage India Quiz</h4>
+                            <p>Top 5 out of 2,300+ schools. Televised semi-finals on History TV18.</p>
                         </div>
                     </div>
-                    <div class="award-item reveal" data-cursor="text">
-                        <div class="award-icon">🌍</div>
-                        <div class="award-info">
-                            <h4>National Finalist & Top 3%</h4>
-                            <p>TGELF Biosand Filter Initiative — Deployed low-cost filters for clean water access.</p>
+                    <div class="rec anim-in">
+                        <span class="rec__year">2024</span>
+                        <div class="rec__info">
+                            <h4>National Finalist & Top 3% — TGELF</h4>
+                            <p>Biosand Filter Initiative. Deployed low-cost water filters for underserved communities.</p>
                         </div>
                     </div>
-                    <div class="award-item reveal" data-cursor="text">
-                        <div class="award-icon">📖</div>
-                        <div class="award-info">
-                            <h4>Published Author</h4>
-                            <p>"A Soldier's Story" — National Young Author's Fair (pool of 200,000+).</p>
+                    <div class="rec anim-in">
+                        <span class="rec__year">2023</span>
+                        <div class="rec__info">
+                            <h4>Published Author — National Young Author's Fair</h4>
+                            <p>"A Soldier's Story" — selected from a pool of 200,000+ entries.</p>
                         </div>
                     </div>
-                    <div class="award-item reveal" data-cursor="text">
-                        <div class="award-icon">🎓</div>
-                        <div class="award-info">
+                    <div class="rec anim-in">
+                        <span class="rec__year">2025</span>
+                        <div class="rec__info">
                             <h4>50% Academic Scholarship</h4>
-                            <p>For Class 10 performance — 97% aggregate, Top 1% of cohort.</p>
+                            <p>Awarded for Class 10 performance — 97% aggregate, Top 1% of cohort.</p>
                         </div>
                     </div>
-                    <div class="award-item reveal" data-cursor="text">
-                        <div class="award-icon">♟️</div>
-                        <div class="award-info">
-                            <h4>District U-19 DSO Chess</h4>
-                            <p>3 consecutive years of district-level competition alongside Football.</p>
+                    <div class="rec anim-in">
+                        <span class="rec__year">2022–24</span>
+                        <div class="rec__info">
+                            <h4>District U-19 DSO Chess — 3 Consecutive Years</h4>
+                            <p>Alongside district-level Football representation.</p>
                         </div>
+                    </div>
+                </div>
+
+                <div class="edu-strip anim-in">
+                    <div class="edu-strip__item">
+                        <span class="edu-strip__school">Centre Point School, Katol Road</span>
+                        <span class="edu-strip__detail">Class 11–12 · CBSE · 87%</span>
+                    </div>
+                    <div class="edu-strip__sep"></div>
+                    <div class="edu-strip__item">
+                        <span class="edu-strip__school">Centre Point School, Amravati Road Bypass</span>
+                        <span class="edu-strip__detail">Class 9–10 · Board: 97% · Top 1%</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ============================================================
-             CONTACT / CTA
-             ============================================================ -->
-        <section id="contact" class="section contact">
-            <div class="container">
-                <div class="contact-inner reveal">
-                    <div class="contact-glow"></div>
-                    <p class="contact-kicker">Have an idea?</p>
-                    <h2 class="contact-heading">Let's build<br>something <span class="highlight-word">extraordinary</span><span class="dot">.</span></h2>
-                    <div class="contact-links">
-                        <a href="mailto:shouryasharan27@gmail.com" class="contact-link" data-cursor="text">
-                            <span class="contact-link-label">Email</span>
-                            <span class="contact-link-value">shouryasharan27@gmail.com</span>
-                            <span class="contact-link-arrow">→</span>
+        <!-- ====== CONTACT ====== -->
+        <section class="section cta" id="contact">
+            <div class="wrap">
+                <div class="cta__inner anim-in">
+                    <span class="tag">Let's talk</span>
+                    <h2 class="cta__heading">Got a wild idea?<br><span class="serif">Let's make it real.</span></h2>
+                    <div class="cta__links">
+                        <a href="mailto:shouryasharan27@gmail.com" class="cta__link">
+                            <span class="cta__link-label">Email</span>
+                            <span class="cta__link-val">shouryasharan27@gmail.com</span>
                         </a>
-                        <a href="https://github.com/shouryasharan7-netizen" target="_blank" class="contact-link" data-cursor="text">
-                            <span class="contact-link-label">GitHub</span>
-                            <span class="contact-link-value">shouryasharan7-netizen</span>
-                            <span class="contact-link-arrow">→</span>
+                        <a href="https://github.com/shouryasharan7-netizen" target="_blank" class="cta__link">
+                            <span class="cta__link-label">GitHub</span>
+                            <span class="cta__link-val">shouryasharan7-netizen</span>
                         </a>
-                        <a href="tel:+917666656784" class="contact-link" data-cursor="text">
-                            <span class="contact-link-label">Phone</span>
-                            <span class="contact-link-value">+91 7666656784</span>
-                            <span class="contact-link-arrow">→</span>
+                        <a href="tel:+917666656784" class="cta__link">
+                            <span class="cta__link-label">Phone</span>
+                            <span class="cta__link-val">+91 766 665 6784</span>
                         </a>
                     </div>
                 </div>
@@ -463,17 +311,11 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container footer-inner">
-            <div class="footer-left">
-                <span class="footer-brand">SHOURYA SHARAN</span>
-                <span class="footer-copy">© 2026 · Designed & Built in Nagpur</span>
-            </div>
-            <button class="back-top" id="backTop" data-cursor="text" aria-label="Back to top">
-                <span>↑</span>
-                <span>Top</span>
-            </button>
+    <footer class="foot">
+        <div class="wrap foot__inner">
+            <span class="foot__name">Shourya Sharan</span>
+            <span class="foot__copy">© 2026</span>
+            <button class="foot__top" id="toTop" aria-label="Back to top">↑</button>
         </div>
     </footer>
 
