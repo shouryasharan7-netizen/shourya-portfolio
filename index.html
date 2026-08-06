@@ -9,15 +9,18 @@
     <meta property="og:title" content="Shourya Sharan">
     <meta property="og:description" content="Where cognition meets computation.">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+    <!-- Custom cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
 
     <!-- ====== NAV ====== -->
     <nav class="nav" id="nav">
@@ -38,7 +41,6 @@
         <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span></button>
     </nav>
 
-    <!-- Mobile menu -->
     <div class="mob" id="mob">
         <a href="#experience">Experience</a>
         <a href="#projects">Projects</a>
@@ -47,10 +49,13 @@
         <a href="#contact">Contact</a>
     </div>
 
+    <!-- Scroll velocity wrapper -->
+    <div id="velocityWrap">
     <main>
 
         <!-- ====== HERO ====== -->
         <section class="hero" id="hero">
+            <canvas id="particleCanvas"></canvas>
             <div class="hero-left">
                 <h1 class="hero-name">
                     <span class="mask"><span class="mask-inner" data-reveal>Shourya</span></span>
@@ -59,10 +64,10 @@
                 <div class="hero-line" id="heroLine"></div>
             </div>
             <div class="hero-right">
-                <p class="hero-p" data-reveal style="--i:2">Researcher, builder, designer exploring where cognition meets computation. I architect interfaces, train models, and lead communities.</p>
+                <p class="hero-p" id="heroDecodeText" data-decode>Researcher, builder, designer exploring where cognition meets computation. I architect interfaces, train models, and lead communities.</p>
                 <div class="hero-meta" data-reveal style="--i:3">
                     <span>Nagpur, India</span>
-                    <span class="hero-avail"><span class="avail-dot"></span>Available</span>
+                    <span class="hero-avail" id="availBadge" data-magnetic><span class="avail-dot"></span>Available</span>
                 </div>
             </div>
             <div class="hero-scroll" data-reveal style="--i:4">
@@ -97,84 +102,14 @@
         <section class="sect" id="experience">
             <div class="wrap">
                 <h2 class="sect-h" data-reveal>Where I've built</h2>
-
                 <div class="exp-list">
-                    <!-- 1. Chief Science Officer -->
-                    <article class="exp-card" data-reveal>
-                        <div class="exp-accent"></div>
-                        <div class="exp-left"><span class="exp-date">Jun 2026 → Now</span></div>
-                        <div class="exp-right">
-                            <h3 class="exp-role">Chief Science Officer</h3>
-                            <span class="exp-org">The Walnut Initiative</span>
-                            <p class="exp-desc">Leading scientific content strategy and peer-review for independent STEM publications. Designed pedagogical reports for localized neuroscience workshops deployed in regional schools.</p>
-                        </div>
-                    </article>
-
-                    <!-- 2. Tech and Outreach Intern -->
-                    <article class="exp-card" data-reveal>
-                        <div class="exp-accent"></div>
-                        <div class="exp-left"><span class="exp-date">Jun 2026</span></div>
-                        <div class="exp-right">
-                            <h3 class="exp-role">Tech & Outreach Intern</h3>
-                            <span class="exp-org">bits&amp;bytes</span>
-                            <p class="exp-desc">Spearheaded technical support and outreach operations for a 501(c)(3) cybersecurity nonprofit. Established strategic partnerships with 2+ external organizations to expand digital literacy to 1,400+ students.</p>
-                        </div>
-                    </article>
-
-                    <!-- 3. Computational Researcher -->
-                    <article class="exp-card" data-reveal>
-                        <div class="exp-accent"></div>
-                        <div class="exp-left"><span class="exp-date">May 2026 → Now</span></div>
-                        <div class="exp-right">
-                            <h3 class="exp-role">Computational Researcher</h3>
-                            <span class="exp-org">STEMinate</span>
-                            <p class="exp-desc">Co-authoring computational research papers using Python, Pandas, and Scikit-Learn. Training predictive ML models with TensorFlow for publishable findings on structured datasets.</p>
-                        </div>
-                    </article>
-
-                    <!-- 4. Head of Tech & Ops -->
-                    <article class="exp-card" data-reveal>
-                        <div class="exp-accent"></div>
-                        <div class="exp-left"><span class="exp-date">May 2026 → Now</span></div>
-                        <div class="exp-right">
-                            <h3 class="exp-role">Head of Tech & Operations</h3>
-                            <span class="exp-org">ThinkEconomics Club</span>
-                            <p class="exp-desc">Managing digital infrastructure for a 50+ member community. Combining economic frameworks with automated workflows to streamline event coordination and outreach.</p>
-                        </div>
-                    </article>
-
-                    <!-- 5. Web Architect -->
-                    <article class="exp-card" data-reveal>
-                        <div class="exp-accent"></div>
-                        <div class="exp-left"><span class="exp-date">Apr 2026 → Now</span></div>
-                        <div class="exp-right">
-                            <h3 class="exp-role">Web Architect & UI Lead</h3>
-                            <span class="exp-org">Descreened · LLPL AI Bootcamp</span>
-                            <p class="exp-desc">Architected responsive web platforms with React and Next.js. Integrated AI-assisted coding workflows, driving 200+ unique user interactions across deployed projects.</p>
-                        </div>
-                    </article>
-
-                    <!-- 6. Blue House Captain -->
-                    <article class="exp-card" data-reveal>
-                        <div class="exp-accent"></div>
-                        <div class="exp-left"><span class="exp-date">Jun 2024 – Mar 2025</span></div>
-                        <div class="exp-right">
-                            <h3 class="exp-role">Blue House Captain</h3>
-                            <span class="exp-org">Centre Point School, Amravati Road Bypass</span>
-                            <p class="exp-desc">Directed a 7-member student core council to lead 300+ house members, organizing logistics, inter-house competitions, and school-wide ceremonies across the academic year.</p>
-                        </div>
-                    </article>
-
-                    <!-- 7. Cyber Congress Ambassador -->
-                    <article class="exp-card" data-reveal>
-                        <div class="exp-accent"></div>
-                        <div class="exp-left"><span class="exp-date">Jun 2023 – Jun 2025</span></div>
-                        <div class="exp-right">
-                            <h3 class="exp-role">Cyber Congress Ambassador</h3>
-                            <span class="exp-org">Centre Point School, Amravati Road Bypass</span>
-                            <p class="exp-desc">Mentored a cohort of 100+ peers on identifying phishing vectors, secure password protocols, and responsible digital footprint management.</p>
-                        </div>
-                    </article>
+                    <article class="exp-card" data-tilt data-spotlight data-reveal><div class="exp-accent"></div><div class="exp-left"><span class="exp-date">Jun 2026 → Now</span></div><div class="exp-right"><h3 class="exp-role">Chief Science Officer</h3><span class="exp-org">The Walnut Initiative</span><p class="exp-desc">Leading scientific content strategy and peer-review for independent STEM publications. Designed pedagogical reports for localized neuroscience workshops deployed in regional schools.</p></div></article>
+                    <article class="exp-card" data-tilt data-spotlight data-reveal><div class="exp-accent"></div><div class="exp-left"><span class="exp-date">Jun 2026</span></div><div class="exp-right"><h3 class="exp-role">Tech & Outreach Intern</h3><span class="exp-org">bits&amp;bytes</span><p class="exp-desc">Spearheaded technical support and outreach for a 501(c)(3) cybersecurity nonprofit. Established partnerships with 2+ orgs to expand digital literacy to 1,400+ students.</p></div></article>
+                    <article class="exp-card" data-tilt data-spotlight data-reveal><div class="exp-accent"></div><div class="exp-left"><span class="exp-date">May 2026 → Now</span></div><div class="exp-right"><h3 class="exp-role">Computational Researcher</h3><span class="exp-org">STEMinate</span><p class="exp-desc">Co-authoring computational research papers using Python, Pandas, and Scikit-Learn. Training predictive ML models with TensorFlow for publishable findings.</p></div></article>
+                    <article class="exp-card" data-tilt data-spotlight data-reveal><div class="exp-accent"></div><div class="exp-left"><span class="exp-date">May 2026 → Now</span></div><div class="exp-right"><h3 class="exp-role">Head of Tech & Operations</h3><span class="exp-org">ThinkEconomics Club</span><p class="exp-desc">Managing digital infrastructure for a 50+ member community. Combining economic frameworks with automated workflows to streamline event coordination.</p></div></article>
+                    <article class="exp-card" data-tilt data-spotlight data-reveal><div class="exp-accent"></div><div class="exp-left"><span class="exp-date">Apr 2026 → Now</span></div><div class="exp-right"><h3 class="exp-role">Web Architect & UI Lead</h3><span class="exp-org">Descreened · LLPL AI Bootcamp</span><p class="exp-desc">Architected responsive web platforms with React and Next.js. Integrated AI-assisted coding workflows, driving 200+ unique user interactions.</p></div></article>
+                    <article class="exp-card" data-tilt data-spotlight data-reveal><div class="exp-accent"></div><div class="exp-left"><span class="exp-date">Jun 2024 – Mar 2025</span></div><div class="exp-right"><h3 class="exp-role">Blue House Captain</h3><span class="exp-org">Centre Point School, Amravati Road Bypass</span><p class="exp-desc">Directed a 7-member student core council to lead 300+ house members, organizing logistics, inter-house competitions, and school-wide ceremonies.</p></div></article>
+                    <article class="exp-card" data-tilt data-spotlight data-reveal><div class="exp-accent"></div><div class="exp-left"><span class="exp-date">Jun 2023 – Jun 2025</span></div><div class="exp-right"><h3 class="exp-role">Cyber Congress Ambassador</h3><span class="exp-org">Centre Point School, Amravati Road Bypass</span><p class="exp-desc">Mentored 100+ peers on identifying phishing vectors, secure password protocols, and responsible digital footprint management.</p></div></article>
                 </div>
             </div>
         </section>
@@ -184,28 +119,21 @@
             <div class="wrap">
                 <h2 class="sect-h" data-reveal>Projects</h2>
                 <div class="proj-grid">
-                    <!-- Ignicion -->
-                    <div class="proj-card proj-card--amber" data-reveal>
+                    <div class="proj-card proj-card--amber" data-tilt data-spotlight data-reveal>
                         <div class="proj-card-accent"></div>
                         <div class="proj-card-icon">Ig</div>
                         <h3 class="proj-card-name">Ignicion</h3>
                         <span class="proj-card-role">UI/UX Design</span>
-                        <p class="proj-card-desc">Designed the UI/UX architecture for a mobile application bridging the youth-heritage knowledge gap, translating static historical data into interactive digital experiences. Presented the prototype at the competitive IGNICION summit hosted by Billabong High School, Mumbai.</p>
-                        <div class="proj-card-tags">
-                            <span>Figma</span><span>UI/UX</span><span>Heritage Tech</span><span>Mobile Design</span>
-                        </div>
+                        <p class="proj-card-desc">Designed the UI/UX architecture for a mobile application bridging the youth-heritage knowledge gap, translating static historical data into interactive digital experiences. Presented at the IGNICION summit, Mumbai.</p>
+                        <div class="proj-card-tags"><span>Figma</span><span>UI/UX</span><span>Heritage Tech</span><span>Mobile Design</span></div>
                     </div>
-
-                    <!-- Project Cenquity -->
-                    <div class="proj-card proj-card--emerald" data-reveal>
+                    <div class="proj-card proj-card--emerald" data-tilt data-spotlight data-reveal>
                         <div class="proj-card-accent"></div>
                         <div class="proj-card-icon">Cq</div>
                         <h3 class="proj-card-name">Project Cenquity</h3>
                         <span class="proj-card-role">Hardware, Tech Ideator</span>
-                        <p class="proj-card-desc">Pitched a conceptual prototype for augmented reality (AR) smart glasses (similar to Meta Ray-Bans) at the Cenference Shark Tank event, focusing on accessible computing and next-gen wearable interfaces.</p>
-                        <div class="proj-card-tags">
-                            <span>AR</span><span>Hardware Concept</span><span>Pitch</span><span>Accessibility</span>
-                        </div>
+                        <p class="proj-card-desc">Pitched a conceptual prototype for AR smart glasses at the Cenference Shark Tank event, focusing on accessible computing and next-gen wearable interfaces.</p>
+                        <div class="proj-card-tags"><span>AR</span><span>Hardware Concept</span><span>Pitch</span><span>Accessibility</span></div>
                     </div>
                 </div>
             </div>
@@ -217,24 +145,8 @@
                 <h2 class="sect-h" data-reveal>Education</h2>
                 <div class="edu-timeline">
                     <div class="edu-line" id="eduLine"></div>
-
-                    <div class="edu-entry" data-reveal>
-                        <div class="edu-dot"></div>
-                        <div class="edu-content">
-                            <h3 class="edu-school">Centre Point School, Katol Road</h3>
-                            <span class="edu-period">Class 11 – Class 12 · CBSE</span>
-                            <p class="edu-detail">Class 11: 87%. Awarded 50% academic scholarship based on Class 10 performance.</p>
-                        </div>
-                    </div>
-
-                    <div class="edu-entry" data-reveal>
-                        <div class="edu-dot"></div>
-                        <div class="edu-content">
-                            <h3 class="edu-school">Centre Point School, Amravati Road Bypass</h3>
-                            <span class="edu-period">Class 9 – Class 10 · CBSE</span>
-                            <p class="edu-detail">Class 10 Board Exams: 97% (Top 1% of cohort). Class 9: 94.6%.</p>
-                        </div>
-                    </div>
+                    <div class="edu-entry" data-reveal><div class="edu-dot"></div><div class="edu-content"><h3 class="edu-school">Centre Point School, Katol Road</h3><span class="edu-period">Class 11 – Class 12 · CBSE</span><p class="edu-detail">Class 11: 87%. Awarded 50% academic scholarship based on Class 10 performance.</p></div></div>
+                    <div class="edu-entry" data-reveal><div class="edu-dot"></div><div class="edu-content"><h3 class="edu-school">Centre Point School, Amravati Road Bypass</h3><span class="edu-period">Class 9 – Class 10 · CBSE</span><p class="edu-detail">Class 10 Board Exams: 97% (Top 1% of cohort). Class 9: 94.6%.</p></div></div>
                 </div>
             </div>
         </section>
@@ -248,100 +160,41 @@
                         <p class="about-big">I don't think in disciplines. I think in problems.</p>
                     </div>
                     <div class="about-right" data-reveal>
-                        <p class="about-body">I don't think in disciplines. I think in problems — whether that's training TensorFlow models on structured data, designing a heritage-preservation mobile app that presented at a Mumbai summit, or mentoring 100+ peers on phishing detection. Currently Chief Science Officer at The Walnut Initiative and Computational Researcher at STEMinate.</p>
-
+                        <p class="about-body">Whether that's training TensorFlow models on structured data, designing a heritage-preservation mobile app that presented at a Mumbai summit, or mentoring 100+ peers on phishing detection. Currently Chief Science Officer at The Walnut Initiative and Computational Researcher at STEMinate.</p>
                         <div class="skills-section">
                             <h4 class="skills-label">Skills</h4>
-                            <div class="skills-tags">
-                                <span class="skill-tag">Python</span>
-                                <span class="skill-tag">JavaScript</span>
-                                <span class="skill-tag">React</span>
-                                <span class="skill-tag">Next.js</span>
-                                <span class="skill-tag">TensorFlow</span>
-                                <span class="skill-tag">Pandas</span>
-                                <span class="skill-tag">Scikit-Learn</span>
-                                <span class="skill-tag">K-means</span>
-                                <span class="skill-tag">Neural Networks</span>
-                                <span class="skill-tag">Figma</span>
-                                <span class="skill-tag">UI/UX Design</span>
-                                <span class="skill-tag">AI-Assisted Dev (Claude/LLMs)</span>
+                            <div class="marquee-wrap">
+                                <div class="marquee-fade marquee-fade--l"></div>
+                                <div class="marquee-fade marquee-fade--r"></div>
+                                <div class="marquee-track" id="marqueeTrack">
+                                    <div class="marquee-set">
+                                        <span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span><span class="skill-tag">React</span><span class="skill-tag">Next.js</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">Pandas</span><span class="skill-tag">Scikit-Learn</span><span class="skill-tag">K-means</span><span class="skill-tag">Neural Networks</span><span class="skill-tag">Figma</span><span class="skill-tag">UI/UX Design</span><span class="skill-tag">AI-Assisted Dev</span>
+                                    </div>
+                                    <div class="marquee-set" aria-hidden="true">
+                                        <span class="skill-tag">Python</span><span class="skill-tag">JavaScript</span><span class="skill-tag">React</span><span class="skill-tag">Next.js</span><span class="skill-tag">TensorFlow</span><span class="skill-tag">Pandas</span><span class="skill-tag">Scikit-Learn</span><span class="skill-tag">K-means</span><span class="skill-tag">Neural Networks</span><span class="skill-tag">Figma</span><span class="skill-tag">UI/UX Design</span><span class="skill-tag">AI-Assisted Dev</span>
+                                    </div>
+                                </div>
                             </div>
-                            <p class="skills-exploring">Currently exploring: Artificial Intelligence Policy · Heritage Preservation via Tech · Behavioral Economics</p>
+                            <p class="skills-exploring">Currently exploring: AI Policy · Heritage Preservation via Tech · Behavioral Economics</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ====== ACHIEVEMENTS TIMELINE ====== -->
+        <!-- ====== ACHIEVEMENTS ====== -->
         <section class="sect" id="achievements">
             <div class="wrap">
                 <h2 class="sect-h" data-reveal>Achievements</h2>
                 <div class="ach-timeline">
                     <div class="ach-line" id="achLine"></div>
-
-                    <div class="ach-node ach-node--left" data-reveal>
-                        <div class="ach-dot"></div>
-                        <div class="ach-content">
-                            <span class="ach-year">2025</span>
-                            <strong>50% Academic Scholarship</strong>
-                            <p>97% aggregate · Top 1% of cohort</p>
-                        </div>
-                    </div>
-
-                    <div class="ach-node ach-node--right" data-reveal>
-                        <div class="ach-dot"></div>
-                        <div class="ach-content">
-                            <span class="ach-year">2024</span>
-                            <strong>National Rank 2 & 5 — CBSE Heritage India Quiz</strong>
-                            <p>2,300+ schools · History TV18 · Reached digital audience of 50,000+ viewers</p>
-                        </div>
-                    </div>
-
-                    <div class="ach-node ach-node--left" data-reveal>
-                        <div class="ach-dot"></div>
-                        <div class="ach-content">
-                            <span class="ach-year">2024</span>
-                            <strong>National Finalist, Top 3% — TGELF</strong>
-                            <p>Biosand Filter Initiative · Deployed low-cost filters impacting 10 local households</p>
-                        </div>
-                    </div>
-
-                    <div class="ach-node ach-node--right" data-reveal>
-                        <div class="ach-dot"></div>
-                        <div class="ach-content">
-                            <span class="ach-year">2023</span>
-                            <strong>Published Author — National Young Author's Fair</strong>
-                            <p>"A Soldier's Story" · Selected from 200,000+ entries</p>
-                        </div>
-                    </div>
-
-                    <div class="ach-node ach-node--left" data-reveal>
-                        <div class="ach-dot"></div>
-                        <div class="ach-content">
-                            <span class="ach-year">2023</span>
-                            <strong>INTACH Heritage Quiz — 3rd Prize (City Level)</strong>
-                            <p>Indian National Trust for Art and Cultural Heritage</p>
-                        </div>
-                    </div>
-
-                    <div class="ach-node ach-node--right" data-reveal>
-                        <div class="ach-dot"></div>
-                        <div class="ach-content">
-                            <span class="ach-year">2023</span>
-                            <strong>Schoolhouse Maths Competition</strong>
-                            <p>Raffle Winner of $25 Art of Problem Solving coupon</p>
-                        </div>
-                    </div>
-
-                    <div class="ach-node ach-node--left" data-reveal>
-                        <div class="ach-dot"></div>
-                        <div class="ach-content">
-                            <span class="ach-year">2022–24</span>
-                            <strong>District U-19 DSO Chess — 3 Consecutive Years</strong>
-                            <p>Classes 9–11 · Also competed in U-19 DSO Shalaya Football</p>
-                        </div>
-                    </div>
+                    <div class="ach-node ach-node--left" data-reveal><div class="ach-dot"></div><div class="ach-content"><span class="ach-year">2025</span><strong>50% Academic Scholarship</strong><p>97% aggregate · Top 1% of cohort</p></div></div>
+                    <div class="ach-node ach-node--right" data-reveal><div class="ach-dot"></div><div class="ach-content"><span class="ach-year">2024</span><strong>National Rank 2 & 5 — CBSE Heritage India Quiz</strong><p>2,300+ schools · History TV18 · 50,000+ viewers</p></div></div>
+                    <div class="ach-node ach-node--left" data-reveal><div class="ach-dot"></div><div class="ach-content"><span class="ach-year">2024</span><strong>National Finalist, Top 3% — TGELF</strong><p>Biosand Filter · Impacting 10 local households</p></div></div>
+                    <div class="ach-node ach-node--right" data-reveal><div class="ach-dot"></div><div class="ach-content"><span class="ach-year">2023</span><strong>Published Author — National Young Author's Fair</strong><p>"A Soldier's Story" · 200,000+ entries</p></div></div>
+                    <div class="ach-node ach-node--left" data-reveal><div class="ach-dot"></div><div class="ach-content"><span class="ach-year">2023</span><strong>INTACH Heritage Quiz — 3rd Prize (City Level)</strong><p>Indian National Trust for Art and Cultural Heritage</p></div></div>
+                    <div class="ach-node ach-node--right" data-reveal><div class="ach-dot"></div><div class="ach-content"><span class="ach-year">2023</span><strong>Schoolhouse Maths Competition</strong><p>$25 Art of Problem Solving coupon</p></div></div>
+                    <div class="ach-node ach-node--left" data-reveal><div class="ach-dot"></div><div class="ach-content"><span class="ach-year">2022–24</span><strong>District U-19 DSO Chess — 3 Years</strong><p>Classes 9–11 · Also DSO Shalaya Football</p></div></div>
                 </div>
             </div>
         </section>
@@ -350,12 +203,9 @@
         <section class="sect sect--alt" id="certifications">
             <div class="wrap">
                 <h2 class="sect-h" data-reveal>Certifications</h2>
-                <div class="cert-card" data-reveal>
+                <div class="cert-card" data-tilt data-spotlight data-reveal>
                     <div class="cert-badge">IIT</div>
-                    <div class="cert-info">
-                        <strong>AI & Data Science</strong>
-                        <span>Indian Institute of Technology (IIT) Madras · July 2026</span>
-                    </div>
+                    <div class="cert-info"><strong>AI & Data Science</strong><span>Indian Institute of Technology (IIT) Madras · July 2026</span></div>
                 </div>
             </div>
         </section>
@@ -365,39 +215,31 @@
             <div class="wrap">
                 <h2 class="contact-h" data-reveal>Let's talk<span class="contact-dot">.</span></h2>
                 <div class="contact-grid" data-reveal>
-                    <a href="mailto:shouryasharan27@gmail.com" class="contact-item">
-                        <span class="contact-label">Email</span>
-                        <span class="contact-val">shouryasharan27@gmail.com</span>
-                    </a>
-                    <a href="https://github.com/shouryasharan7-netizen" target="_blank" class="contact-item">
-                        <span class="contact-label">GitHub</span>
-                        <span class="contact-val">shouryasharan7-netizen</span>
-                    </a>
-                    <a href="tel:+917666656784" class="contact-item">
-                        <span class="contact-label">Phone</span>
-                        <span class="contact-val">+91 766 665 6784</span>
-                    </a>
+                    <a href="mailto:shouryasharan27@gmail.com" class="contact-item" data-magnetic><span class="contact-label">Email</span><span class="contact-val">shouryasharan27@gmail.com</span></a>
+                    <a href="https://github.com/shouryasharan7-netizen" target="_blank" class="contact-item" data-magnetic><span class="contact-label">GitHub</span><span class="contact-val">shouryasharan7-netizen</span></a>
+                    <a href="tel:+917666656784" class="contact-item" data-magnetic><span class="contact-label">Phone</span><span class="contact-val">+91 766 665 6784</span></a>
                 </div>
             </div>
         </section>
     </main>
+    </div>
 
-    <!-- ====== FOOTER ====== -->
     <footer class="footer">
         <div class="wrap footer-inner">
-            <div class="footer-left">
-                <span class="footer-name">Shourya Sharan</span>
-                <span class="footer-loc">Nagpur, India</span>
-            </div>
+            <div class="footer-left"><span class="footer-name">Shourya Sharan</span><span class="footer-loc">Nagpur, India</span></div>
             <div class="footer-links">
-                <a href="mailto:shouryasharan27@gmail.com">shouryasharan27@gmail.com</a>
-                <a href="tel:+917666656784">+91 7666656784</a>
-                <a href="https://github.com/shouryasharan7-netizen" target="_blank">GitHub</a>
+                <a href="mailto:shouryasharan27@gmail.com" data-magnetic>shouryasharan27@gmail.com</a>
+                <a href="tel:+917666656784" data-magnetic>+91 7666656784</a>
+                <a href="https://github.com/shouryasharan7-netizen" target="_blank" data-magnetic>GitHub</a>
             </div>
             <div class="footer-copy">© 2026 Shourya Sharan. Built with React & Next.js.</div>
         </div>
     </footer>
 
+    <!-- GSAP + Lenis from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
