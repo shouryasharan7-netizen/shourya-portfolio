@@ -501,6 +501,13 @@
     function setupThemeToggle() {
         const toggle = document.getElementById('themeToggle');
         const html = document.documentElement;
+        
+        // Check local storage, default to dark
+        const stored = localStorage.getItem('theme');
+        if (stored) {
+            html.setAttribute('data-theme', stored);
+        }
+        
         if (toggle) {
             toggle.addEventListener('click', () => {
                 const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
