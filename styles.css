@@ -394,8 +394,8 @@ body.cursor-active .cursor-ring { opacity: 0; }
    ================================================================== */
 .about-split{display:grid;grid-template-columns:1fr;gap:2rem}
 @media(min-width:768px){.about-split{grid-template-columns:1fr 1fr;gap:3rem}}
-.about-left { opacity: 0; transform: translateY(30px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
-.about-right { opacity: 0; transform: translateY(30px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.about-left { min-width: 0; opacity: 0; transform: translateY(30px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
+.about-right { min-width: 0; opacity: 0; transform: translateY(30px); transition:opacity .6s var(--ease), transform .6s var(--ease); }
 .about-left.vis, .about-right.vis { opacity: 1; transform: translateY(0); }
 .about-big{
     font-family:var(--sans);font-size:var(--t-xl);font-weight:700;
