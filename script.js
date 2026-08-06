@@ -199,9 +199,9 @@
         const letters = originalText.split('').map((char, index) => {
             const span = document.createElement('span');
             span.textContent = char;
-            // Preserve spaces
+            // Preserve spaces but allow wrapping
             if (char === ' ') {
-                span.style.whiteSpace = 'pre';
+                span.style.whiteSpace = 'pre-wrap';
             }
             decodeEl.appendChild(span);
             return { el: span, char: char, isSpace: char === ' ' };
