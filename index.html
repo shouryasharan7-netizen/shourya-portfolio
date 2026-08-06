@@ -4,27 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shourya Sharan</title>
-    <meta name="description" content="Shourya Sharan — researcher, builder, designer. Where cognition meets computation.">
+    <meta name="description" content="Shourya Sharan — researcher, builder, designer.">
     <meta name="author" content="Shourya Sharan">
     <meta property="og:title" content="Shourya Sharan">
-    <meta property="og:description" content="Researcher, builder, designer.">
+    <meta property="og:description" content="Where cognition meets computation.">
     <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-    <!-- SVG filter for liquid text effect -->
-    <svg style="width:0;height:0;position:absolute" aria-hidden="true">
-        <defs>
-            <filter id="liquid" x="-15%" y="-15%" width="130%" height="130%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" seed="3" result="noise"/>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" result="displaced"/>
-                <feGaussianBlur in="displaced" stdDeviation="0" result="blurred"/>
-            </filter>
-        </defs>
-    </svg>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -32,205 +20,219 @@
 
     <!-- ====== NAV ====== -->
     <nav class="nav" id="nav">
-        <a href="#" class="nav-mark">S</a>
-        <div class="nav-links" id="navLinks">
-            <a href="#about">About</a>
-            <a href="#path">Path</a>
-            <a href="#craft">Craft</a>
-            <a href="#contact">Contact</a>
+        <a href="#" class="nav-logo">SS</a>
+        <div class="nav-right">
+            <div class="nav-links" id="navLinks">
+                <a href="#work">Work</a>
+                <a href="#path">Path</a>
+                <a href="#about">About</a>
+            </div>
+            <a href="mailto:shouryasharan27@gmail.com" class="nav-mail">shouryasharan27@gmail.com</a>
         </div>
-        <a href="mailto:shouryasharan27@gmail.com" class="nav-cta">say hello →</a>
         <button class="nav-burger" id="burger" aria-label="Menu"><span></span><span></span></button>
     </nav>
 
-    <!-- Mobile overlay -->
+    <!-- Mobile menu -->
     <div class="mob" id="mob">
-        <a href="#about">About</a>
+        <a href="#work">Work</a>
         <a href="#path">Path</a>
-        <a href="#craft">Craft</a>
+        <a href="#about">About</a>
         <a href="#contact">Contact</a>
     </div>
 
     <main>
 
-        <!-- ====== HERO — Scroll-driven kinetic text ====== -->
+        <!-- ====== HERO — Split reveal ====== -->
         <section class="hero" id="hero">
-            <div class="hero-sticky">
-                <!-- Main hello state -->
-                <div class="hero-intro" id="heroIntro">
-                    <div class="hero-name">
-                        <span class="hero-word">shourya</span><span class="hero-dot">.</span>
-                    </div>
-                    <div class="hero-aside">
-                        <p>researcher, builder, designer.<br>exploring where cognition meets computation.</p>
-                        <p class="hero-loc">based in nagpur. building for the internet.</p>
-                    </div>
+            <div class="hero-left">
+                <h1 class="hero-name">
+                    <span class="mask"><span class="mask-inner" data-reveal>Shourya</span></span>
+                    <span class="mask"><span class="mask-inner" data-reveal style="--i:1">Sharan</span></span>
+                </h1>
+                <div class="hero-line" id="heroLine"></div>
+            </div>
+            <div class="hero-right">
+                <p class="hero-p" data-reveal style="--i:2">Researcher, builder, designer exploring where cognition meets computation. I architect interfaces, train models, and lead communities.</p>
+                <div class="hero-meta" data-reveal style="--i:3">
+                    <span>Nagpur, India</span>
+                    <span class="hero-avail"><span class="dot"></span>Available</span>
                 </div>
+            </div>
+            <div class="hero-scroll" data-reveal style="--i:4">
+                <span>Scroll</span>
+                <div class="hero-scroll-bar"></div>
+            </div>
+        </section>
 
-                <!-- Scroll-revealed words -->
-                <div class="hero-words" id="heroWords">
-                    <div class="hero-slide"><span class="hero-slide-word" data-liquid>RESEARCH</span></div>
-                    <div class="hero-slide"><span class="hero-slide-word" data-liquid>DESIGN</span></div>
-                    <div class="hero-slide"><span class="hero-slide-word" data-liquid>SYSTEMS</span></div>
-                    <div class="hero-slide"><span class="hero-slide-word" data-liquid>CODE</span></div>
+        <!-- ====== WORK ====== -->
+        <section class="sect" id="work">
+            <div class="wrap">
+                <h2 class="sect-h" data-reveal>Selected work</h2>
+
+                <div class="proj-list">
+                    <a class="proj" href="#" data-reveal>
+                        <div class="proj-top">
+                            <h3 class="proj-name">Ignicion</h3>
+                            <span class="proj-tag">UI/UX · Heritage Tech</span>
+                        </div>
+                        <p class="proj-desc">Designed the full UI/UX for a mobile app bridging the youth-heritage knowledge gap. Presented working prototype at the IGNICION summit — digital cultural preservation for the next generation.</p>
+                        <div class="proj-foot">
+                            <div class="proj-stack"><span>UI/UX</span><span>Mobile</span><span>Prototyping</span></div>
+                            <span class="proj-arrow">↗</span>
+                        </div>
+                    </a>
+
+                    <a class="proj" href="#" data-reveal>
+                        <div class="proj-top">
+                            <h3 class="proj-name">Project Cenquity</h3>
+                            <span class="proj-tag">Hardware · AR/VR</span>
+                        </div>
+                        <p class="proj-desc">Pitched AR smart glasses at a Shark Tank-style event. Accessible next-gen computing, wearable interfaces for daily use — the kind of product that's still years from mainstream.</p>
+                        <div class="proj-foot">
+                            <div class="proj-stack"><span>AR/VR</span><span>Hardware</span><span>Product</span></div>
+                            <span class="proj-arrow">↗</span>
+                        </div>
+                    </a>
+
+                    <a class="proj" href="#" data-reveal>
+                        <div class="proj-top">
+                            <h3 class="proj-name">TGELF Biosand Filter</h3>
+                            <span class="proj-tag">Impact · Engineering</span>
+                        </div>
+                        <p class="proj-desc">National Finalist, Top 3% at TGELF. Deployed low-cost biosand water filtration systems for clean water access in underserved communities. Engineering that serves real human need.</p>
+                        <div class="proj-foot">
+                            <div class="proj-stack"><span>Engineering</span><span>Impact</span><span>Deployment</span></div>
+                            <span class="proj-arrow">↗</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== NUMBERS — Outlined stroke text ====== -->
+        <section class="nums-sect">
+            <div class="wrap nums-row">
+                <div class="num-card" data-reveal>
+                    <span class="num-big" data-count="200">0</span>
+                    <span class="num-label">User interactions driven</span>
+                </div>
+                <div class="num-card" data-reveal>
+                    <span class="num-big" data-count="97">0</span>
+                    <span class="num-unit">%</span>
+                    <span class="num-label">Board score · Top 1%</span>
+                </div>
+                <div class="num-card" data-reveal>
+                    <span class="num-big" data-count="50">0</span>
+                    <span class="num-label">Community members led</span>
+                </div>
+                <div class="num-card" data-reveal>
+                    <span class="num-big" data-count="4">0</span>
+                    <span class="num-label">Concurrent roles</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ====== PATH ====== -->
+        <section class="sect sect--light" id="path">
+            <div class="wrap">
+                <h2 class="sect-h sect-h--dark" data-reveal>Where I've built</h2>
+
+                <div class="exp-list">
+                    <article class="exp" data-reveal>
+                        <div class="exp-left">
+                            <span class="exp-date">Jun 2026 → Now</span>
+                        </div>
+                        <div class="exp-right">
+                            <h3 class="exp-role">Chief Science Officer</h3>
+                            <span class="exp-org">The Walnut Initiative</span>
+                            <p class="exp-desc">Leading scientific content strategy and peer-review for STEM publications. Designed pedagogical reports for neuroscience workshops in regional schools.</p>
+                        </div>
+                    </article>
+
+                    <article class="exp" data-reveal>
+                        <div class="exp-left">
+                            <span class="exp-date">Apr 2026 → Now</span>
+                        </div>
+                        <div class="exp-right">
+                            <h3 class="exp-role">Web Architect & UI Lead</h3>
+                            <span class="exp-org">Descreened · LLPL AI Bootcamp</span>
+                            <p class="exp-desc">Architected responsive web platforms with React and Next.js. Integrated AI-assisted coding workflows, driving 200+ unique user interactions.</p>
+                        </div>
+                    </article>
+
+                    <article class="exp" data-reveal>
+                        <div class="exp-left">
+                            <span class="exp-date">May 2026 → Now</span>
+                        </div>
+                        <div class="exp-right">
+                            <h3 class="exp-role">Computational Researcher</h3>
+                            <span class="exp-org">STEMinate</span>
+                            <p class="exp-desc">Co-authoring papers using Python, Pandas, Scikit-Learn. Training predictive ML models with TensorFlow for structured dataset analysis.</p>
+                        </div>
+                    </article>
+
+                    <article class="exp" data-reveal>
+                        <div class="exp-left">
+                            <span class="exp-date">May 2026 → Now</span>
+                        </div>
+                        <div class="exp-right">
+                            <h3 class="exp-role">Head of Tech & Ops</h3>
+                            <span class="exp-org">ThinkEconomics Club</span>
+                            <p class="exp-desc">Managing digital infrastructure for 50+ members. Combining economic frameworks with automated workflows for event coordination.</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </section>
 
         <!-- ====== ABOUT ====== -->
         <section class="sect" id="about">
-            <div class="container">
-                <div class="about-grid">
-                    <div class="about-col-left anim">
-                        <h2 class="h2">I don't think in disciplines.<br>I think in problems.</h2>
+            <div class="wrap">
+                <h2 class="sect-h" data-reveal>About</h2>
+                <div class="about-split">
+                    <div class="about-left" data-reveal>
+                        <p class="about-big">I don't think in disciplines. I think in problems.</p>
                     </div>
-                    <div class="about-col-right anim">
-                        <p>Whether it's training ML models, designing a heritage mobile app, or running the tech operations of a 50+ member economics club — the approach is the same: understand deeply, then make it better.</p>
-                        <p class="muted">Python, JavaScript, React, Next.js, TensorFlow, Pandas, Scikit-Learn, Figma.</p>
-                    </div>
-                </div>
+                    <div class="about-right" data-reveal>
+                        <p>Whether it's training ML models, designing a heritage mobile app, or running the tech operations of a 50+ member economics club — the approach is always the same: understand deeply, then make it better.</p>
+                        <p class="about-stack">Python · JavaScript · React · Next.js · TensorFlow · Pandas · Scikit-Learn · Figma</p>
 
-                <div class="nums anim">
-                    <div class="num-block">
-                        <span class="num-val" data-count="200">0</span><span class="num-suffix">+</span>
-                        <span class="num-cap">user interactions</span>
-                    </div>
-                    <div class="num-block">
-                        <span class="num-val" data-count="97">0</span><span class="num-suffix">%</span>
-                        <span class="num-cap">board score</span>
-                    </div>
-                    <div class="num-block">
-                        <span class="num-val" data-count="50">0</span><span class="num-suffix">+</span>
-                        <span class="num-cap">community members</span>
-                    </div>
-                    <div class="num-block">
-                        <span class="num-val" data-count="4">0</span>
-                        <span class="num-cap">leadership roles</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ====== PATH ====== -->
-        <section class="sect sect--ink" id="path">
-            <div class="container">
-                <h2 class="h2 anim">What I've been building.</h2>
-
-                <div class="exp-stack">
-                    <article class="exp anim">
-                        <div class="exp-head">
-                            <h3 class="exp-role">Chief Science Officer</h3>
-                            <span class="exp-org">The Walnut Initiative</span>
-                        </div>
-                        <div class="exp-meta">Jun 2026 → Now · Remote</div>
-                        <p class="exp-body">Leading scientific content strategy and peer-review for independent STEM publications. Designed pedagogical reports for localized neuroscience workshops deployed in regional schools.</p>
-                    </article>
-
-                    <article class="exp anim">
-                        <div class="exp-head">
-                            <h3 class="exp-role">Web Architect & UI Lead</h3>
-                            <span class="exp-org">Descreened · LLPL AI Bootcamp</span>
-                        </div>
-                        <div class="exp-meta">Apr 2026 → Now · Freelance</div>
-                        <p class="exp-body">Architected responsive web platforms with React and Next.js. Integrated AI-assisted coding workflows, driving 200+ unique user interactions across projects.</p>
-                    </article>
-
-                    <article class="exp anim">
-                        <div class="exp-head">
-                            <h3 class="exp-role">Computational Researcher</h3>
-                            <span class="exp-org">STEMinate</span>
-                        </div>
-                        <div class="exp-meta">May 2026 → Now · Research</div>
-                        <p class="exp-body">Co-authoring computational research papers using Python, Pandas, and Scikit-Learn. Training predictive ML models with TensorFlow for publishable findings.</p>
-                    </article>
-
-                    <article class="exp anim">
-                        <div class="exp-head">
-                            <h3 class="exp-role">Head of Tech & Operations</h3>
-                            <span class="exp-org">ThinkEconomics Club</span>
-                        </div>
-                        <div class="exp-meta">May 2026 → Now · Operations</div>
-                        <p class="exp-body">Managing digital infrastructure for a 50+ member community. Combining economic frameworks with automated workflows to streamline everything.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <!-- ====== CRAFT ====== -->
-        <section class="sect" id="craft">
-            <div class="container">
-                <h2 class="h2 anim">Selected work.</h2>
-
-                <div class="project-list">
-                    <a class="project anim" href="#">
-                        <div class="project-left">
-                            <span class="project-cat">UI/UX · Heritage Tech</span>
-                            <h3 class="project-name">Ignicion</h3>
-                        </div>
-                        <p class="project-desc">Designed the full UI/UX for a mobile app bridging the youth-heritage knowledge gap. Presented at the IGNICION summit.</p>
-                        <span class="project-arrow">↗</span>
-                    </a>
-
-                    <a class="project anim" href="#">
-                        <div class="project-left">
-                            <span class="project-cat">Hardware · AR/VR</span>
-                            <h3 class="project-name">Project Cenquity</h3>
-                        </div>
-                        <p class="project-desc">Pitched AR smart glasses at a Shark Tank event — focusing on accessible computing and next-gen wearable interfaces.</p>
-                        <span class="project-arrow">↗</span>
-                    </a>
-
-                    <a class="project anim" href="#">
-                        <div class="project-left">
-                            <span class="project-cat">Social Impact · Engineering</span>
-                            <h3 class="project-name">TGELF Biosand Filter</h3>
-                        </div>
-                        <p class="project-desc">National Finalist & Top 3%. Deployed low-cost biosand water filtration systems for clean water access in underserved communities.</p>
-                        <span class="project-arrow">↗</span>
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- ====== RECOGNITIONS ====== -->
-        <section class="sect sect--ink" id="recognitions">
-            <div class="container">
-                <h2 class="h2 anim">Things I'm proud of.</h2>
-
-                <div class="rec-stack">
-                    <div class="rec anim">
-                        <span class="rec-year">2024</span>
-                        <div>
-                            <h4 class="rec-title">National Rank 2 & 5 — CBSE Heritage India Quiz</h4>
-                            <p class="rec-desc">Top 5 out of 2,300+ schools. Televised semi-finals on History TV18.</p>
-                        </div>
-                    </div>
-                    <div class="rec anim">
-                        <span class="rec-year">2024</span>
-                        <div>
-                            <h4 class="rec-title">National Finalist & Top 3% — TGELF</h4>
-                            <p class="rec-desc">Biosand Filter Initiative for clean water access in underserved communities.</p>
-                        </div>
-                    </div>
-                    <div class="rec anim">
-                        <span class="rec-year">2023</span>
-                        <div>
-                            <h4 class="rec-title">Published Author — National Young Author's Fair</h4>
-                            <p class="rec-desc">"A Soldier's Story" — selected from 200,000+ entries.</p>
-                        </div>
-                    </div>
-                    <div class="rec anim">
-                        <span class="rec-year">2025</span>
-                        <div>
-                            <h4 class="rec-title">50% Academic Scholarship</h4>
-                            <p class="rec-desc">Class 10 — 97% aggregate, Top 1% of cohort.</p>
-                        </div>
-                    </div>
-                    <div class="rec anim">
-                        <span class="rec-year">2022–24</span>
-                        <div>
-                            <h4 class="rec-title">District U-19 DSO Chess — 3 Consecutive Years</h4>
-                            <p class="rec-desc">Alongside district-level Football representation.</p>
+                        <div class="about-awards">
+                            <div class="award">
+                                <span class="award-year">2024</span>
+                                <div>
+                                    <strong>National Rank 2 & 5</strong>
+                                    <span>CBSE Heritage India Quiz · 2,300+ schools · History TV18</span>
+                                </div>
+                            </div>
+                            <div class="award">
+                                <span class="award-year">2024</span>
+                                <div>
+                                    <strong>National Finalist, Top 3%</strong>
+                                    <span>TGELF · Biosand filter deployment</span>
+                                </div>
+                            </div>
+                            <div class="award">
+                                <span class="award-year">2023</span>
+                                <div>
+                                    <strong>Published Author</strong>
+                                    <span>National Young Author's Fair · 200,000+ entries</span>
+                                </div>
+                            </div>
+                            <div class="award">
+                                <span class="award-year">2025</span>
+                                <div>
+                                    <strong>50% Academic Scholarship</strong>
+                                    <span>97% aggregate · Top 1% of cohort</span>
+                                </div>
+                            </div>
+                            <div class="award">
+                                <span class="award-year">22–24</span>
+                                <div>
+                                    <strong>District U-19 DSO Chess</strong>
+                                    <span>3 consecutive years + Football</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -238,21 +240,21 @@
         </section>
 
         <!-- ====== CONTACT ====== -->
-        <section class="sect sect--cta" id="contact">
-            <div class="container">
-                <h2 class="cta-h anim">Got a wild idea?<br>Let's make it real.</h2>
-                <div class="cta-links anim">
-                    <a href="mailto:shouryasharan27@gmail.com" class="cta-row">
-                        <span class="cta-label">Email</span>
-                        <span class="cta-val">shouryasharan27@gmail.com</span>
+        <section class="contact" id="contact">
+            <div class="wrap">
+                <h2 class="contact-h" data-reveal>Let's talk<span class="contact-dot">.</span></h2>
+                <div class="contact-grid" data-reveal>
+                    <a href="mailto:shouryasharan27@gmail.com" class="contact-item">
+                        <span class="contact-label">Email</span>
+                        <span class="contact-val">shouryasharan27@gmail.com</span>
                     </a>
-                    <a href="https://github.com/shouryasharan7-netizen" target="_blank" class="cta-row">
-                        <span class="cta-label">GitHub</span>
-                        <span class="cta-val">shouryasharan7-netizen</span>
+                    <a href="https://github.com/shouryasharan7-netizen" target="_blank" class="contact-item">
+                        <span class="contact-label">GitHub</span>
+                        <span class="contact-val">shouryasharan7-netizen</span>
                     </a>
-                    <a href="tel:+917666656784" class="cta-row">
-                        <span class="cta-label">Phone</span>
-                        <span class="cta-val">+91 766 665 6784</span>
+                    <a href="tel:+917666656784" class="contact-item">
+                        <span class="contact-label">Phone</span>
+                        <span class="contact-val">+91 766 665 6784</span>
                     </a>
                 </div>
             </div>
@@ -260,9 +262,9 @@
     </main>
 
     <footer class="foot">
-        <div class="container foot-row">
-            <span>Shourya Sharan © 2026</span>
-            <button id="toTop" aria-label="Back to top">↑ top</button>
+        <div class="wrap foot-inner">
+            <span>© 2026 Shourya Sharan</span>
+            <button id="toTop">↑</button>
         </div>
     </footer>
 
