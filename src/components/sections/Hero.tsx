@@ -220,7 +220,7 @@ export function Hero() {
 
         {/* THE STRATEGIST */}
         <h1
-          className="text-[clamp(3.5rem,10vw,10rem)] font-bold tracking-[0.08em] leading-[0.85] mb-6"
+          className="text-[clamp(2.5rem,9vw,8rem)] font-bold tracking-[0.08em] leading-[1.1] mb-6 whitespace-nowrap"
           style={{
             fontFamily: "var(--font-cinzel)",
             color: "var(--color-ivory)",
@@ -233,7 +233,7 @@ export function Hero() {
         </h1>
 
         {/* Subtitle typewriter */}
-        <div className="mb-8">
+        <div className="mb-8 mt-4">
           <Typewriter
             text="Shourya Sharan · Researcher · Builder · Captain"
             className="text-sm md:text-base tracking-[0.15em] text-[var(--color-muted)]"
@@ -244,7 +244,7 @@ export function Hero() {
 
         {/* Location + Available */}
         <motion.div
-          className="flex items-center justify-center gap-6 text-xs text-[var(--color-muted-dark)] tracking-[0.1em]"
+          className="flex items-center justify-center gap-6 text-xs text-[var(--color-muted-dark)] tracking-[0.1em] mb-8"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.5, duration: 0.6 }}
@@ -258,7 +258,7 @@ export function Hero() {
 
         {/* Stats */}
         <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 pt-8 border-t border-[var(--color-rule)]"
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 pt-8 border-t border-[var(--color-rule)]"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 3, duration: 0.6 }}
@@ -271,10 +271,9 @@ export function Hero() {
           ].map((stat, i) => (
             <div key={i} className="text-center">
               <div
-                className="text-3xl md:text-4xl font-bold text-transparent"
+                className="text-3xl md:text-4xl font-bold text-[var(--color-gold)]"
                 style={{
                   fontFamily: "var(--font-cinzel)",
-                  WebkitTextStroke: "1px var(--color-gold)",
                 }}
               >
                 <AnimatedCounter
