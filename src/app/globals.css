@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+/* ================================================================
+   THE STRATEGIST — Imperial Design System
+   ================================================================ */
+
+@theme {
+  /* Imperial Color Palette */
+  --color-imperial-navy: #0A0E1A;
+  --color-imperial-dark: #111827;
+  --color-imperial-surface: #1a1f2e;
+  --color-gold: #C9A227;
+  --color-gold-dim: rgba(201, 162, 39, 0.08);
+  --color-gold-glow: rgba(201, 162, 39, 0.25);
+  --color-crimson: #8B1E1E;
+  --color-crimson-dim: rgba(139, 30, 30, 0.15);
+  --color-ivory: #F5F0E6;
+  --color-warm-white: #E8E4DC;
+  --color-muted: #9CA3AF;
+  --color-muted-dark: #6B7280;
+  --color-grid: rgba(201, 162, 39, 0.08);
+  --color-rule: rgba(201, 162, 39, 0.12);
+  --color-emerald: #10b981;
+
+  /* Typography Scale */
+  --font-cinzel: "Cinzel", serif;
+  --font-playfair: "Playfair Display", serif;
+  --font-inter: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Spacing */
+  --spacing-section: 8rem;
+
+  /* Animation */
+  --ease-expo-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-expo-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ================================================================
+   BASE STYLES
+   ================================================================ */
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: auto; /* Lenis handles smooth scroll */
+}
+
+body {
+  font-family: var(--font-inter);
+  background: var(--color-imperial-navy);
+  color: var(--color-warm-white);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Lenis overrides */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-imperial-navy);
+}
+
+a { color: inherit; text-decoration: none; }
+button { background: none; border: none; color: inherit; font: inherit; cursor: pointer; }
+img { max-width: 100%; display: block; }
+
+/* Hide default cursor when custom cursor is active */
+body.custom-cursor-active { cursor: none; }
+body.custom-cursor-active a,
+body.custom-cursor-active button,
+body.custom-cursor-active [role="button"] { cursor: none; }
+
+@media (max-width: 768px) {
+  body.custom-cursor-active { cursor: auto; }
+  body.custom-cursor-active a,
+  body.custom-cursor-active button { cursor: pointer; }
+}
+
+/* ================================================================
+   FILM GRAIN OVERLAY
+   ================================================================ */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  animation: grain 8s steps(10) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 35%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+/* ================================================================
+   VIGNETTE
+   ================================================================ */
+.vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(10, 14, 26, 0.6) 100%
+  );
+  z-index: 2;
+}
+
+/* ================================================================
+   CHESS BOARD GRID PATTERN
+   ================================================================ */
+.chess-grid-bg {
+  background-image:
+    linear-gradient(rgba(201, 162, 39, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201, 162, 39, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ================================================================
+   CUSTOM SCROLLBAR
+   ================================================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-imperial-navy); }
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-dim);
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-gold); }
+
+/* ================================================================
+   TYPOGRAPHY UTILITIES
+   ================================================================ */
+.text-display {
+  font-family: var(--font-cinzel);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.text-heading {
+  font-family: var(--font-playfair);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+/* ================================================================
+   IMPERIAL DECORATIVE ELEMENTS
+   ================================================================ */
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold) 20%,
+    var(--color-gold) 80%,
+    transparent
+  );
+}
+
+.gold-border-frame {
+  border: 1px solid var(--color-rule);
+  position: relative;
+}
+.gold-border-frame::before,
+.gold-border-frame::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--color-gold);
+}
+.gold-border-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.gold-border-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+/* Wax seal decorative element */
+.wax-seal {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #c0392b, #8B1E1E, #5a1010);
+  box-shadow:
+    0 2px 8px rgba(139, 30, 30, 0.5),
+    inset 0 1px 2px rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-cinzel);
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgba(245, 240, 230, 0.8);
+  letter-spacing: 0.05em;
+}
+
+/* ================================================================
+   SECTION FOUNDATIONS
+   ================================================================ */
+.section-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (min-width: 768px) {
+  .section-wrap { padding: 0 4rem; }
+}
+
+/* ================================================================
+   REDUCED MOTION
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .film-grain { display: none; }
+}
