@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { ScrambleText } from "@/components/ui/ScrambleText";
 
 const PILLARS = [
   {
@@ -75,7 +76,7 @@ export function Manifesto() {
             >
               &ldquo;I don&apos;t play the game.
               <br />
-              I architect the <span className="text-[var(--color-gold)]">neural network</span> that runs it.&rdquo;
+              I architect the <ScrambleText text="neural network" className="text-[var(--color-gold)]" /> that runs it.&rdquo;
             </motion.p>
           </div>
 

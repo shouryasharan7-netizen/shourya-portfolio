@@ -56,7 +56,7 @@ export const metadata: Metadata = {
 };
 
 import { AudioProvider } from "@/components/ui/AudioProvider";
-import { GestureController } from "@/components/ui/GestureController";
+import { CyberCursor } from "@/components/ui/CyberCursor";
 
 export default function RootLayout({
   children,
@@ -69,8 +69,8 @@ export default function RootLayout({
       className={`${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="custom-cursor-active relative">
+        <CyberCursor />
         <div className="napoleon-bg" />
-        <GestureController />
         <AudioProvider>
           {children}
         </AudioProvider>

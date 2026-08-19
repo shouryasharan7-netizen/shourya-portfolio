@@ -2,7 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { TextReveal, Typewriter, AnimatedCounter } from "@/components/ui/TextReveal";
+import { Typewriter, AnimatedCounter } from "@/components/ui/TextReveal";
+import { ScrambleText } from "@/components/ui/ScrambleText";
+import { MagneticElement } from "@/components/ui/MagneticElement";
 
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -218,7 +220,7 @@ export function Hero() {
           </span>
         </motion.div>
 
-        {/* THE GRAND TACTICIAN -> THE SYNAPTIC ARCHITECT */}
+        {/* THE SYNAPTIC ARCHITECT */}
         <h1
           className="text-[clamp(2rem,7vw,6rem)] font-bold tracking-[0.08em] leading-[1.1] mb-6 whitespace-nowrap"
           style={{
@@ -227,9 +229,9 @@ export function Hero() {
             textShadow: "0 0 80px rgba(0, 240, 255, 0.4)",
           }}
         >
-          <TextReveal text="THE SYNAPTIC" delay={0.2} stagger={0.06} />
+          <ScrambleText text="THE SYNAPTIC" />
           <br />
-          <TextReveal text="ARCHITECT" delay={0.5} stagger={0.05} />
+          <ScrambleText text="ARCHITECT" />
         </h1>
 
         {/* Subtitle typewriter */}
@@ -243,18 +245,20 @@ export function Hero() {
         </div>
 
         {/* Location + Available */}
-        <motion.div
-          className="flex items-center justify-center gap-6 text-xs text-[var(--color-muted)] tracking-[0.1em] mb-8"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2.5, duration: 0.6 }}
-        >
-          <span>Node: Nagpur, India</span>
-          <span className="flex items-center gap-1.5 px-2 py-1 border border-[var(--color-gold)] rounded-sm bg-black/50 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] animate-pulse" />
-            <span className="text-[var(--color-gold)] font-mono">SYSTEM READY</span>
-          </span>
-        </motion.div>
+        <MagneticElement strength={0.3}>
+          <motion.div
+            className="flex items-center justify-center gap-6 text-xs text-[var(--color-muted)] tracking-[0.1em] mb-8 cursor-pointer"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 2.5, duration: 0.6 }}
+          >
+            <ScrambleText text="Node: Nagpur, India" />
+            <span className="flex items-center gap-1.5 px-2 py-1 border border-[var(--color-gold)] rounded-sm bg-black/50 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] animate-pulse" />
+              <ScrambleText text="SYSTEM READY" className="text-[var(--color-gold)] font-mono" />
+            </span>
+          </motion.div>
+        </MagneticElement>
 
         {/* Stats */}
         <motion.div
