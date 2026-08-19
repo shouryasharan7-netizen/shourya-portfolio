@@ -27,6 +27,7 @@ export function TextReveal({
 
   return (
     <Tag
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ref={containerRef as any}
       className={`${className} inline-flex flex-wrap`}
       aria-label={text}

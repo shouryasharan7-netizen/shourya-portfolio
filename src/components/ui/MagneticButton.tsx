@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -47,6 +47,7 @@ export function MagneticButton({
     y.set(0);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Component = motion[as] as any;
 
   return (

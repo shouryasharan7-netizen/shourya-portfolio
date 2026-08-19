@@ -23,7 +23,7 @@ export function Hero() {
     const ctx = canvas.getContext("2d")!;
     const dpr = window.devicePixelRatio || 1;
     let animId: number;
-    let mouse = { x: -100, y: -100 };
+    const mouse = { x: -100, y: -100 };
 
     const resize = () => {
       canvas.width = window.innerWidth * dpr;

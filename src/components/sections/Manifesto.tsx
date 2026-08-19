@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { TextReveal } from "@/components/ui/TextReveal";
 
 const PILLARS = [
   {
