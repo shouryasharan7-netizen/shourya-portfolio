@@ -21,6 +21,7 @@ export const useAudio = () => useContext(AudioContext);
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     YT: any;
     onYouTubeIframeAPIReady: () => void;
   }
@@ -56,6 +57,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
         },
         events: {
           onReady: () => setPlayerReady(true),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           onStateChange: (event: any) => {
             if (event.data === window.YT.PlayerState.PLAYING) {
               setIsPlaying(true);

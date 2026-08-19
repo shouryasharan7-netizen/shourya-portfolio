@@ -137,7 +137,7 @@ export function General() {
               </p>
               <p>
                 <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Layer 3: Decisive Execution</strong>
-                Deploying TensorFlow models at STEMinate or engineering heritage-preservation platforms. Theory is useless without velocity. The most dangerous individual in any room isn't the one who writes the best code—it's the one who understands the synergy between systems, strategy, and time.
+                Deploying TensorFlow models at STEMinate or engineering heritage-preservation platforms. Theory is useless without velocity. The most dangerous individual in any room isn&apos;t the one who writes the best code—it&apos;s the one who understands the synergy between systems, strategy, and time.
               </p>
             </div>
 

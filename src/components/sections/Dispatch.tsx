@@ -153,6 +153,7 @@ export function Dispatch() {
           transition={{ delay: 0.6, duration: 0.6 }}
         >
           <button 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onClick={() => { setInput("connect --email"); setTimeout(() => handleCommand({ preventDefault: () => {} } as any), 100); }}
             className="text-[0.65rem] tracking-[0.1em] text-[var(--color-muted)] hover:text-[var(--color-gold)] uppercase"
             style={{ fontFamily: "var(--font-mono)" }}
@@ -160,6 +161,7 @@ export function Dispatch() {
             [ EMAIL ]
           </button>
           <button 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onClick={() => { setInput("connect --github"); setTimeout(() => handleCommand({ preventDefault: () => {} } as any), 100); }}
             className="text-[0.65rem] tracking-[0.1em] text-[var(--color-muted)] hover:text-[var(--color-gold)] uppercase"
             style={{ fontFamily: "var(--font-mono)" }}
