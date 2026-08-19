@@ -5,22 +5,22 @@ import { motion, useInView } from "framer-motion";
 
 const PILLARS = [
   {
-    icon: "♞",
-    title: "CALCULATION",
-    subtitle: "3 Years District Chess · Top 1% Board Scorer",
-    description: "Every move is a probability tree. Chess taught patience; boards taught precision.",
+    icon: "⚡",
+    title: "NEURAL VELOCITY",
+    subtitle: "AI Architect · Tensor Engineering",
+    description: "I don't just write code. I train systems to outthink the baseline. Speed is the ultimate weapon.",
   },
   {
-    icon: "⚔",
-    title: "CONQUEST",
-    subtitle: "National Rank 2 Heritage Quiz · Published Author",
-    description: "Competing against 2,300+ schools. Publishing among 200,000+ entries. The odds sharpen the blade.",
+    icon: "👁",
+    title: "OMNISCIENT SCOPE",
+    subtitle: "National Rank 2 Heritage Quiz · Author",
+    description: "Competing against 2,300+ nodes. Publishing among 200,000+ entries. Data is useless without vision.",
   },
   {
-    icon: "⚽",
-    title: "MOMENTUM",
-    subtitle: "DSO Shalaya Football · Blue House Captain",
-    description: "Leading 300+ students. Momentum isn't speed — it's mass times velocity. Build both.",
+    icon: "♜",
+    title: "KINETIC DOMINANCE",
+    subtitle: "DSO Football Captain · Chess Strategist",
+    description: "Momentum is mass times velocity. Leading 300+ units on the physical plane. Calculate, then conquer.",
   },
 ];
 
@@ -45,9 +45,9 @@ export function Manifesto() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 1 }}
         >
-          {/* Wax seal */}
+          {/* Cyber logo */}
           <motion.div
-            className="wax-seal mx-auto mb-8"
+            className="w-16 h-16 mx-auto mb-8 border border-[var(--color-gold)] flex items-center justify-center text-[var(--color-gold)] font-mono font-bold text-xl shadow-[0_0_20px_rgba(0,240,255,0.3)]"
             initial={{ scale: 0, rotate: -180 }}
             animate={isInView ? { scale: 1, rotate: 0 } : {}}
             transition={{
@@ -61,12 +61,13 @@ export function Manifesto() {
           </motion.div>
 
           {/* Quote frame */}
-          <div className="gold-border-frame px-8 py-12 md:px-16 md:py-16 bg-[var(--color-imperial-surface)] shadow-[0_0_40px_rgba(197,160,89,0.05)]">
+          <div className="border border-[var(--color-gold)] px-8 py-12 md:px-16 md:py-16 bg-black/60 backdrop-blur-sm shadow-[0_0_40px_rgba(0,240,255,0.1)]">
             <motion.p
               className="text-2xl md:text-4xl lg:text-5xl leading-[1.2] font-bold tracking-tight"
               style={{
-                fontFamily: "var(--font-cormorant)",
+                fontFamily: "var(--font-mono)",
                 color: "var(--color-ivory)",
+                textShadow: "0 0 10px rgba(0,240,255,0.3)",
               }}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -74,13 +75,13 @@ export function Manifesto() {
             >
               &ldquo;I don&apos;t play the game.
               <br />
-              I architect the <span className="text-[var(--color-gold)]">engine</span> that runs it.&rdquo;
+              I architect the <span className="text-[var(--color-gold)]">neural network</span> that runs it.&rdquo;
             </motion.p>
           </div>
 
           {/* Decorative line */}
           <motion.div
-            className="gold-rule mt-12 mx-auto max-w-xs"
+            className="h-[1px] bg-gradient-to-r from-transparent via-[var(--color-gold)] to-transparent mt-12 mx-auto max-w-xs shadow-[0_0_10px_rgba(0,240,255,0.5)]"
             initial={{ scaleX: 0 }}
             animate={isInView ? { scaleX: 1 } : {}}
             transition={{ delay: 1, duration: 0.8 }}
@@ -92,7 +93,7 @@ export function Manifesto() {
           {PILLARS.map((pillar, i) => (
             <motion.div
               key={pillar.title}
-              className="group relative p-8 border border-[var(--color-rule)] rounded-sm overflow-hidden"
+              className="group relative p-8 border border-[var(--color-rule)] hover:border-[var(--color-gold)] transition-colors duration-500 rounded-sm overflow-hidden bg-black/40 backdrop-blur-sm"
               style={{ perspective: "1000px" }}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}

@@ -56,7 +56,7 @@ export const metadata: Metadata = {
 };
 
 import { AudioProvider } from "@/components/ui/AudioProvider";
-import { InteractiveCanvas } from "@/components/ui/InteractiveCanvas";
+import { GestureController } from "@/components/ui/GestureController";
 
 export default function RootLayout({
   children,
@@ -69,8 +69,9 @@ export default function RootLayout({
       className={`${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="custom-cursor-active relative">
+        <div className="napoleon-bg" />
+        <GestureController />
         <AudioProvider>
-          <InteractiveCanvas />
           {children}
         </AudioProvider>
         {/* Film grain overlay */}

@@ -218,25 +218,25 @@ export function Hero() {
           </span>
         </motion.div>
 
-        {/* THE GRAND TACTICIAN */}
+        {/* THE GRAND TACTICIAN -> THE SYNAPTIC ARCHITECT */}
         <h1
           className="text-[clamp(2rem,7vw,6rem)] font-bold tracking-[0.08em] leading-[1.1] mb-6 whitespace-nowrap"
           style={{
             fontFamily: "var(--font-cinzel)",
             color: "var(--color-ivory)",
-            textShadow: "0 0 80px rgba(197, 160, 89, 0.15)",
+            textShadow: "0 0 80px rgba(0, 240, 255, 0.4)",
           }}
         >
-          <TextReveal text="THE GRAND" delay={0.2} stagger={0.06} />
+          <TextReveal text="THE SYNAPTIC" delay={0.2} stagger={0.06} />
           <br />
-          <TextReveal text="TACTICIAN" delay={0.5} stagger={0.05} />
+          <TextReveal text="ARCHITECT" delay={0.5} stagger={0.05} />
         </h1>
 
         {/* Subtitle typewriter */}
         <div className="mb-8 mt-4">
           <Typewriter
-            text="I don't predict the future. I construct the board it's played on."
-            className="text-sm md:text-base tracking-[0.15em] text-[var(--color-muted)]"
+            text="I don't predict the future. I engineer the matrix it runs on."
+            className="text-sm md:text-base tracking-[0.15em] text-[var(--color-gold)] font-bold"
             delay={1.5}
             speed={35}
           />
@@ -244,15 +244,15 @@ export function Hero() {
 
         {/* Location + Available */}
         <motion.div
-          className="flex items-center justify-center gap-6 text-xs text-[var(--color-muted-dark)] tracking-[0.1em] mb-8"
+          className="flex items-center justify-center gap-6 text-xs text-[var(--color-muted)] tracking-[0.1em] mb-8"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.5, duration: 0.6 }}
         >
-          <span>Nagpur, India</span>
-          <span className="flex items-center gap-1.5 px-2 py-1 border border-[var(--color-rule)] rounded-full bg-[var(--color-imperial-surface)] shadow-[0_0_15px_rgba(16,185,129,0.1)]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-emerald)] animate-pulse" />
-            <span className="text-[var(--color-emerald)] font-bold">Awaiting Orders</span>
+          <span>Node: Nagpur, India</span>
+          <span className="flex items-center gap-1.5 px-2 py-1 border border-[var(--color-gold)] rounded-sm bg-black/50 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-gold)] animate-pulse" />
+            <span className="text-[var(--color-gold)] font-mono">SYSTEM READY</span>
           </span>
         </motion.div>
 
@@ -264,16 +264,16 @@ export function Hero() {
           transition={{ delay: 3, duration: 0.6 }}
         >
           {[
-            { value: 2300, suffix: "+", label: "Strategic Deployments" },
-            { value: 97, suffix: "%", label: "Calculated Precision" },
+            { value: 2300, suffix: "+", label: "Nodes Connected" },
+            { value: 97, suffix: "%", label: "Computational Precision" },
             { value: 50, suffix: "+", label: "Systems Architected" },
-            { value: 7, suffix: "", label: "Simultaneous Campaigns" },
+            { value: 7, suffix: "", label: "Parallel Threads" },
           ].map((stat, i) => (
             <div key={i} className="text-center group">
               <div
-                className="text-3xl md:text-4xl font-bold text-[var(--color-gold)] group-hover:text-white transition-colors duration-300"
+                className="text-3xl md:text-4xl font-bold text-[var(--color-ivory)] group-hover:text-[var(--color-gold)] transition-colors duration-300"
                 style={{
-                  fontFamily: "var(--font-cormorant)",
+                  fontFamily: "var(--font-mono)",
                 }}
               >
                 <AnimatedCounter
@@ -282,7 +282,7 @@ export function Hero() {
                   duration={2}
                 />
               </div>
-              <div className="text-[0.65rem] tracking-[0.1em] uppercase text-[var(--color-muted-dark)] mt-1 group-hover:text-[var(--color-gold)] transition-colors duration-300">
+              <div className="text-[0.65rem] tracking-[0.1em] uppercase text-[var(--color-muted)] mt-1 group-hover:text-[var(--color-ivory)] transition-colors duration-300">
                 {stat.label}
               </div>
             </div>
