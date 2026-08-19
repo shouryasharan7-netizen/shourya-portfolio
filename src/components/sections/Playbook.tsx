@@ -54,12 +54,17 @@ export function Playbook() {
           </h2>
         </motion.div>
 
-        {/* Project bento grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {/* Project tactical formation grid */}
+        <div className="flex flex-col gap-12 max-w-5xl mx-auto relative">
+          {/* Central pitch line */}
+          <div className="absolute top-0 bottom-0 left-1/2 w-px bg-[var(--color-rule)] -translate-x-1/2 hidden md:block" />
+          
           {PROJECTS.map((project, i) => (
             <motion.div
               key={project.name}
-              className="group relative overflow-hidden border border-[var(--color-rule)] rounded-sm bg-[var(--color-imperial-surface)]"
+              className={`group relative overflow-hidden border border-[var(--color-rule)] rounded-sm bg-[var(--color-imperial-surface)] w-full md:w-[65%] ${
+                i % 2 === 0 ? "self-start md:mr-auto" : "self-end md:ml-auto"
+              }`}
               style={{ perspective: "1000px" }}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -86,6 +91,21 @@ export function Playbook() {
                     : "bg-gradient-to-br from-emerald-500/5 to-transparent"
                 }`}
               />
+
+              {/* Tactical Vectors (Football passing lanes / chess moves) */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0">
+                <motion.path
+                  d={i % 2 === 0 ? "M -20 150 Q 150 20 450 100" : "M 450 150 Q 150 20 -20 100"}
+                  fill="none"
+                  stroke={project.accent === "amber" ? "rgba(245, 158, 11, 0.3)" : "rgba(16, 185, 129, 0.3)"}
+                  strokeWidth="2"
+                  strokeDasharray="6 6"
+                  initial={{ pathLength: 0 }}
+                  whileHover={{ pathLength: 1 }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                />
+                <circle cx={i % 2 === 0 ? "450" : "-20"} cy="100" r="4" fill={project.accent === "amber" ? "rgba(245, 158, 11, 0.5)" : "rgba(16, 185, 129, 0.5)"} />
+              </svg>
 
               {/* Tactical texture */}
               <div className="absolute inset-0 chess-grid-bg opacity-10" />

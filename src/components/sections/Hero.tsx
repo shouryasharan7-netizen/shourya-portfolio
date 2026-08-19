@@ -218,18 +218,18 @@ export function Hero() {
           </span>
         </motion.div>
 
-        {/* THE STRATEGIST */}
+        {/* THE GRAND TACTICIAN */}
         <h1
-          className="text-[clamp(2.5rem,9vw,8rem)] font-bold tracking-[0.08em] leading-[1.1] mb-6 whitespace-nowrap"
+          className="text-[clamp(2rem,7vw,6rem)] font-bold tracking-[0.08em] leading-[1.1] mb-6 whitespace-nowrap"
           style={{
             fontFamily: "var(--font-cinzel)",
             color: "var(--color-ivory)",
-            textShadow: "0 0 80px rgba(201, 162, 39, 0.15)",
+            textShadow: "0 0 80px rgba(197, 160, 89, 0.15)",
           }}
         >
-          <TextReveal text="THE" delay={0.2} stagger={0.08} />
+          <TextReveal text="THE GRAND" delay={0.2} stagger={0.06} />
           <br />
-          <TextReveal text="STRATEGIST" delay={0.5} stagger={0.05} />
+          <TextReveal text="TACTICIAN" delay={0.5} stagger={0.05} />
         </h1>
 
         {/* Subtitle typewriter */}

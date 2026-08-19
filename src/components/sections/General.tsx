@@ -38,7 +38,7 @@ export function General() {
             className="text-xs tracking-[0.3em] uppercase text-[var(--color-gold)] opacity-60 block mb-4"
             style={{ fontFamily: "var(--font-mono)" }}
           >
-            VII. The General
+            VII. The Dossier (Strategic Brief)
           </span>
         </motion.div>
 
@@ -126,23 +126,18 @@ export function General() {
               <span className="text-[var(--color-gold)]">I build them.</span>
             </h2>
 
-            <div className="space-y-4 text-sm text-[var(--color-muted)] leading-relaxed">
+            <div className="space-y-6 text-sm text-[var(--color-muted)] leading-relaxed">
               <p>
-                At 17, I operate across seven concurrent roles — from directing
-                research at The Walnut Initiative to building ML pipelines at
-                STEMinate. My work spans AI, heritage preservation, community
-                leadership, and competitive chess.
+                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Defense (Foundation)</strong>
+                At 17, I operate across seven concurrent roles. Whether it's securing community stability as Blue House Captain or maintaining digital hygiene as a Cyber Congress Ambassador, defense requires foresight and structure.
               </p>
               <p>
-                Whether that&apos;s training TensorFlow models on structured data,
-                designing a heritage-preservation mobile app presented at a Mumbai
-                summit, or mentoring 100+ peers on phishing detection — the thread
-                is always the same: find the problem, study the terrain, deploy the
-                solution.
+                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Midfield Control (Systems & Logistics)</strong>
+                Directing research at The Walnut Initiative and architecting infrastructure for ThinkEconomics Club means controlling the flow of information. It's about finding the problem, studying the terrain, and building the pipelines.
               </p>
               <p>
-                I believe the most dangerous person in any room is the one who
-                understands systems — not just code, but people, strategy, and time.
+                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Counter-Attack (Execution)</strong>
+                Training TensorFlow models at STEMinate or designing a heritage-preservation app for the IGNICION summit represents the decisive strike. I believe the most dangerous person in any room is the one who understands systems — not just code, but people, strategy, and time.
               </p>
             </div>
 

@@ -6,25 +6,26 @@
 
 @theme {
   /* Imperial Color Palette */
-  --color-imperial-navy: #0A0E1A;
+  --color-imperial-navy: #0a0e17;
   --color-imperial-dark: #111827;
   --color-imperial-surface: #1a1f2e;
-  --color-gold: #C9A227;
-  --color-gold-dim: rgba(201, 162, 39, 0.08);
-  --color-gold-glow: rgba(201, 162, 39, 0.25);
+  --color-gold: #c5a059;
+  --color-gold-dim: rgba(197, 160, 89, 0.08);
+  --color-gold-glow: rgba(197, 160, 89, 0.25);
   --color-crimson: #8B1E1E;
   --color-crimson-dim: rgba(139, 30, 30, 0.15);
-  --color-ivory: #F5F0E6;
-  --color-warm-white: #E8E4DC;
+  --color-ivory: #f8f9fa;
+  --color-warm-white: #f8f9fa;
   --color-muted: #9CA3AF;
   --color-muted-dark: #6B7280;
-  --color-grid: rgba(201, 162, 39, 0.08);
-  --color-rule: rgba(201, 162, 39, 0.12);
+  --color-grid: rgba(197, 160, 89, 0.08);
+  --color-rule: rgba(197, 160, 89, 0.12);
   --color-emerald: #10b981;
 
   /* Typography Scale */
-  --font-cinzel: "Cinzel", serif;
-  --font-playfair: "Playfair Display", serif;
+  --font-cormorant: "Cormorant Garamond", serif;
+  --font-cinzel: var(--font-cormorant);
+  --font-playfair: var(--font-cormorant);
   --font-inter: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
@@ -125,7 +126,7 @@ body.custom-cursor-active [role="button"] { cursor: none; }
   background: radial-gradient(
     ellipse at center,
     transparent 40%,
-    rgba(10, 14, 26, 0.6) 100%
+    rgba(10, 14, 23, 0.6) 100%
   );
   z-index: 2;
 }
@@ -135,8 +136,8 @@ body.custom-cursor-active [role="button"] { cursor: none; }
    ================================================================ */
 .chess-grid-bg {
   background-image:
-    linear-gradient(rgba(201, 162, 39, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201, 162, 39, 0.04) 1px, transparent 1px);
+    linear-gradient(rgba(197, 160, 89, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(197, 160, 89, 0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 

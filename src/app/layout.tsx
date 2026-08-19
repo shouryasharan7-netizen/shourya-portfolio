@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import { Cinzel, Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
+import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const cinzel = Cinzel({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-cinzel",
+  variable: "--font-cormorant",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const inter = Inter({
@@ -70,7 +63,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cinzel.variable} ${playfair.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
       <body className="custom-cursor-active">
         {children}
