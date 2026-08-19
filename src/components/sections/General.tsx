@@ -119,25 +119,25 @@ export function General() {
           >
             <h2
               className="text-3xl md:text-4xl font-bold text-[var(--color-ivory)] mb-6 leading-tight"
-              style={{ fontFamily: "var(--font-playfair)" }}
+              style={{ fontFamily: "var(--font-cormorant)" }}
             >
-              I don&apos;t fit in a box.
+              I don&apos;t navigate the world.
               <br />
-              <span className="text-[var(--color-gold)]">I build them.</span>
+              <span className="text-[var(--color-gold)]">I engineer its rules.</span>
             </h2>
 
             <div className="space-y-6 text-sm text-[var(--color-muted)] leading-relaxed">
               <p>
-                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Defense (Foundation)</strong>
-                At 17, I operate across seven concurrent roles. Whether it's securing community stability as Blue House Captain or maintaining digital hygiene as a Cyber Congress Ambassador, defense requires foresight and structure.
+                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Layer 1: Structural Integrity</strong>
+                At 17, I command seven concurrent operational roles. From maintaining digital hygiene as a Cyber Congress Ambassador to steering community stability, I view defense as the prerequisite to ambition. You cannot scale on a weak foundation.
               </p>
               <p>
-                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Midfield Control (Systems & Logistics)</strong>
-                Directing research at The Walnut Initiative and architecting infrastructure for ThinkEconomics Club means controlling the flow of information. It's about finding the problem, studying the terrain, and building the pipelines.
+                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Layer 2: Information Arbitrage</strong>
+                Directing research at The Walnut Initiative and architecting infrastructure for ThinkEconomics Club. Strategy is simply the optimization of information flow. I locate the problem, analyze the terrain, and construct the pipeline.
               </p>
               <p>
-                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Counter-Attack (Execution)</strong>
-                Training TensorFlow models at STEMinate or designing a heritage-preservation app for the IGNICION summit represents the decisive strike. I believe the most dangerous person in any room is the one who understands systems — not just code, but people, strategy, and time.
+                <strong className="text-[var(--color-gold)] font-mono text-xs tracking-wider uppercase block mb-1">Layer 3: Decisive Execution</strong>
+                Deploying TensorFlow models at STEMinate or engineering heritage-preservation platforms. Theory is useless without velocity. The most dangerous individual in any room isn't the one who writes the best code—it's the one who understands the synergy between systems, strategy, and time.
               </p>
             </div>
 

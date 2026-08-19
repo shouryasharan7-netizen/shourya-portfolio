@@ -16,17 +16,24 @@ import { Playbook } from "@/components/sections/Playbook";
 import { General } from "@/components/sections/General";
 import { Dispatch } from "@/components/sections/Dispatch";
 import { NavBar } from "@/components/ui/NavBar";
+import { useAudio } from "@/components/ui/AudioProvider";
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
+  const { play } = useAudio();
+
+  const handlePreloaderComplete = () => {
+    setIsLoaded(true);
+    play();
+  };
 
   return (
     <SmoothScrollProvider>
       <CustomCursor />
       <AnimatePresence mode="wait">
         {!isLoaded && (
-          <Preloader key="preloader" onComplete={() => setIsLoaded(true)} />
+          <Preloader key="preloader" onComplete={handlePreloaderComplete} />
         )}
       </AnimatePresence>
 

@@ -6,8 +6,8 @@ import { motion, useInView } from "framer-motion";
 const PROJECTS = [
   {
     name: "Ignicion",
-    role: "UI/UX Design Lead",
-    desc: "Heritage-preservation mobile application presented at the IGNICION summit in Mumbai. Designed the complete user experience for documenting and protecting cultural heritage sites through community-driven technology.",
+    role: "Lead Systems Designer",
+    desc: "Architected the complete user experience for a heritage-preservation platform, presented at the IGNICION summit. A masterclass in merging community-driven behavior with cultural safeguarding.",
     tags: ["Figma", "UI/UX", "Mobile", "Heritage Tech", "Design Systems"],
     accent: "amber",
     icon: "🏛",
@@ -15,8 +15,8 @@ const PROJECTS = [
   },
   {
     name: "Project Cenquity",
-    role: "Hardware · Tech Ideator",
-    desc: "Augmented Reality smart glasses concept pitched at Cenference Shark Tank. Envisioned a wearable device for real-time contextual information overlay, bridging the physical and digital worlds.",
+    role: "Hardware · Reality Architect",
+    desc: "Conceptualized AR smart glasses bridging physical reality with real-time digital overlays. Pitched at Cenference Shark Tank. The future isn't a screen; it's the air around us.",
     tags: ["AR/VR", "Hardware", "Innovation", "IoT", "Pitch"],
     accent: "emerald",
     icon: "👓",

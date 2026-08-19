@@ -62,22 +62,20 @@ export function Manifesto() {
           </motion.div>
 
           {/* Quote frame */}
-          <div className="gold-border-frame px-8 py-12 md:px-16 md:py-16">
+          <div className="gold-border-frame px-8 py-12 md:px-16 md:py-16 bg-[var(--color-imperial-surface)] shadow-[0_0_40px_rgba(197,160,89,0.05)]">
             <motion.p
-              className="text-2xl md:text-4xl lg:text-5xl leading-[1.2] font-bold"
+              className="text-2xl md:text-4xl lg:text-5xl leading-[1.2] font-bold tracking-tight"
               style={{
-                fontFamily: "var(--font-playfair)",
+                fontFamily: "var(--font-cormorant)",
                 color: "var(--color-ivory)",
-                fontStyle: "italic",
               }}
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              &ldquo;I don&apos;t think in disciplines.
+              &ldquo;I don&apos;t play the game.
               <br />
-              I think in{" "}
-              <span className="text-[var(--color-gold)]">problems</span>.&rdquo;
+              I architect the <span className="text-[var(--color-gold)]">engine</span> that runs it.&rdquo;
             </motion.p>
           </div>
 

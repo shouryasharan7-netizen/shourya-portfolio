@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 
 const ACHIEVEMENTS = [
   {
@@ -46,6 +46,12 @@ export function Victories() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-10%" });
 
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["-80%", "-20%"]);
+
   return (
     <section
       id="victories"
@@ -53,16 +59,17 @@ export function Victories() {
       className="relative py-32 md:py-40 bg-[var(--color-imperial-dark)] overflow-hidden"
     >
       {/* Background text */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[clamp(5rem,16vw,14rem)] font-bold tracking-[0.08em] whitespace-nowrap pointer-events-none z-0"
+      <motion.div
+        className="absolute left-1/2 -translate-x-1/2 text-[clamp(5rem,16vw,14rem)] font-bold tracking-[0.08em] whitespace-nowrap pointer-events-none z-0"
         style={{
+          y: bgY,
           fontFamily: "var(--font-cinzel)",
           color: "transparent",
           WebkitTextStroke: "1px rgba(201, 162, 39, 0.03)",
         }}
       >
         VICTORIES
-      </div>
+      </motion.div>
 
       <div className="section-wrap relative z-10">
         {/* Section header */}

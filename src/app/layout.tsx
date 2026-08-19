@@ -55,6 +55,9 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+import { AudioProvider } from "@/components/ui/AudioProvider";
+import { InteractiveCanvas } from "@/components/ui/InteractiveCanvas";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -65,8 +68,11 @@ export default function RootLayout({
       lang="en"
       className={`${cormorant.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="custom-cursor-active">
-        {children}
+      <body className="custom-cursor-active relative">
+        <AudioProvider>
+          <InteractiveCanvas />
+          {children}
+        </AudioProvider>
         {/* Film grain overlay */}
         <div className="film-grain" aria-hidden="true" />
       </body>
