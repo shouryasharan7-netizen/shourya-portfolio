@@ -11,7 +11,7 @@ import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { RecognitionsSection } from "@/components/sections/RecognitionsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 
-// Dynamically import 3D WebGL Canvas to prevent server-side SSR prerender errors
+// Dynamically import 3D WebGL Canvas for client-side rendering
 const MainScene = dynamic(
   () => import("@/components/3d/MainScene").then((mod) => mod.MainScene),
   { ssr: false }
@@ -19,9 +19,14 @@ const MainScene = dynamic(
 
 export default function Home() {
   const [introFinished, setIntroFinished] = useState(false);
-  const [isOrbitMode, setIsOrbitMode] = useState(false);
+  const [isHologramMode, setIsHologramMode] = useState(false);
+  const [empTriggerCount, setEmpTriggerCount] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState("hero");
+
+  const triggerEMP = () => {
+    setEmpTriggerCount((prev) => prev + 1);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -56,31 +61,35 @@ export default function Home() {
         <CinematicIntro onComplete={() => setIntroFinished(true)} />
       )}
 
-      {/* Full-Screen 3D WebGL Canvas Layer */}
-      <MainScene scrollProgress={scrollProgress} isOrbitMode={isOrbitMode} />
+      {/* Full-Screen JARVIS 3D WebGL Canvas Layer */}
+      <MainScene
+        scrollProgress={scrollProgress}
+        isHologramMode={isHologramMode}
+        empTriggerCount={empTriggerCount}
+      />
 
       {/* Cinematic Vignette */}
       <div className="cinematic-vignette" />
 
       {/* Fixed Spatial Tactical HUD Bar */}
       <SpatialHUD
-        isOrbitMode={isOrbitMode}
-        onToggleOrbit={() => setIsOrbitMode(!isOrbitMode)}
+        isHologramMode={isHologramMode}
+        onToggleHologram={() => setIsHologramMode(!isHologramMode)}
+        onTriggerEMP={triggerEMP}
         activeSection={activeSection}
       />
 
       {/* Interactive 3D Spatial Content Overlays */}
-      <div
-        className={`relative z-10 w-full transition-opacity duration-500 ${
-          isOrbitMode ? "opacity-20 pointer-events-none" : "opacity-100"
-        }`}
-      >
-        <HeroSection />
+      <div className="relative z-10 w-full">
+        <HeroSection onTriggerEMP={triggerEMP} />
         <AboutSection />
         <ExperienceSection />
         <ProjectsSection />
         <RecognitionsSection />
-        <ContactSection />
+        <ContactSection
+          onToggleHologram={() => setIsHologramMode(!isHologramMode)}
+          onTriggerEMP={triggerEMP}
+        />
       </div>
     </main>
   );

@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { MusicPlayer } from "@/components/audio/MusicPlayer";
 import { audioEngine } from "@/components/audio/AudioEngine";
-import { Compass, Eye, Menu, X, Terminal, ChevronRight } from "lucide-react";
+import { Zap, Eye, Menu, X, ShieldAlert, Cpu, Sparkles, ChevronRight } from "lucide-react";
 
 interface SpatialHUDProps {
-  isOrbitMode: boolean;
-  onToggleOrbit: () => void;
+  isHologramMode: boolean;
+  onToggleHologram: () => void;
+  onTriggerEMP: () => void;
   activeSection: string;
 }
 
@@ -19,7 +20,12 @@ const NAV_LINKS = [
   { label: "05. SIGNAL", href: "#contact" },
 ];
 
-export function SpatialHUD({ isOrbitMode, onToggleOrbit, activeSection }: SpatialHUDProps) {
+export function SpatialHUD({
+  isHologramMode,
+  onToggleHologram,
+  onTriggerEMP,
+  activeSection,
+}: SpatialHUDProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState("");
 
@@ -52,7 +58,7 @@ export function SpatialHUD({ isOrbitMode, onToggleOrbit, activeSection }: Spatia
   return (
     <>
       {/* Fixed Top Spatial HUD Bar */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-4 pointer-events-none">
+      <header className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-8 py-3.5 pointer-events-none">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Brand & Radar Coordinates */}
           <div className="flex items-center gap-4 pointer-events-auto">
@@ -64,7 +70,7 @@ export function SpatialHUD({ isOrbitMode, onToggleOrbit, activeSection }: Spatia
               }}
               className="flex items-center gap-2 group"
             >
-              <div className="w-8 h-8 rounded-sm bg-black/80 border border-gold-500/40 flex items-center justify-center text-gold-400 font-serif text-sm font-bold shadow-[0_0_15px_rgba(212,175,55,0.25)] group-hover:border-gold-400 group-hover:scale-105 transition-all">
+              <div className="w-8 h-8 rounded-sm bg-black/85 border border-gold-500/40 flex items-center justify-center text-gold-400 font-serif text-sm font-bold shadow-[0_0_15px_rgba(212,175,55,0.25)] group-hover:border-gold-400 group-hover:scale-105 transition-all">
                 ♟
               </div>
               <div className="flex flex-col">
@@ -72,14 +78,14 @@ export function SpatialHUD({ isOrbitMode, onToggleOrbit, activeSection }: Spatia
                   SHOURYA<span className="text-gold-400">.</span>
                 </span>
                 <span className="text-[9px] font-mono text-gray-400 tracking-wider hidden sm:block">
-                  NAGPUR [21.14° N, 79.08° E] · {currentTime}
+                  JARVIS TACTICAL HUD // NAGPUR [{currentTime}]
                 </span>
               </div>
             </a>
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 px-4 py-1.5 rounded-full border border-gold-500/20 bg-black/60 backdrop-blur-md pointer-events-auto shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+          <nav className="hidden lg:flex items-center gap-1 px-4 py-1.5 rounded-full border border-gold-500/20 bg-black/70 backdrop-blur-md pointer-events-auto shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
             {NAV_LINKS.map((link) => (
               <button
                 key={link.label}
@@ -96,24 +102,37 @@ export function SpatialHUD({ isOrbitMode, onToggleOrbit, activeSection }: Spatia
             ))}
           </nav>
 
-          {/* Right Action Tools: Orbit Mode Toggle + Music Player + Mobile Hamburger */}
-          <div className="flex items-center gap-3 pointer-events-auto">
-            {/* 3D Orbit Mode Toggle */}
+          {/* Right Action Tools: JARVIS Hologram + EMP Shockwave + Music Player */}
+          <div className="flex items-center gap-2.5 pointer-events-auto">
+            {/* EMP Shockwave Trigger */}
             <button
               onClick={() => {
-                audioEngine.playClick();
-                onToggleOrbit();
+                onTriggerEMP();
               }}
               onMouseEnter={() => audioEngine.playHover()}
-              className={`hidden sm:flex items-center gap-2 px-3 py-2 rounded-full border text-xs font-mono tracking-wider transition-all duration-200 ${
-                isOrbitMode
-                  ? "border-cyan-neon bg-cyan-neon/20 text-cyan-neon shadow-[0_0_20px_rgba(0,240,255,0.4)]"
-                  : "border-gold-500/30 bg-black/60 text-gray-300 hover:border-gold-400 hover:text-gold-400"
-              }`}
-              title={isOrbitMode ? "Exit 3D Free-Orbit" : "Enable 3D Free-Orbit"}
+              className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-full border border-amber-500/30 bg-black/60 text-amber-300 text-xs font-mono tracking-wider hover:border-amber-400 hover:bg-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all duration-200"
+              title="Release 3D EMP Shockwave Energy Pulse"
             >
-              <Eye className="w-3.5 h-3.5" />
-              <span>{isOrbitMode ? "3D ORBIT ON" : "3D ORBIT"}</span>
+              <Zap className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>EMP PULSE</span>
+            </button>
+
+            {/* JARVIS Hologram / X-Ray CAD Mode Toggle */}
+            <button
+              onClick={() => {
+                audioEngine.playHoloToggle();
+                onToggleHologram();
+              }}
+              onMouseEnter={() => audioEngine.playHover()}
+              className={`hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-full border text-xs font-mono tracking-wider transition-all duration-200 ${
+                isHologramMode
+                  ? "border-cyan-neon bg-cyan-neon/20 text-cyan-neon shadow-[0_0_20px_rgba(0,240,255,0.5)] animate-pulse"
+                  : "border-cyan-neon/30 bg-black/60 text-cyan-300 hover:border-cyan-neon hover:bg-cyan-neon/10"
+              }`}
+              title={isHologramMode ? "Disable Holographic CAD View" : "Enable Holographic CAD View"}
+            >
+              <Cpu className="w-3.5 h-3.5" />
+              <span>{isHologramMode ? "HOLO CAD ON" : "HOLO CAD"}</span>
             </button>
 
             {/* Audio Synthesizer Widget */}
@@ -138,8 +157,8 @@ export function SpatialHUD({ isOrbitMode, onToggleOrbit, activeSection }: Spatia
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl flex flex-col justify-center px-8 lg:hidden">
           <div className="flex flex-col gap-6 max-w-sm mx-auto w-full">
-            <span className="text-xs font-mono text-gold-400/80 tracking-widest uppercase">
-              // SPATIAL DIRECTORY
+            <span className="text-xs font-mono text-gold-400 tracking-widest uppercase">
+              // JARVIS SPATIAL DIRECTORY
             </span>
 
             {NAV_LINKS.map((link) => (
@@ -156,21 +175,25 @@ export function SpatialHUD({ isOrbitMode, onToggleOrbit, activeSection }: Spatia
             <div className="pt-4 flex flex-col gap-3">
               <button
                 onClick={() => {
-                  onToggleOrbit();
+                  onToggleHologram();
                   setMobileMenuOpen(false);
                 }}
                 className="w-full py-3 rounded-md border border-cyan-neon/40 bg-cyan-neon/10 text-cyan-neon font-mono text-xs tracking-widest uppercase flex items-center justify-center gap-2"
               >
-                <Compass className="w-4 h-4" />
-                <span>{isOrbitMode ? "SWITCH TO SCROLL" : "SWITCH TO 3D ORBIT"}</span>
+                <Cpu className="w-4 h-4" />
+                <span>{isHologramMode ? "DISABLE HOLOGRAM" : "ENABLE HOLOGRAM CAD"}</span>
               </button>
 
-              <a
-                href="mailto:shouryasharan27@gmail.com"
-                className="w-full py-3 rounded-md bg-gold-500 text-black font-semibold text-xs font-mono tracking-widest uppercase text-center hover:bg-gold-400 transition-colors"
+              <button
+                onClick={() => {
+                  onTriggerEMP();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full py-3 rounded-md border border-amber-400/40 bg-amber-400/10 text-amber-300 font-mono text-xs tracking-widest uppercase flex items-center justify-center gap-2"
               >
-                INITIATE CONTACT →
-              </a>
+                <Zap className="w-4 h-4" />
+                <span>FIRE EMP PULSE</span>
+              </button>
             </div>
           </div>
         </div>

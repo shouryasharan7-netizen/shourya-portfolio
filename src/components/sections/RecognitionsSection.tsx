@@ -1,14 +1,15 @@
 "use client";
 
 import React from "react";
-import { audioEngine } from "@/components/audio/AudioEngine";
-import { Award, Trophy, BookOpen, GraduationCap, Shield, Sparkles, CheckCircle2 } from "lucide-react";
+import { Card3D } from "@/components/ui/Card3D";
+import { Trophy, BookOpen, GraduationCap, Shield, Award, Sparkles } from "lucide-react";
 
 interface Recognition {
   year: string;
   title: string;
   subtitle: string;
   tag: string;
+  glow: "gold" | "cyan" | "purple" | "amber";
   icon: React.ReactNode;
 }
 
@@ -18,6 +19,7 @@ const RECOGNITIONS: Recognition[] = [
     title: "National Rank 2 & 5 — CBSE Heritage India Quiz",
     subtitle: "Top 5 national finish out of 2,300+ participating schools. Televised national semi-finals broadcast on History TV18.",
     tag: "NATIONAL // QUIZ",
+    glow: "gold",
     icon: <Trophy className="w-5 h-5 text-gold-400" />,
   },
   {
@@ -25,6 +27,7 @@ const RECOGNITIONS: Recognition[] = [
     title: "National Finalist & Top 3% — TGELF Initiative",
     subtitle: "Engineered and deployed low-cost biosand water filtration units for underserved off-grid communities.",
     tag: "IMPACT // TOP 3%",
+    glow: "cyan",
     icon: <Shield className="w-5 h-5 text-cyan-neon" />,
   },
   {
@@ -32,6 +35,7 @@ const RECOGNITIONS: Recognition[] = [
     title: "Published Author — National Young Author's Fair",
     subtitle: "Authored \"A Soldier's Story\" — evaluated and selected from a nationwide competitive pool of 200,000+ literary submissions.",
     tag: "LITERATURE // AUTHOR",
+    glow: "purple",
     icon: <BookOpen className="w-5 h-5 text-purple-400" />,
   },
   {
@@ -39,6 +43,7 @@ const RECOGNITIONS: Recognition[] = [
     title: "50% Academic Merit Scholarship",
     subtitle: "Awarded for exceptional academic excellence in Class 10 board examinations — 97% aggregate, placed in top 1% cohort.",
     tag: "ACADEMIC // TOP 1%",
+    glow: "amber",
     icon: <GraduationCap className="w-5 h-5 text-amber-400" />,
   },
   {
@@ -46,6 +51,7 @@ const RECOGNITIONS: Recognition[] = [
     title: "District U-19 DSO Chess — 3 Consecutive Years",
     subtitle: "Competed at district level for three straight years; simultaneously represented institution in district-level football championships.",
     tag: "STRATEGY // ATHLETICS",
+    glow: "gold",
     icon: <Award className="w-5 h-5 text-gold-400" />,
   },
 ];
@@ -56,7 +62,7 @@ export function RecognitionsSection() {
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
-          <span className="text-xs font-mono text-gold-400 tracking-[0.3em] uppercase bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/20 mb-3">
+          <span className="text-xs font-mono text-gold-400 tracking-[0.3em] uppercase bg-gold-500/10 px-3.5 py-1 rounded-full border border-gold-500/30 mb-3 shadow-[0_0_15px_rgba(212,175,55,0.2)]">
             // 04. HONORS & CREDENTIALS
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
@@ -64,42 +70,40 @@ export function RecognitionsSection() {
           </h2>
         </div>
 
-        {/* Recognitions Grid */}
+        {/* Recognitions Grid with 3D Depth */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
           {RECOGNITIONS.map((rec, i) => (
-            <div
-              key={i}
-              onMouseEnter={() => audioEngine.playHover()}
-              className="glass-card p-6 rounded-sm flex items-start gap-4 group hover:border-gold-400/50 transition-all duration-300 hud-corner"
-            >
-              <div className="p-3 rounded bg-black/60 border border-white/10 flex-shrink-0 group-hover:scale-110 transition-transform">
-                {rec.icon}
-              </div>
-
-              <div className="flex-1">
-                <div className="flex items-center justify-between gap-2 mb-1.5">
-                  <span className="text-[10px] font-mono tracking-widest text-gold-400 font-semibold uppercase">
-                    {rec.tag}
-                  </span>
-                  <span className="text-xs font-mono text-gray-500 bg-black/40 px-2 py-0.5 rounded border border-zinc-800">
-                    {rec.year}
-                  </span>
+            <div key={i} className="h-full">
+              <Card3D glowColor={rec.glow} className="flex items-start gap-4 p-6 h-full">
+                <div className="p-3 rounded bg-black/70 border border-white/10 flex-shrink-0 group-hover:scale-110 transition-transform">
+                  {rec.icon}
                 </div>
 
-                <h3 className="text-base sm:text-lg font-bold font-serif text-white group-hover:text-gold-300 transition-colors mb-2">
-                  {rec.title}
-                </h3>
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <span className="text-[10px] font-mono tracking-widest text-gold-400 font-semibold uppercase">
+                      {rec.tag}
+                    </span>
+                    <span className="text-xs font-mono text-gray-500 bg-black/50 px-2 py-0.5 rounded border border-zinc-800">
+                      {rec.year}
+                    </span>
+                  </div>
 
-                <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed">
-                  {rec.subtitle}
-                </p>
-              </div>
+                  <h3 className="text-base sm:text-lg font-bold font-serif text-white group-hover:text-gold-300 transition-colors mb-2">
+                    {rec.title}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed">
+                    {rec.subtitle}
+                  </p>
+                </div>
+              </Card3D>
             </div>
           ))}
         </div>
 
         {/* Education Timeline Strip */}
-        <div className="glass-card p-6 sm:p-8 rounded-sm bg-gradient-to-r from-obsidian-900/90 via-black to-obsidian-900/90 border border-gold-500/30">
+        <Card3D glowColor="gold" className="p-6 sm:p-8">
           <div className="flex items-center gap-2 mb-6">
             <GraduationCap className="w-5 h-5 text-gold-400" />
             <span className="text-xs font-mono text-gold-400 tracking-widest uppercase">
@@ -138,7 +142,7 @@ export function RecognitionsSection() {
               </p>
             </div>
           </div>
-        </div>
+        </Card3D>
       </div>
     </section>
   );

@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import { audioEngine } from "@/components/audio/AudioEngine";
-import { ArrowUpRight, Layers, Sparkles, X, CheckCircle, Cpu, Eye } from "lucide-react";
+import { Card3D } from "@/components/ui/Card3D";
+import { ArrowUpRight, X, CheckCircle, Eye, Sparkles } from "lucide-react";
 
 interface Project {
   id: string;
@@ -13,7 +14,7 @@ interface Project {
   fullOverview: string;
   impact: string;
   tags: string[];
-  accent: string;
+  glow: "cyan" | "purple" | "amber";
   icon: string;
 }
 
@@ -30,7 +31,7 @@ const PROJECTS: Project[] = [
     impact:
       "Presented prototype at IGNICION Summit with commendation for accessible UI paradigms and interactive cultural safeguarding.",
     tags: ["Figma", "UI/UX Architecture", "Mobile Prototyping", "Design Systems", "Heritage Tech"],
-    accent: "from-cyan-500/20 to-blue-900/40 border-cyan-neon/40",
+    glow: "cyan",
     icon: "🏛️",
   },
   {
@@ -45,7 +46,7 @@ const PROJECTS: Project[] = [
     impact:
       "Pitched to an executive jury panel at Cenference Shark Tank; acclaimed for wearable ergonomics and spatial user interaction models.",
     tags: ["AR/VR", "Hardware Design", "Spatial Computing", "Optics", "Pitch Strategy"],
-    accent: "from-purple-500/20 to-indigo-900/40 border-purple-400/40",
+    glow: "purple",
     icon: "👓",
   },
   {
@@ -60,7 +61,7 @@ const PROJECTS: Project[] = [
     impact:
       "Ranked Top 3% nationally across India at TGELF, delivering measurable bacterial reduction for off-grid communities.",
     tags: ["Environmental Engineering", "Social Impact", "National Finalist", "Hydrology", "Deployments"],
-    accent: "from-amber-500/20 to-yellow-900/40 border-gold-500/40",
+    glow: "amber",
     icon: "💧",
   },
 ];
@@ -83,72 +84,73 @@ export function ProjectsSection() {
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
-          <span className="text-xs font-mono text-gold-400 tracking-[0.3em] uppercase bg-gold-500/10 px-3 py-1 rounded-full border border-gold-500/20 mb-3">
+          <span className="text-xs font-mono text-cyan-neon tracking-[0.3em] uppercase bg-cyan-neon/10 px-3.5 py-1 rounded-full border border-cyan-neon/30 mb-3 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
             // 03. CRAFT & DEPLOYMENTS
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
             FEATURED <span className="text-gold-400 font-sans">INVENTIONS & DESIGNS.</span>
           </h2>
           <p className="text-sm text-gray-400 font-mono mt-2">
-            Click any project to initialize 3D exploded schematic
+            Click any schematic to initialize full holographic CAD blueprint
           </p>
         </div>
 
-        {/* 3 Featured Projects Grid */}
+        {/* 3 Featured Projects Grid with 3D Depth */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {PROJECTS.map((proj) => (
-            <div
-              key={proj.id}
-              onClick={() => openModal(proj)}
-              onMouseEnter={() => audioEngine.playHover()}
-              className={`glass-card p-6 sm:p-8 rounded-sm flex flex-col justify-between group hover:scale-[1.02] cursor-pointer bg-gradient-to-b ${proj.accent} hud-corner transition-all duration-300`}
-            >
-              <div>
-                {/* Icon & Category */}
-                <div className="flex items-center justify-between mb-6">
-                  <div className="text-3xl p-3 rounded bg-black/60 border border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                    {proj.icon}
-                  </div>
-                  <span className="text-[10px] font-mono tracking-widest text-gold-400 uppercase bg-black/70 px-2.5 py-1 rounded border border-gold-500/30">
-                    {proj.category}
-                  </span>
-                </div>
-
-                {/* Title & Role */}
-                <h3 className="text-2xl font-bold font-mono text-white group-hover:text-gold-300 transition-colors mb-1">
-                  {proj.title}
-                </h3>
-                <h4 className="text-xs font-mono text-gray-300 font-medium mb-4">
-                  {proj.role}
-                </h4>
-
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed mb-6">
-                  {proj.description}
-                </p>
-              </div>
-
-              {/* Tags and Inspect CTA */}
-              <div>
-                <div className="flex flex-wrap gap-1.5 mb-6">
-                  {proj.tags.slice(0, 3).map((tag, j) => (
-                    <span
-                      key={j}
-                      className="text-[9px] font-mono text-gray-400 bg-black/60 px-2 py-0.5 rounded border border-zinc-800"
-                    >
-                      {tag}
+            <div key={proj.id} className="h-full">
+              <Card3D
+                glowColor={proj.glow}
+                onClick={() => openModal(proj)}
+                className="flex flex-col justify-between h-full p-6 sm:p-8 cursor-pointer group"
+              >
+                <div>
+                  {/* Icon & Category */}
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="text-3xl p-3 rounded bg-black/70 border border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.6)]">
+                      {proj.icon}
+                    </div>
+                    <span className="text-[10px] font-mono tracking-widest text-gold-400 uppercase bg-black/80 px-2.5 py-1 rounded border border-gold-500/30">
+                      {proj.category}
                     </span>
-                  ))}
+                  </div>
+
+                  {/* Title & Role */}
+                  <h3 className="text-2xl font-bold font-mono text-white group-hover:text-gold-300 transition-colors mb-1">
+                    {proj.title}
+                  </h3>
+                  <h4 className="text-xs font-mono text-gray-300 font-medium mb-4">
+                    {proj.role}
+                  </h4>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed mb-6">
+                    {proj.description}
+                  </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-gold-400 group-hover:text-white transition-colors">
-                  <span className="flex items-center gap-1.5">
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>INSPECT SCHEMATIC</span>
-                  </span>
-                  <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                {/* Tags and Inspect CTA */}
+                <div>
+                  <div className="flex flex-wrap gap-1.5 mb-6">
+                    {proj.tags.slice(0, 3).map((tag, j) => (
+                      <span
+                        key={j}
+                        className="text-[9px] font-mono text-gray-400 bg-black/70 px-2 py-0.5 rounded border border-zinc-800"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-mono text-cyan-neon group-hover:text-white transition-colors">
+                    <span className="flex items-center gap-1.5">
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>INSPECT BLUEPRINT</span>
+                    </span>
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </div>
                 </div>
-              </div>
+              </Card3D>
             </div>
           ))}
         </div>
@@ -156,7 +158,7 @@ export function ProjectsSection() {
         {/* Interactive Schematic Inspection Modal */}
         {selectedProject && (
           <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6">
-            <div className="glass-card max-w-2xl w-full p-6 sm:p-10 rounded-sm border border-gold-500/50 shadow-[0_0_80px_rgba(212,175,55,0.25)] relative max-h-[90vh] overflow-y-auto">
+            <div className="glass-card max-w-2xl w-full p-6 sm:p-10 rounded-sm border border-cyan-neon/50 shadow-[0_0_80px_rgba(0,240,255,0.3)] relative max-h-[90vh] overflow-y-auto">
               {/* Close Button */}
               <button
                 onClick={closeModal}
@@ -172,7 +174,7 @@ export function ProjectsSection() {
                   {selectedProject.icon}
                 </div>
                 <div>
-                  <span className="text-[10px] font-mono tracking-widest text-gold-400 uppercase bg-gold-500/10 px-2 py-0.5 rounded border border-gold-500/30">
+                  <span className="text-[10px] font-mono tracking-widest text-cyan-neon uppercase bg-cyan-neon/10 px-2 py-0.5 rounded border border-cyan-neon/30">
                     {selectedProject.category}
                   </span>
                   <h3 className="text-3xl font-bold font-serif text-white tracking-tight mt-1">
@@ -190,7 +192,7 @@ export function ProjectsSection() {
                   <h4 className="text-xs font-mono text-gold-400 tracking-wider uppercase mb-2">
                     // ARCHITECTURAL OVERVIEW
                   </h4>
-                  <p className="bg-black/50 p-4 rounded border border-zinc-800 text-gray-300 font-sans">
+                  <p className="bg-black/60 p-4 rounded border border-zinc-800 text-gray-300 font-sans">
                     {selectedProject.fullOverview}
                   </p>
                 </div>
@@ -199,7 +201,7 @@ export function ProjectsSection() {
                   <h4 className="text-xs font-mono text-cyan-neon tracking-wider uppercase mb-2">
                     // KEY IMPACT & VALIDATION
                   </h4>
-                  <p className="bg-black/50 p-4 rounded border border-cyan-neon/20 text-cyan-100 font-mono text-xs flex items-start gap-2">
+                  <p className="bg-black/60 p-4 rounded border border-cyan-neon/30 text-cyan-100 font-mono text-xs flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-cyan-neon flex-shrink-0 mt-0.5" />
                     <span>{selectedProject.impact}</span>
                   </p>
@@ -225,7 +227,7 @@ export function ProjectsSection() {
               <div className="mt-8 pt-6 border-t border-zinc-800 flex justify-end">
                 <button
                   onClick={closeModal}
-                  className="px-6 py-2.5 rounded-full bg-gold-500 text-black font-mono font-semibold text-xs tracking-widest uppercase hover:bg-gold-400 transition-colors"
+                  className="px-6 py-2.5 rounded-full bg-cyan-neon text-black font-mono font-semibold text-xs tracking-widest uppercase hover:bg-white transition-colors"
                 >
                   DISMISS SCHEMATIC
                 </button>
