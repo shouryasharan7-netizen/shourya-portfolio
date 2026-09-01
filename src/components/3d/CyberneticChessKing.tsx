@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import * as THREE from "three";
@@ -12,35 +12,35 @@ export function CyberneticChessKing({ scrollProgress = 0 }: { scrollProgress?: n
   const coreRef = useRef<THREE.Mesh>(null);
   const crownRef = useRef<THREE.Group>(null);
 
-  // Materials
-  const goldMaterial = new THREE.MeshStandardMaterial({
-    color: "#D4AF37",
-    metalness: 0.88,
-    roughness: 0.22,
-    envMapIntensity: 2.2,
-  });
+  // Memoized Three.js Materials
+  const materials = useMemo(() => {
+    return {
+      gold: new THREE.MeshStandardMaterial({
+        color: "#D4AF37",
+        metalness: 0.88,
+        roughness: 0.22,
+      }),
+      chrome: new THREE.MeshStandardMaterial({
+        color: "#181822",
+        metalness: 0.95,
+        roughness: 0.15,
+      }),
+      cyanGlow: new THREE.MeshStandardMaterial({
+        color: "#00F0FF",
+        emissive: "#00F0FF",
+        emissiveIntensity: 1.8,
+        roughness: 0.1,
+      }),
+      goldGlow: new THREE.MeshStandardMaterial({
+        color: "#FFD700",
+        emissive: "#D4AF37",
+        emissiveIntensity: 1.2,
+        roughness: 0.2,
+      }),
+    };
+  }, []);
 
-  const chromeMaterial = new THREE.MeshStandardMaterial({
-    color: "#181822",
-    metalness: 0.95,
-    roughness: 0.15,
-  });
-
-  const cyanGlowMaterial = new THREE.MeshStandardMaterial({
-    color: "#00F0FF",
-    emissive: "#00F0FF",
-    emissiveIntensity: 1.8,
-    roughness: 0.1,
-  });
-
-  const goldGlowMaterial = new THREE.MeshStandardMaterial({
-    color: "#FFD700",
-    emissive: "#D4AF37",
-    emissiveIntensity: 1.2,
-    roughness: 0.2,
-  });
-
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (!kingGroupRef.current) return;
 
     const t = state.clock.getElapsedTime();
@@ -68,7 +68,7 @@ export function CyberneticChessKing({ scrollProgress = 0 }: { scrollProgress?: n
       0.06
     );
 
-    // Scroll Position Interpolation (panning across sections)
+    // Scroll Position Interpolation
     const targetX = Math.sin(scrollProgress * Math.PI) * 1.5;
     const targetY = (1 - scrollProgress * 2) * 0.3;
     kingGroupRef.current.position.x = THREE.MathUtils.lerp(
@@ -108,35 +108,31 @@ export function CyberneticChessKing({ scrollProgress = 0 }: { scrollProgress?: n
     <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.3}>
       <group ref={kingGroupRef} position={[0, -0.4, 0]} scale={1.2}>
         {/* === BASE PLATFORM === */}
-        {/* Tier 1: Wide Bottom Ring */}
-        <mesh position={[0, -1.8, 0]} material={goldMaterial}>
+        <mesh position={[0, -1.8, 0]} material={materials.gold}>
           <cylinderGeometry args={[1.3, 1.4, 0.25, 32]} />
         </mesh>
-        {/* Tier 2: Beveled Step */}
-        <mesh position={[0, -1.6, 0]} material={chromeMaterial}>
+        <mesh position={[0, -1.6, 0]} material={materials.chrome}>
           <cylinderGeometry args={[1.1, 1.25, 0.2, 32]} />
         </mesh>
-        {/* Tier 3: Gold Collar */}
-        <mesh position={[0, -1.4, 0]} material={goldMaterial}>
+        <mesh position={[0, -1.4, 0]} material={materials.gold}>
           <torusGeometry args={[1.05, 0.08, 16, 32]} />
         </mesh>
 
         {/* === LOWER PEDESTAL === */}
-        <mesh position={[0, -1.0, 0]} material={chromeMaterial}>
+        <mesh position={[0, -1.0, 0]} material={materials.chrome}>
           <cylinderGeometry args={[0.75, 1.05, 0.7, 32]} />
         </mesh>
-        <mesh position={[0, -0.65, 0]} material={goldMaterial}>
+        <mesh position={[0, -0.65, 0]} material={materials.gold}>
           <cylinderGeometry args={[0.65, 0.75, 0.15, 32]} />
         </mesh>
 
         {/* === WAIST & CORE REACTOR === */}
-        {/* Main Tapered Body */}
-        <mesh position={[0, 0.2, 0]} material={chromeMaterial}>
+        <mesh position={[0, 0.2, 0]} material={materials.chrome}>
           <cylinderGeometry args={[0.55, 0.7, 1.2, 32]} />
         </mesh>
 
         {/* Inner Glowing Reactor Core */}
-        <mesh ref={coreRef} position={[0, 0.2, 0]} material={cyanGlowMaterial}>
+        <mesh ref={coreRef} position={[0, 0.2, 0]} material={materials.cyanGlow}>
           <sphereGeometry args={[0.32, 24, 24]} />
         </mesh>
 
@@ -150,35 +146,33 @@ export function CyberneticChessKing({ scrollProgress = 0 }: { scrollProgress?: n
               Math.sin((angle * Math.PI) / 180) * 0.58,
             ]}
             rotation={[0, -(angle * Math.PI) / 180, 0]}
-            material={goldGlowMaterial}
+            material={materials.goldGlow}
           >
             <boxGeometry args={[0.08, 0.6, 0.04]} />
           </mesh>
         ))}
 
         {/* === UPPER CHEST & COLLAR === */}
-        <mesh position={[0, 0.9, 0]} material={goldMaterial}>
+        <mesh position={[0, 0.9, 0]} material={materials.gold}>
           <cylinderGeometry args={[0.8, 0.55, 0.35, 32]} />
         </mesh>
-        <mesh position={[0, 1.1, 0]} material={chromeMaterial}>
+        <mesh position={[0, 1.1, 0]} material={materials.chrome}>
           <torusGeometry args={[0.78, 0.06, 16, 32]} />
         </mesh>
 
         {/* === HEAD / CRANIUM === */}
-        <mesh position={[0, 1.6, 0]} material={goldMaterial}>
+        <mesh position={[0, 1.6, 0]} material={materials.gold}>
           <sphereGeometry args={[0.75, 32, 24, 0, Math.PI * 2, 0, Math.PI * 0.7]} />
         </mesh>
-        <mesh position={[0, 2.05, 0]} material={chromeMaterial}>
+        <mesh position={[0, 2.05, 0]} material={materials.chrome}>
           <cylinderGeometry args={[0.55, 0.7, 0.3, 32]} />
         </mesh>
 
         {/* === FLOATING IMPERIAL CROWN & CROSS === */}
         <group ref={crownRef} position={[0, 2.45, 0]}>
-          {/* Crown Filigree Ring */}
-          <mesh material={goldMaterial}>
+          <mesh material={materials.gold}>
             <torusGeometry args={[0.42, 0.06, 16, 32]} />
           </mesh>
-          {/* Crown Spires (4 spikes) */}
           {[0, 90, 180, 270].map((angle, i) => (
             <mesh
               key={i}
@@ -187,19 +181,17 @@ export function CyberneticChessKing({ scrollProgress = 0 }: { scrollProgress?: n
                 0.12,
                 Math.sin((angle * Math.PI) / 180) * 0.42,
               ]}
-              material={goldMaterial}
+              material={materials.gold}
             >
               <coneGeometry args={[0.08, 0.22, 16]} />
             </mesh>
           ))}
 
           {/* Central King's Cross */}
-          {/* Vertical Post */}
-          <mesh position={[0, 0.35, 0]} material={goldGlowMaterial}>
+          <mesh position={[0, 0.35, 0]} material={materials.goldGlow}>
             <boxGeometry args={[0.1, 0.45, 0.1]} />
           </mesh>
-          {/* Horizontal Beam */}
-          <mesh position={[0, 0.42, 0]} material={goldGlowMaterial}>
+          <mesh position={[0, 0.42, 0]} material={materials.goldGlow}>
             <boxGeometry args={[0.32, 0.09, 0.09]} />
           </mesh>
         </group>
