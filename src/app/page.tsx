@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { SpatialHUD } from "@/components/ui/SpatialHUD";
 import { CommandPalette } from "@/components/ui/CommandPalette";
+import { AppleHelloIntro } from "@/components/intro/AppleHelloIntro";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
@@ -11,6 +12,7 @@ import { RecognitionsSection } from "@/components/sections/RecognitionsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 
 export default function Home() {
+  const [showHello, setShowHello] = useState(true);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
@@ -46,12 +48,23 @@ export default function Home() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleHelloComplete = () => {
+    setShowHello(false);
+  };
+
+  const handleReplayHello = () => {
+    setShowHello(true);
+  };
+
   return (
     <main
       id="main-content"
       role="main"
       className="relative min-h-screen w-full bg-[#08080A] text-[#F4F4F6] overflow-x-hidden selection:bg-white selection:text-black font-sans"
     >
+      {/* Apple iPhone-Style Multilingual "hello" Cinematic Boot Screen */}
+      {showHello && <AppleHelloIntro onComplete={handleHelloComplete} />}
+
       {/* Subtle Linear Grid Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#16161c_1px,transparent_1px),linear-gradient(to_bottom,#16161c_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40 pointer-events-none" />
 
@@ -61,6 +74,7 @@ export default function Home() {
       {/* Sleek Floating Navbar */}
       <SpatialHUD
         onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+        onReplayHello={handleReplayHello}
         activeSection={activeSection}
       />
 
@@ -72,7 +86,10 @@ export default function Home() {
 
       {/* Content Stream */}
       <div className="relative z-10 w-full">
-        <HeroSection onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
+        <HeroSection
+          onOpenCommandPalette={() => setCommandPaletteOpen(true)}
+          onReplayHello={handleReplayHello}
+        />
         <ExperienceSection />
         <ProjectsSection />
         <AboutSection />

@@ -11,6 +11,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { BookExcerptWidget } from "@/components/widgets/BookExcerptWidget";
 import {
   RECOGNITIONS_DATA,
   CERTIFICATIONS_DATA,
@@ -49,6 +50,11 @@ export function RecognitionsSection() {
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white font-sans">
           Honors, Certifications & Academic Pedagogy
         </h2>
+      </div>
+
+      {/* Featured Anti-AI Literary Highlight: 'A Soldier's Story' Book Excerpt Widget */}
+      <div className="mb-6">
+        <BookExcerptWidget />
       </div>
 
       {/* Recognitions Grid (2 Columns, 8 Items) */}

@@ -14,13 +14,15 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { ChessTacticsWidget } from "@/components/widgets/ChessTacticsWidget";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 
 interface HeroSectionProps {
   onOpenCommandPalette: () => void;
+  onReplayHello?: () => void;
 }
 
-export function HeroSection({ onOpenCommandPalette }: HeroSectionProps) {
+export function HeroSection({ onOpenCommandPalette, onReplayHello }: HeroSectionProps) {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const copyEmail = () => {
@@ -42,11 +44,23 @@ export function HeroSection({ onOpenCommandPalette }: HeroSectionProps) {
           <span>Available for research & engineering collaborations</span>
         </div>
 
-        <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
-          <MapPin className="w-3.5 h-3.5 text-zinc-500" />
-          <span>Nagpur, India</span>
+        <div className="flex items-center gap-3 text-xs font-mono text-zinc-400">
+          {onReplayHello && (
+            <button
+              onClick={onReplayHello}
+              className="inline-flex items-center gap-1 text-amber-400 hover:underline"
+            >
+              <Sparkles className="w-3 h-3" />
+              <span>Apple &ldquo;hello&rdquo; intro</span>
+            </button>
+          )}
+          <span className="hidden sm:inline text-zinc-600">·</span>
+          <span className="flex items-center gap-1">
+            <MapPin className="w-3 h-3 text-zinc-500" />
+            <span>Nagpur, India</span>
+          </span>
           <span className="text-zinc-600">·</span>
-          <span className="text-zinc-400">Top 1% CBSE Cohort</span>
+          <span className="text-zinc-300">Top 1% CBSE Cohort</span>
         </div>
       </div>
 
@@ -68,7 +82,7 @@ export function HeroSection({ onOpenCommandPalette }: HeroSectionProps) {
       </div>
 
       {/* Action Row */}
-      <div className="flex flex-wrap items-center gap-3 mb-12">
+      <div className="flex flex-wrap items-center gap-3 mb-10">
         {/* Explore Work */}
         <a
           href="#projects"
@@ -118,40 +132,48 @@ export function HeroSection({ onOpenCommandPalette }: HeroSectionProps) {
         </button>
       </div>
 
-      {/* 4 Verified Metric Bento Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-        {PERSONAL_INFO.stats.map((stat, i) => (
-          <SpotlightCard
-            key={i}
-            spotlightColor={
-              i === 0
-                ? "rgba(245, 158, 11, 0.12)"
-                : i === 1
-                ? "rgba(56, 189, 248, 0.12)"
-                : i === 2
-                ? "rgba(168, 85, 247, 0.12)"
-                : "rgba(16, 185, 129, 0.12)"
-            }
-            className="p-4 sm:p-5 flex flex-col justify-between"
-          >
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
-                {stat.label}
-              </span>
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-600" />
-            </div>
+      {/* Bento Metric Cards + Interactive Chess Tactic Widget */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-stretch">
+        {/* Left: 4 Verified Metric SpotlightCards (8 cols) */}
+        <div className="lg:col-span-8 grid grid-cols-2 gap-3 sm:gap-4">
+          {PERSONAL_INFO.stats.map((stat, i) => (
+            <SpotlightCard
+              key={i}
+              spotlightColor={
+                i === 0
+                  ? "rgba(245, 158, 11, 0.12)"
+                  : i === 1
+                  ? "rgba(56, 189, 248, 0.12)"
+                  : i === 2
+                  ? "rgba(168, 85, 247, 0.12)"
+                  : "rgba(16, 185, 129, 0.12)"
+              }
+              className="p-5 flex flex-col justify-between"
+            >
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
+                  {stat.label}
+                </span>
+                <span className="w-1.5 h-1.5 rounded-full bg-zinc-600" />
+              </div>
 
-            <div className="my-1">
-              <span className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white">
-                {stat.value}
-              </span>
-            </div>
+              <div className="my-1">
+                <span className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white">
+                  {stat.value}
+                </span>
+              </div>
 
-            <p className="text-[11px] text-zinc-400 font-sans mt-1">
-              {stat.sub}
-            </p>
-          </SpotlightCard>
-        ))}
+              <p className="text-[11px] text-zinc-400 font-sans mt-1">
+                {stat.sub}
+              </p>
+            </SpotlightCard>
+          ))}
+        </div>
+
+        {/* Right: Interactive DSO Chess Tactic Widget (4 cols) */}
+        <div className="lg:col-span-4">
+          <ChessTacticsWidget />
+        </div>
       </div>
     </section>
   );

@@ -5,16 +5,15 @@ import {
   Search,
   Menu,
   X,
-  FileText,
+  Sparkles,
   Mail,
-  Github,
   ChevronRight,
-  ExternalLink,
 } from "lucide-react";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 
 interface SpatialHUDProps {
   onOpenCommandPalette: () => void;
+  onReplayHello?: () => void;
   activeSection: string;
 }
 
@@ -29,6 +28,7 @@ const NAV_LINKS = [
 
 export function SpatialHUD({
   onOpenCommandPalette,
+  onReplayHello,
   activeSection,
 }: SpatialHUDProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -59,7 +59,7 @@ export function SpatialHUD({
         className={`max-w-6xl mx-auto flex items-center justify-between px-4 py-2.5 rounded-full border transition-all duration-300 pointer-events-auto ${
           scrolled
             ? "bg-[#08080A]/85 backdrop-blur-xl border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
-            : "bg-[#08080A]/40 backdrop-blur-md border-white/[0.06]"
+            : "bg-[#08080A]/50 backdrop-blur-md border-white/[0.06]"
         }`}
       >
         {/* Brand Logo & Name */}
@@ -79,7 +79,7 @@ export function SpatialHUD({
             <span className="font-semibold text-white">Shourya Sharan</span>
             <span className="text-zinc-500 hidden sm:inline">/</span>
             <span className="text-zinc-400 text-[11px] font-mono hidden sm:inline">
-              CSO & ML Researcher
+              CSO & Researcher
             </span>
           </div>
         </a>
@@ -109,12 +109,24 @@ export function SpatialHUD({
           })}
         </nav>
 
-        {/* Right Tools: Cmd+K Trigger + Contact CTA */}
-        <div className="flex items-center gap-2.5">
+        {/* Right Tools: Hello Replay + Cmd+K + Contact */}
+        <div className="flex items-center gap-2">
+          {/* Replay Hello Intro Button */}
+          {onReplayHello && (
+            <button
+              onClick={onReplayHello}
+              className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-zinc-900/80 border border-white/10 hover:border-amber-400/40 text-zinc-400 hover:text-amber-300 text-[11px] font-mono transition-all"
+              title="Replay Apple Hello Opening Sequence"
+            >
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>hello</span>
+            </button>
+          )}
+
           {/* Command Palette Trigger Pill */}
           <button
             onClick={onOpenCommandPalette}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/80 border border-white/10 hover:border-white/20 text-zinc-400 hover:text-zinc-200 text-xs transition-all shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/80 border border-white/10 hover:border-white/20 text-zinc-400 hover:text-zinc-200 text-xs transition-all shadow-inner focus:outline-none"
             aria-label="Open Command Palette"
             title="Search or press Cmd+K"
           >
@@ -125,13 +137,13 @@ export function SpatialHUD({
             </kbd>
           </button>
 
-          {/* Quick Contact Button */}
+          {/* Contact Button */}
           <a
             href={`mailto:${PERSONAL_INFO.email}`}
             className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-black font-semibold text-xs hover:bg-zinc-200 transition-colors shadow-sm"
           >
             <Mail className="w-3 h-3 text-black" />
-            <span>Get in touch</span>
+            <span>Contact</span>
           </a>
 
           {/* Mobile Menu Toggle */}
@@ -145,7 +157,7 @@ export function SpatialHUD({
         </div>
       </div>
 
-      {/* Mobile Navigation Dropdown Modal */}
+      {/* Mobile Navigation Dropdown */}
       {mobileMenuOpen && (
         <div
           role="dialog"
@@ -156,7 +168,7 @@ export function SpatialHUD({
           <div className="flex flex-col gap-5 max-w-sm mx-auto w-full">
             <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
               <span className="text-xs font-mono text-zinc-400 tracking-wider uppercase">
-                Navigation
+                Directory
               </span>
               <button
                 onClick={() => setMobileMenuOpen(false)}
@@ -179,6 +191,19 @@ export function SpatialHUD({
             ))}
 
             <div className="pt-4 flex flex-col gap-2.5">
+              {onReplayHello && (
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    onReplayHello();
+                  }}
+                  className="w-full py-2.5 rounded-lg bg-zinc-900/80 border border-amber-400/30 text-amber-300 text-xs font-mono flex items-center justify-center gap-2"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Replay Apple Hello Opening</span>
+                </button>
+              )}
+
               <button
                 onClick={() => {
                   setMobileMenuOpen(false);
