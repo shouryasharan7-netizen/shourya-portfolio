@@ -20,12 +20,17 @@ const MainScene = dynamic(
 export default function Home() {
   const [introFinished, setIntroFinished] = useState(false);
   const [isHologramMode, setIsHologramMode] = useState(false);
+  const [isRecruiterMode, setIsRecruiterMode] = useState(false);
   const [empTriggerCount, setEmpTriggerCount] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState("hero");
 
   const triggerEMP = () => {
     setEmpTriggerCount((prev) => prev + 1);
+  };
+
+  const toggleRecruiterMode = () => {
+    setIsRecruiterMode((prev) => !prev);
   };
 
   useEffect(() => {
@@ -55,9 +60,15 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="relative min-h-screen w-full bg-[#030305] text-[#F8F9FA] overflow-x-hidden selection:bg-gold-500 selection:text-black">
-      {/* HIMYM-Style Cinematic Snapshot Opening Intro */}
-      {!introFinished && (
+    <main
+      id="main-content"
+      role="main"
+      className={`relative min-h-screen w-full bg-[#030305] text-[#F8F9FA] overflow-x-hidden selection:bg-gold-500 selection:text-black ${
+        isRecruiterMode ? "recruiter-mode-active" : ""
+      }`}
+    >
+      {/* HIMYM-Style Cinematic Snapshot Opening Intro (Only if not in Recruiter Mode) */}
+      {!introFinished && !isRecruiterMode && (
         <CinematicIntro onComplete={() => setIntroFinished(true)} />
       )}
 
@@ -66,10 +77,11 @@ export default function Home() {
         scrollProgress={scrollProgress}
         isHologramMode={isHologramMode}
         empTriggerCount={empTriggerCount}
+        isRecruiterMode={isRecruiterMode}
       />
 
       {/* Cinematic Vignette */}
-      <div className="cinematic-vignette" />
+      {!isRecruiterMode && <div className="cinematic-vignette" aria-hidden="true" />}
 
       {/* Fixed Spatial Tactical HUD Bar */}
       <SpatialHUD
@@ -77,11 +89,26 @@ export default function Home() {
         onToggleHologram={() => setIsHologramMode(!isHologramMode)}
         onTriggerEMP={triggerEMP}
         activeSection={activeSection}
+        isRecruiterMode={isRecruiterMode}
+        onToggleRecruiterMode={toggleRecruiterMode}
       />
+
+      {/* Recruiter Mode Active Banner */}
+      {isRecruiterMode && (
+        <div className="fixed top-16 left-0 right-0 z-40 bg-gold-400 text-black px-4 py-1.5 text-center text-xs font-mono font-bold flex items-center justify-center gap-2 shadow-lg">
+          <span>RECRUITER BRIEF MODE ACTIVE — 3D WebGL paused for fast scanning.</span>
+          <button
+            onClick={toggleRecruiterMode}
+            className="underline hover:text-white transition-colors ml-2"
+          >
+            [Switch to 3D Mode]
+          </button>
+        </div>
+      )}
 
       {/* Interactive 3D Spatial Content Overlays */}
       <div className="relative z-10 w-full">
-        <HeroSection onTriggerEMP={triggerEMP} />
+        <HeroSection onTriggerEMP={triggerEMP} isRecruiterMode={isRecruiterMode} />
         <AboutSection />
         <ExperienceSection />
         <ProjectsSection />

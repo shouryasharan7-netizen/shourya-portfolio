@@ -2,63 +2,45 @@
 
 import React from "react";
 import { Card3D } from "@/components/ui/Card3D";
-import { Trophy, BookOpen, GraduationCap, Shield, Award, Sparkles } from "lucide-react";
-
-interface Recognition {
-  year: string;
-  title: string;
-  subtitle: string;
-  tag: string;
-  glow: "gold" | "cyan" | "purple" | "amber";
-  icon: React.ReactNode;
-}
-
-const RECOGNITIONS: Recognition[] = [
-  {
-    year: "2024",
-    title: "National Rank 2 & 5 — CBSE Heritage India Quiz",
-    subtitle: "Top 5 national finish out of 2,300+ participating schools. Televised national semi-finals broadcast on History TV18.",
-    tag: "NATIONAL // QUIZ",
-    glow: "gold",
-    icon: <Trophy className="w-5 h-5 text-gold-400" />,
-  },
-  {
-    year: "2024",
-    title: "National Finalist & Top 3% — TGELF Initiative",
-    subtitle: "Engineered and deployed low-cost biosand water filtration units for underserved off-grid communities.",
-    tag: "IMPACT // TOP 3%",
-    glow: "cyan",
-    icon: <Shield className="w-5 h-5 text-cyan-neon" />,
-  },
-  {
-    year: "2023",
-    title: "Published Author — National Young Author's Fair",
-    subtitle: "Authored \"A Soldier's Story\" — evaluated and selected from a nationwide competitive pool of 200,000+ literary submissions.",
-    tag: "LITERATURE // AUTHOR",
-    glow: "purple",
-    icon: <BookOpen className="w-5 h-5 text-purple-400" />,
-  },
-  {
-    year: "2025",
-    title: "50% Academic Merit Scholarship",
-    subtitle: "Awarded for exceptional academic excellence in Class 10 board examinations — 97% aggregate, placed in top 1% cohort.",
-    tag: "ACADEMIC // TOP 1%",
-    glow: "amber",
-    icon: <GraduationCap className="w-5 h-5 text-amber-400" />,
-  },
-  {
-    year: "2022–24",
-    title: "District U-19 DSO Chess — 3 Consecutive Years",
-    subtitle: "Competed at district level for three straight years; simultaneously represented institution in district-level football championships.",
-    tag: "STRATEGY // ATHLETICS",
-    glow: "gold",
-    icon: <Award className="w-5 h-5 text-gold-400" />,
-  },
-];
+import {
+  Trophy,
+  BookOpen,
+  GraduationCap,
+  Shield,
+  Award,
+  Sparkles,
+  BadgeCheck,
+  CheckCircle2,
+} from "lucide-react";
+import {
+  RECOGNITIONS_DATA,
+  CERTIFICATIONS_DATA,
+  EDUCATION_DATA,
+} from "@/data/portfolioData";
 
 export function RecognitionsSection() {
+  const getIcon = (id: string) => {
+    switch (id) {
+      case "cbse-heritage-quiz":
+      case "resera-hackathon":
+        return <Trophy className="w-5 h-5 text-gold-400" />;
+      case "tgelf-initiative":
+        return <Shield className="w-5 h-5 text-cyan-neon" />;
+      case "published-author":
+        return <BookOpen className="w-5 h-5 text-purple-400" />;
+      case "academic-scholarship":
+        return <GraduationCap className="w-5 h-5 text-gold-400" />;
+      default:
+        return <Award className="w-5 h-5 text-amber-400" />;
+    }
+  };
+
   return (
-    <section id="recognitions" className="py-28 px-4 sm:px-8 relative z-10">
+    <section
+      id="recognitions"
+      aria-label="Awards, Certifications & Education"
+      className="py-28 px-4 sm:px-8 relative z-10"
+    >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
@@ -66,25 +48,28 @@ export function RecognitionsSection() {
             // 04. HONORS & CREDENTIALS
           </span>
           <h2 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
-            RECOGNITIONS & <span className="text-gold-400 font-sans">MILESTONES.</span>
+            RECOGNITIONS, CERTIFICATIONS & <span className="text-gold-400 font-sans">EDUCATION.</span>
           </h2>
+          <p className="text-sm text-gray-400 font-mono mt-2 max-w-xl">
+            National competitions, literary publications, academic scholarships, and technical certifications.
+          </p>
         </div>
 
-        {/* Recognitions Grid with 3D Depth */}
+        {/* Recognitions Grid (2 Columns, 8 Items) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-14">
-          {RECOGNITIONS.map((rec, i) => (
-            <div key={i} className="h-full">
+          {RECOGNITIONS_DATA.map((rec) => (
+            <div key={rec.id} className="h-full">
               <Card3D glowColor={rec.glow} className="flex items-start gap-4 p-6 h-full">
-                <div className="p-3 rounded bg-black/70 border border-white/10 flex-shrink-0 group-hover:scale-110 transition-transform">
-                  {rec.icon}
+                <div className="p-3 rounded bg-black/80 border border-white/10 flex-shrink-0 group-hover:scale-105 transition-transform">
+                  {getIcon(rec.id)}
                 </div>
 
                 <div className="flex-1">
                   <div className="flex items-center justify-between gap-2 mb-1.5">
                     <span className="text-[10px] font-mono tracking-widest text-gold-400 font-semibold uppercase">
-                      {rec.tag}
+                      {rec.badge}
                     </span>
-                    <span className="text-xs font-mono text-gray-500 bg-black/50 px-2 py-0.5 rounded border border-zinc-800">
+                    <span className="text-xs font-mono text-gray-400 bg-black/60 px-2.5 py-0.5 rounded border border-zinc-800">
                       {rec.year}
                     </span>
                   </div>
@@ -93,13 +78,56 @@ export function RecognitionsSection() {
                     {rec.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed">
+                  <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed mb-3">
                     {rec.subtitle}
                   </p>
+
+                  {rec.metric && (
+                    <span className="text-[10px] font-mono text-cyan-neon bg-cyan-neon/10 px-2 py-0.5 rounded border border-cyan-neon/30">
+                      ✓ {rec.metric}
+                    </span>
+                  )}
                 </div>
               </Card3D>
             </div>
           ))}
+        </div>
+
+        {/* Certifications Row */}
+        <div className="mb-14">
+          <Card3D glowColor="cyan" className="p-6 sm:p-8">
+            <div className="flex items-center gap-2 mb-6">
+              <BadgeCheck className="w-5 h-5 text-cyan-neon" />
+              <span className="text-xs font-mono text-cyan-neon tracking-widest uppercase">
+                // PROFESSIONAL & TECHNICAL CERTIFICATIONS
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {CERTIFICATIONS_DATA.map((cert, idx) => (
+                <div
+                  key={idx}
+                  className="p-4 rounded border border-cyan-neon/30 bg-black/60 flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="text-[10px] font-mono text-gold-400 tracking-wider uppercase block mb-1">
+                      {cert.date}
+                    </span>
+                    <h4 className="text-sm font-bold font-mono text-white mb-1">
+                      {cert.name}
+                    </h4>
+                    <p className="text-xs text-gray-300 font-sans">
+                      {cert.issuer}
+                    </p>
+                  </div>
+                  <div className="mt-3 pt-2 border-t border-zinc-800 flex items-center gap-1 text-[10px] font-mono text-cyan-neon">
+                    <CheckCircle2 className="w-3 h-3 text-cyan-neon" />
+                    <span>Verified Credential</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card3D>
         </div>
 
         {/* Education Timeline Strip */}
@@ -112,35 +140,30 @@ export function RecognitionsSection() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 divide-y md:divide-y-0 md:divide-x divide-zinc-800">
-            <div className="pr-0 md:pr-6 pt-4 md:pt-0">
-              <span className="text-[10px] font-mono text-cyan-neon tracking-widest uppercase block mb-1">
-                CURRENT ENROLLMENT // SENIOR SECONDARY
-              </span>
-              <h4 className="text-lg font-bold font-serif text-white mb-1">
-                Centre Point School, Katol Road
-              </h4>
-              <p className="text-xs font-mono text-gold-400 mb-2">
-                Class 11–12 · CBSE Curriculum · 87%
-              </p>
-              <p className="text-xs text-gray-400 leading-relaxed font-sans">
-                Focused on Advanced Mathematics, Physics, Chemistry, and Computational Systems.
-              </p>
-            </div>
-
-            <div className="pl-0 md:pl-6 pt-4 md:pt-0">
-              <span className="text-[10px] font-mono text-gold-400 tracking-widest uppercase block mb-1">
-                BOARD EXAMINATION // TOP 1% NATIONWIDE
-              </span>
-              <h4 className="text-lg font-bold font-serif text-white mb-1">
-                Centre Point School, Amravati Road Bypass
-              </h4>
-              <p className="text-xs font-mono text-gold-400 mb-2">
-                Class 9–10 · CBSE Board: 97% Aggregate · Top 1% of Cohort
-              </p>
-              <p className="text-xs text-gray-400 leading-relaxed font-sans">
-                Conferred 50% Academic Merit Scholarship in recognition of top percentile scholastic performance.
-              </p>
-            </div>
+            {EDUCATION_DATA.map((edu, index) => (
+              <div
+                key={index}
+                className={index === 0 ? "pr-0 md:pr-6 pt-4 md:pt-0" : "pl-0 md:pl-6 pt-4 md:pt-0"}
+              >
+                <span className="text-[10px] font-mono text-cyan-neon tracking-widest uppercase block mb-1">
+                  {edu.classes} · {edu.period}
+                </span>
+                <h4 className="text-lg font-bold font-serif text-white mb-1">
+                  {edu.institution}
+                </h4>
+                <p className="text-xs font-mono text-gold-400 mb-3">
+                  {edu.score} · {edu.percentileText}
+                </p>
+                <div className="space-y-1.5">
+                  {edu.highlights.map((h, i) => (
+                    <div key={i} className="flex items-start gap-2 text-xs text-gray-300 font-sans leading-relaxed">
+                      <span className="text-gold-400 mt-0.5">•</span>
+                      <span>{h}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </Card3D>
       </div>

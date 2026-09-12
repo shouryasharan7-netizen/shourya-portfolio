@@ -1,75 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { audioEngine } from "@/components/audio/AudioEngine";
 import { Card3D } from "@/components/ui/Card3D";
-import { ArrowUpRight, X, CheckCircle, Eye, Sparkles } from "lucide-react";
-
-interface Project {
-  id: string;
-  title: string;
-  category: string;
-  role: string;
-  description: string;
-  fullOverview: string;
-  impact: string;
-  tags: string[];
-  glow: "cyan" | "purple" | "amber";
-  icon: string;
-}
-
-const PROJECTS: Project[] = [
-  {
-    id: "ignicion",
-    title: "Ignicion",
-    category: "HERITAGE TECH // UI/UX",
-    role: "Lead Systems Designer",
-    description:
-      "Designed the complete UI/UX and interaction architecture for a mobile platform bridging the youth-heritage gap. Presented the working prototype at the IGNICION summit.",
-    fullOverview:
-      "Ignicion is an interactive mobile ecosystem engineered to solve the cultural disconnect between modern youth and historical heritage. Designed from scratch in Figma with custom design systems, gamified learning pathways, and interactive 3D monument walkthroughs.",
-    impact:
-      "Presented prototype at IGNICION Summit with commendation for accessible UI paradigms and interactive cultural safeguarding.",
-    tags: ["Figma", "UI/UX Architecture", "Mobile Prototyping", "Design Systems", "Heritage Tech"],
-    glow: "cyan",
-    icon: "🏛️",
-  },
-  {
-    id: "cenquity",
-    title: "Project Cenquity",
-    category: "AR/VR // HARDWARE",
-    role: "Hardware & Reality Architect",
-    description:
-      "Conceptualized wearable AR smart glasses bridging physical reality with real-time digital overlays. Pitched prototype at a Shark Tank-style innovation summit.",
-    fullOverview:
-      "Project Cenquity explores ambient augmented reality—replacing screen fatigue with lightweight optical waveguides. Conceptualized hardware chassis, battery thermal dissipation, and head-up optical display interfaces.",
-    impact:
-      "Pitched to an executive jury panel at Cenference Shark Tank; acclaimed for wearable ergonomics and spatial user interaction models.",
-    tags: ["AR/VR", "Hardware Design", "Spatial Computing", "Optics", "Pitch Strategy"],
-    glow: "purple",
-    icon: "👓",
-  },
-  {
-    id: "biosand",
-    title: "TGELF Biosand Filter",
-    category: "SOCIAL IMPACT // ENGINEERING",
-    role: "National Finalist · Top 3%",
-    description:
-      "Deployed low-cost multi-layer biosand water filtration units for clean water access in underserved communities. National Finalist at TGELF.",
-    fullOverview:
-      "Engineered an open-source, affordable biosand water filter using graded sand layers, active biolayer filtration, and gravel stratification. Successfully deployed real physical filtration units to remove pathogens without electricity.",
-    impact:
-      "Ranked Top 3% nationally across India at TGELF, delivering measurable bacterial reduction for off-grid communities.",
-    tags: ["Environmental Engineering", "Social Impact", "National Finalist", "Hydrology", "Deployments"],
-    glow: "amber",
-    icon: "💧",
-  },
-];
+import {
+  ArrowUpRight,
+  X,
+  CheckCircle,
+  Eye,
+  Sparkles,
+  MapPin,
+  ExternalLink,
+} from "lucide-react";
+import { PROJECTS_DATA, ProjectItem } from "@/data/portfolioData";
 
 export function ProjectsSection() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
 
-  const openModal = (proj: Project) => {
+  const openModal = (proj: ProjectItem) => {
     audioEngine.playClick();
     setSelectedProject(proj);
   };
@@ -79,8 +27,23 @@ export function ProjectsSection() {
     setSelectedProject(null);
   };
 
+  // Keyboard accessibility: Escape to close modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && selectedProject) {
+        closeModal();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedProject]);
+
   return (
-    <section id="projects" className="py-28 px-4 sm:px-8 relative z-10">
+    <section
+      id="projects"
+      aria-label="Projects and Inventions"
+      className="py-28 px-4 sm:px-8 relative z-10"
+    >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
@@ -90,28 +53,28 @@ export function ProjectsSection() {
           <h2 className="text-3xl sm:text-5xl font-bold font-serif text-white tracking-tight">
             FEATURED <span className="text-gold-400 font-sans">INVENTIONS & DESIGNS.</span>
           </h2>
-          <p className="text-sm text-gray-400 font-mono mt-2">
-            Click any schematic to initialize full holographic CAD blueprint
+          <p className="text-sm text-gray-400 font-mono mt-2 max-w-xl">
+            Prototypes and implementations spanning heritage cultural applications, AR wearables, and environmental technology.
           </p>
         </div>
 
         {/* 3 Featured Projects Grid with 3D Depth */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {PROJECTS.map((proj) => (
+          {PROJECTS_DATA.map((proj) => (
             <div key={proj.id} className="h-full">
               <Card3D
                 glowColor={proj.glow}
                 onClick={() => openModal(proj)}
-                className="flex flex-col justify-between h-full p-6 sm:p-8 cursor-pointer group"
+                className="flex flex-col justify-between h-full p-6 sm:p-8 cursor-pointer group focus:outline-none focus:ring-2 focus:ring-cyan-neon rounded-sm"
               >
                 <div>
                   {/* Icon & Category */}
                   <div className="flex items-center justify-between mb-6">
-                    <div className="text-3xl p-3 rounded bg-black/70 border border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.6)]">
+                    <div className="text-3xl p-3 rounded bg-black/80 border border-white/10 shadow-[0_0_15px_rgba(0,0,0,0.6)] group-hover:scale-105 transition-transform">
                       {proj.icon}
                     </div>
                     <span className="text-[10px] font-mono tracking-widest text-gold-400 uppercase bg-black/80 px-2.5 py-1 rounded border border-gold-500/30">
-                      {proj.category}
+                      {proj.category.split("//")[0]}
                     </span>
                   </div>
 
@@ -123,9 +86,9 @@ export function ProjectsSection() {
                     {proj.role}
                   </h4>
 
-                  {/* Description */}
+                  {/* Short Description */}
                   <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed mb-6">
-                    {proj.description}
+                    {proj.shortDesc}
                   </p>
                 </div>
 
@@ -155,15 +118,20 @@ export function ProjectsSection() {
           ))}
         </div>
 
-        {/* Interactive Schematic Inspection Modal */}
+        {/* Accessible Interactive Schematic Inspection Modal */}
         {selectedProject && (
-          <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-project-title"
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 sm:p-6"
+          >
             <div className="glass-card max-w-2xl w-full p-6 sm:p-10 rounded-sm border border-cyan-neon/50 shadow-[0_0_80px_rgba(0,240,255,0.3)] relative max-h-[90vh] overflow-y-auto">
-              {/* Close Button */}
+              {/* Close Button with 44px touch area */}
               <button
                 onClick={closeModal}
-                className="absolute top-6 right-6 w-9 h-9 rounded-full bg-black/80 border border-gold-500/40 flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-black transition-all"
-                aria-label="Close modal"
+                className="absolute top-6 right-6 w-11 h-11 rounded-full bg-black/80 border border-gold-500/40 flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-black transition-all focus:outline-none focus:ring-2 focus:ring-gold-400"
+                aria-label="Close project blueprint modal"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -177,10 +145,13 @@ export function ProjectsSection() {
                   <span className="text-[10px] font-mono tracking-widest text-cyan-neon uppercase bg-cyan-neon/10 px-2 py-0.5 rounded border border-cyan-neon/30">
                     {selectedProject.category}
                   </span>
-                  <h3 className="text-3xl font-bold font-serif text-white tracking-tight mt-1">
+                  <h3
+                    id="modal-project-title"
+                    className="text-3xl font-bold font-serif text-white tracking-tight mt-1"
+                  >
                     {selectedProject.title}
                   </h3>
-                  <p className="text-xs font-mono text-gray-400">
+                  <p className="text-xs font-mono text-gray-300">
                     ROLE: {selectedProject.role}
                   </p>
                 </div>
@@ -193,7 +164,7 @@ export function ProjectsSection() {
                     // ARCHITECTURAL OVERVIEW
                   </h4>
                   <p className="bg-black/60 p-4 rounded border border-zinc-800 text-gray-300 font-sans">
-                    {selectedProject.fullOverview}
+                    {selectedProject.overview}
                   </p>
                 </div>
 
@@ -201,11 +172,23 @@ export function ProjectsSection() {
                   <h4 className="text-xs font-mono text-cyan-neon tracking-wider uppercase mb-2">
                     // KEY IMPACT & VALIDATION
                   </h4>
-                  <p className="bg-black/60 p-4 rounded border border-cyan-neon/30 text-cyan-100 font-mono text-xs flex items-start gap-2">
+                  <div className="bg-black/60 p-4 rounded border border-cyan-neon/30 text-cyan-100 font-mono text-xs flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-cyan-neon flex-shrink-0 mt-0.5" />
                     <span>{selectedProject.impact}</span>
-                  </p>
+                  </div>
                 </div>
+
+                {selectedProject.presentationVenue && (
+                  <div>
+                    <h4 className="text-xs font-mono text-purple-400 tracking-wider uppercase mb-2">
+                      // PRESENTATION & SUMMIT VENUE
+                    </h4>
+                    <div className="bg-black/60 p-3 rounded border border-purple-500/30 text-purple-200 font-mono text-xs flex items-center gap-2">
+                      <MapPin className="w-4 h-4 text-purple-400" />
+                      <span>{selectedProject.presentationVenue}</span>
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <h4 className="text-xs font-mono text-gold-400 tracking-wider uppercase mb-2">
@@ -227,7 +210,7 @@ export function ProjectsSection() {
               <div className="mt-8 pt-6 border-t border-zinc-800 flex justify-end">
                 <button
                   onClick={closeModal}
-                  className="px-6 py-2.5 rounded-full bg-cyan-neon text-black font-mono font-semibold text-xs tracking-widest uppercase hover:bg-white transition-colors"
+                  className="px-6 py-3 rounded-full bg-cyan-neon text-black font-mono font-semibold text-xs tracking-widest uppercase hover:bg-white transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-neon"
                 >
                   DISMISS SCHEMATIC
                 </button>

@@ -4,11 +4,27 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { audioEngine } from "@/components/audio/AudioEngine";
 import { Card3D } from "@/components/ui/Card3D";
-import { ArrowUpRight, Terminal, Crosshair, Zap, Cpu, Sparkles } from "lucide-react";
+import {
+  ArrowUpRight,
+  Briefcase,
+  Layers,
+  Sparkles,
+  Zap,
+  Download,
+  Mail,
+  Award,
+  ChevronDown,
+} from "lucide-react";
+import { PERSONAL_INFO } from "@/data/portfolioData";
 
-export function HeroSection({ onTriggerEMP }: { onTriggerEMP?: () => void }) {
+interface HeroSectionProps {
+  onTriggerEMP?: () => void;
+  isRecruiterMode?: boolean;
+}
+
+export function HeroSection({ onTriggerEMP, isRecruiterMode }: HeroSectionProps) {
   const [glitchText, setGlitchText] = useState("SHOURYA SHARAN");
-  const subtitle = "I don't think in disciplines — I think in problems.";
+  const subtitle = "I don't think in disciplines. I think in problems.";
   const [typedText, setTypedText] = useState("");
 
   useEffect(() => {
@@ -20,13 +36,13 @@ export function HeroSection({ onTriggerEMP }: { onTriggerEMP?: () => void }) {
       } else {
         clearInterval(interval);
       }
-    }, 45);
+    }, 40);
     return () => clearInterval(interval);
   }, []);
 
   const triggerGlitch = () => {
     audioEngine.playHover();
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     let iterations = 0;
     const target = "SHOURYA SHARAN";
 
@@ -51,124 +67,145 @@ export function HeroSection({ onTriggerEMP }: { onTriggerEMP?: () => void }) {
   return (
     <section
       id="hero"
+      aria-label="Introduction & Overview"
       className="min-h-screen w-full flex flex-col justify-center items-center text-center px-4 sm:px-6 relative z-10 pt-28 pb-16"
     >
       <div className="max-w-4xl mx-auto flex flex-col items-center">
-        {/* Holographic Tactical Badge */}
+        {/* Tactical Signal Pill */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-cyan-neon/40 bg-black/70 backdrop-blur-md mb-6 shadow-[0_0_25px_rgba(0,240,255,0.2)]"
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-gold-500/30 bg-black/80 backdrop-blur-md mb-6 shadow-[0_0_25px_rgba(212,175,55,0.2)]"
         >
-          <Crosshair className="w-3.5 h-3.5 text-cyan-neon animate-spin-slow" />
-          <span className="text-[11px] font-mono tracking-widest text-cyan-200 uppercase">
-            STARK-CLASS HOLOGRAPHIC DOMAIN // 0x26
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="text-[11px] font-mono tracking-widest text-gold-300 uppercase">
+            CHIEF SCIENCE OFFICER // COMPUTATIONAL RESEARCHER // UI ARCHITECT
           </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-gold-400 animate-pulse" />
         </motion.div>
 
-        {/* Main 3D Spatial Title with Glitch Decryption */}
+        {/* Semantic H1 with Glitch Decryption on Hover */}
         <motion.h1
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
           onMouseEnter={triggerGlitch}
           className="text-4xl sm:text-7xl md:text-8xl font-black font-serif tracking-tight text-white mb-4 select-none cursor-pointer group"
-          title="Hover to decode"
+          title="Hover to trigger cryptographic decode"
         >
           <span className="bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent group-hover:from-gold-200 group-hover:via-gold-400 group-hover:to-amber-500 transition-all duration-300 drop-shadow-[0_10px_40px_rgba(0,0,0,0.9)]">
             {glitchText}
           </span>
         </motion.h1>
 
-        {/* Typewriter Subtitle */}
-        <div className="min-h-[32px] mb-8">
+        {/* Dynamic Core Thesis Subtitle */}
+        <div className="min-h-[32px] mb-6">
           <p className="text-base sm:text-xl text-gold-400 font-mono tracking-wider font-medium">
-            &quot;{typedText}&quot;
+            &ldquo;{typedText}&rdquo;
             <span className="animate-pulse text-cyan-neon">_</span>
           </p>
         </div>
 
-        {/* Hero Bio Blurb */}
+        {/* Direct, Credible Bio Paragraph */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-sm sm:text-base text-gray-300 max-w-2xl leading-relaxed mb-10 font-sans backdrop-blur-[2px]"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-sm sm:text-base text-gray-300 max-w-2xl leading-relaxed mb-8 font-sans"
         >
-          Sitting at the confluence of cognitive science, machine computation, and tactical visual design.
-          Currently serving as <span className="text-white font-semibold">Chief Science Officer</span> at The Walnut Initiative
-          and <span className="text-white font-semibold">Computational Researcher</span> at STEMinate.
+          Operating at the intersection of <strong className="text-white font-semibold">cognitive science</strong>,{" "}
+          <strong className="text-white font-semibold">machine computation</strong>, and{" "}
+          <strong className="text-white font-semibold">tactile UI architecture</strong>. Currently serving as{" "}
+          <span className="text-gold-300 font-medium">Chief Science Officer</span> at The Walnut Initiative,{" "}
+          <span className="text-cyan-neon font-medium">Computational Researcher</span> at STEMinate, and{" "}
+          <span className="text-white font-medium">Freelance UI Architect</span> at Descreened.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* Primary Action Row: Immediate Value & Fast Navigation */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="flex flex-wrap items-center justify-center gap-4 mb-14"
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="flex flex-wrap items-center justify-center gap-3.5 mb-14"
         >
+          {/* Primary CTA: Selected Work */}
           <a
             href="#projects"
             onClick={() => audioEngine.playClick()}
             onMouseEnter={() => audioEngine.playHover()}
-            className="group px-7 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-amber-500 text-black font-semibold text-xs font-mono tracking-widest uppercase shadow-[0_0_35px_rgba(212,175,55,0.45)] hover:shadow-[0_0_55px_rgba(212,175,55,0.8)] hover:scale-105 transition-all duration-200 flex items-center gap-2"
+            className="px-6 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-amber-500 text-black font-semibold text-xs font-mono tracking-widest uppercase shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:shadow-[0_0_45px_rgba(212,175,55,0.75)] hover:scale-105 transition-all min-h-[44px] flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-gold-400"
           >
-            <span>EXPLORE CRAFT</span>
-            <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            <span>EXPLORE WORK</span>
+            <ArrowUpRight className="w-4 h-4" />
           </a>
 
-          {onTriggerEMP && (
-            <button
-              onClick={() => {
-                onTriggerEMP();
-              }}
-              onMouseEnter={() => audioEngine.playHover()}
-              className="px-6 py-3.5 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-300 font-semibold text-xs font-mono tracking-widest uppercase hover:border-amber-400 hover:bg-amber-500/20 hover:text-white transition-all duration-200 flex items-center gap-2"
-            >
-              <Zap className="w-4 h-4 text-amber-400 animate-pulse" />
-              <span>DISCHARGE EMP</span>
-            </button>
-          )}
+          {/* Secondary CTA: Experience Dossier */}
+          <a
+            href="#experience"
+            onClick={() => audioEngine.playClick()}
+            onMouseEnter={() => audioEngine.playHover()}
+            className="px-6 py-3.5 rounded-full border border-gold-500/40 bg-black/70 text-gold-300 font-semibold text-xs font-mono tracking-widest uppercase hover:bg-gold-500/10 hover:border-gold-400 transition-all min-h-[44px] flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-gold-400"
+          >
+            <Briefcase className="w-4 h-4 text-gold-400" />
+            <span>VIEW EXPERIENCE</span>
+          </a>
 
+          {/* Contact CTA */}
           <a
             href="#contact"
             onClick={() => audioEngine.playClick()}
             onMouseEnter={() => audioEngine.playHover()}
-            className="px-7 py-3.5 rounded-full border border-gold-500/30 bg-black/60 backdrop-blur-md text-gold-300 font-semibold text-xs font-mono tracking-widest uppercase hover:border-gold-400 hover:bg-gold-500/10 hover:text-white transition-all duration-200 flex items-center gap-2"
+            className="px-5 py-3.5 rounded-full border border-zinc-700 bg-black/60 text-gray-300 font-semibold text-xs font-mono tracking-widest uppercase hover:border-zinc-500 hover:text-white transition-all min-h-[44px] flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-zinc-400"
           >
-            <Terminal className="w-4 h-4 text-gold-400" />
-            <span>JARVIS TERMINAL</span>
+            <Mail className="w-4 h-4 text-gray-400" />
+            <span>CONTACT</span>
           </a>
+
+          {/* EMP Kinetic Shockwave (Only in visual mode) */}
+          {onTriggerEMP && !isRecruiterMode && (
+            <button
+              onClick={onTriggerEMP}
+              onMouseEnter={() => audioEngine.playHover()}
+              className="px-4 py-3.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-mono tracking-widest uppercase hover:bg-amber-500/20 transition-all min-h-[44px] flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amber-400"
+              title="Discharge 3D particle kinetic pulse"
+            >
+              <Zap className="w-3.5 h-3.5 text-amber-400" />
+              <span>EMP</span>
+            </button>
+          )}
         </motion.div>
 
-        {/* 4 Multi-Layer 3D Stat Cards */}
+        {/* 4 Multi-Layer Verified Metric Cards (Grounded strictly in resume) */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.8 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
           className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-4xl"
         >
-          {[
-            { value: "200+", label: "INTERACTIONS DRIVEN", sub: "User Engagement", glow: "gold" as const },
-            { value: "97%", label: "BOARD SCORE", sub: "Top 1% Aggregate", glow: "cyan" as const },
-            { value: "50+", label: "COMMUNITY LED", sub: "Economics & Tech", glow: "purple" as const },
-            { value: "4", label: "CONCURRENT ROLES", sub: "Active Leadership", glow: "amber" as const },
-          ].map((stat, i) => (
-            <Card3D key={i} glowColor={stat.glow} className="p-4 sm:p-5 flex flex-col items-center justify-center text-center">
+          {PERSONAL_INFO.stats.map((stat, i) => (
+            <Card3D
+              key={i}
+              glowColor={i === 0 ? "gold" : i === 1 ? "cyan" : i === 2 ? "purple" : "amber"}
+              className="p-4 sm:p-5 flex flex-col items-center justify-center text-center"
+            >
               <span className="text-2xl sm:text-3xl font-bold font-mono text-white group-hover:text-gold-400 transition-colors">
                 {stat.value}
               </span>
               <span className="text-[10px] font-mono tracking-wider text-gold-400/90 font-semibold mt-1">
                 {stat.label}
               </span>
-              <span className="text-[9px] text-gray-500 font-sans mt-0.5">
+              <span className="text-[9px] text-gray-400 font-sans mt-0.5">
                 {stat.sub}
               </span>
             </Card3D>
           ))}
         </motion.div>
+
+        {/* Gentle Scroll Hint */}
+        <div className="mt-12 flex flex-col items-center text-gray-500 text-[11px] font-mono tracking-widest uppercase animate-bounce">
+          <span>Scroll to inspect trajectory</span>
+          <ChevronDown className="w-4 h-4 mt-1 text-gold-400/60" />
+        </div>
       </div>
     </section>
   );

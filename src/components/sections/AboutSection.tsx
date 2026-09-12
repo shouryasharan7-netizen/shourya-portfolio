@@ -3,7 +3,19 @@
 import React, { useState } from "react";
 import { audioEngine } from "@/components/audio/AudioEngine";
 import { Card3D } from "@/components/ui/Card3D";
-import { Brain, Cpu, Palette, Layers, Zap, Crosshair } from "lucide-react";
+import {
+  Brain,
+  Cpu,
+  Palette,
+  Layers,
+  Zap,
+  Crosshair,
+  Compass,
+  Code2,
+  Database,
+  Sparkles,
+} from "lucide-react";
+import { SKILLS_DATA, PERSONAL_INFO } from "@/data/portfolioData";
 
 export function AboutSection() {
   const [activePillar, setActivePillar] = useState<number>(0);
@@ -11,39 +23,30 @@ export function AboutSection() {
   const pillars = [
     {
       icon: <Brain className="w-5 h-5 text-gold-400" />,
-      title: "COGNITIVE SCIENCE",
-      desc: "Investigating how human perception models systems, processes information, and abstracts complex challenges into intuitive mental maps.",
+      title: "COGNITIVE SCIENCE & SYSTEMS",
+      desc: "Modeling how human perception interprets complex systems, abstracts noise, and navigates digital environments intuitively.",
       glow: "gold" as const,
     },
     {
       icon: <Cpu className="w-5 h-5 text-cyan-neon" />,
-      title: "COMPUTATION & ML",
-      desc: "Training predictive models with TensorFlow & Scikit-Learn, building Python data pipelines, and co-authoring computational research papers.",
+      title: "COMPUTATION & MACHINE LEARNING",
+      desc: "Engineering reproducible Python data pipelines, training TensorFlow neural models, and co-authoring computational research papers.",
       glow: "cyan" as const,
     },
     {
       icon: <Palette className="w-5 h-5 text-amber-400" />,
-      title: "VISUAL ARCHITECTURE",
-      desc: "Architecting high-precision interfaces in Figma, Next.js, and Three.js with deep attention to typography, spatial physics, and tactile ergonomics.",
+      title: "TACTILE UI & ARCHITECTURE",
+      desc: "Designing component libraries, spatial physics, and accessible responsive interfaces using React, Next.js, and Figma.",
       glow: "amber" as const,
     },
   ];
 
-  const techStack = [
-    { name: "Python", cat: "Research & ML" },
-    { name: "TensorFlow", cat: "Deep Learning" },
-    { name: "Scikit-Learn", cat: "Predictive Models" },
-    { name: "Pandas", cat: "Data Analytics" },
-    { name: "Next.js 15", cat: "Web Architecture" },
-    { name: "React 19", cat: "UI Engineering" },
-    { name: "Three.js", cat: "3D Graphics" },
-    { name: "TypeScript", cat: "Type Safety" },
-    { name: "Figma", cat: "Systems Design" },
-    { name: "Tailwind CSS", cat: "Styling Tokens" },
-  ];
-
   return (
-    <section id="about" className="py-28 px-4 sm:px-8 relative z-10">
+    <section
+      id="about"
+      aria-label="Cognitive Matrix and Skills"
+      className="py-28 px-4 sm:px-8 relative z-10"
+    >
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="flex flex-col items-center text-center mb-16">
@@ -56,35 +59,38 @@ export function AboutSection() {
           </h2>
         </div>
 
-        {/* 2-Column Split: 3D Manifesto Card & Pillars */}
+        {/* 2-Column Split: Manifesto Card & 3 Pillars */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-16">
-          {/* Left Column: 3D Manifesto Card */}
+          {/* Left Column: First Principles Axiom */}
           <div className="lg:col-span-7">
             <Card3D glowColor="gold" className="p-8 sm:p-10 flex flex-col justify-between h-full">
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono text-gold-400 tracking-widest uppercase mb-4">
                   <Zap className="w-4 h-4 text-gold-400" />
-                  <span>FIRST PRINCIPLES AXIOM</span>
+                  <span>FIRST PRINCIPLES METHODOLOGY</span>
                 </div>
                 <p className="text-base sm:text-lg text-gray-200 leading-relaxed font-sans mb-6">
-                  Whether training predictive machine learning models with TensorFlow, designing mobile architectures for heritage preservation, or directing tech operations for a 50+ member community — the methodology is uncompromising:
+                  Whether training predictive machine learning models in TensorFlow, designing mobile architectures for heritage preservation, or directing operations for a 50+ member academic community:
                 </p>
                 <blockquote className="border-l-2 border-gold-500 pl-4 py-2 my-4 text-gold-300 font-mono text-sm leading-relaxed bg-gold-500/5">
-                  &quot;Understand the underlying system down to first principles, eliminate unnecessary friction, and engineer a solution that feels inevitable.&quot;
+                  &ldquo;Deconstruct any system down to its foundational axioms, eliminate unnecessary friction, and engineer a solution whose execution feels inevitable.&rdquo;
                 </blockquote>
+                <p className="text-xs sm:text-sm text-gray-300 font-sans leading-relaxed">
+                  Focusing on technical clarity, rigorous scientific inquiry, and purposeful design systems rather than decorative complexity.
+                </p>
               </div>
 
               <div className="pt-6 border-t border-zinc-800 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-gray-400">
                 <span className="flex items-center gap-1.5 text-cyan-neon">
                   <Crosshair className="w-3.5 h-3.5" />
-                  <span>ACTIVE NODE: NAGPUR</span>
+                  <span>ACTIVE NODE: NAGPUR, INDIA</span>
                 </span>
-                <span className="text-gold-400">CLASS 11–12 · CBSE 87% // 10TH 97%</span>
+                <span className="text-gold-400">CBSE BOARD 97% // TOP 1% COHORT</span>
               </div>
             </Card3D>
           </div>
 
-          {/* Right Column: 3 3D Cognitive Pillars */}
+          {/* Right Column: 3 Pillars */}
           <div className="lg:col-span-5 flex flex-col gap-4">
             {pillars.map((pillar, i) => (
               <div key={i} className="flex-1">
@@ -94,7 +100,7 @@ export function AboutSection() {
                     audioEngine.playClick();
                     setActivePillar(i);
                   }}
-                  className={`p-5 cursor-pointer ${
+                  className={`p-5 cursor-pointer transition-all ${
                     activePillar === i ? "border-cyan-neon bg-cyan-neon/10" : ""
                   }`}
                 >
@@ -115,30 +121,91 @@ export function AboutSection() {
           </div>
         </div>
 
-        {/* Tech Stack Matrix Tags */}
-        <Card3D glowColor="cyan" className="p-6 sm:p-8">
-          <div className="flex items-center gap-2 mb-6">
-            <Layers className="w-4 h-4 text-cyan-neon" />
-            <span className="text-xs font-mono text-cyan-neon tracking-widest uppercase">
-              TECHNICAL PROFICIENCIES & RESEARCH TOOLKIT
-            </span>
-          </div>
+        {/* Technical Proficiencies & Skills Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* Languages & Frameworks */}
+          <Card3D glowColor="cyan" className="p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Code2 className="w-4 h-4 text-cyan-neon" />
+              <h3 className="text-xs font-mono text-cyan-neon tracking-widest uppercase">
+                LANGUAGES & FRAMEWORKS
+              </h3>
+            </div>
+            <div className="space-y-2">
+              {SKILLS_DATA.languagesAndFrameworks.map((skill, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center justify-between p-2 rounded bg-black/60 border border-zinc-800 text-xs"
+                >
+                  <span className="font-mono text-white font-medium">{skill.name}</span>
+                  <span className="text-[10px] font-mono text-gray-400">[{skill.category}]</span>
+                </div>
+              ))}
+            </div>
+          </Card3D>
 
-          <div className="flex flex-wrap gap-2.5">
-            {techStack.map((tech, i) => (
-              <div
-                key={i}
-                onMouseEnter={() => audioEngine.playHover()}
-                className="px-3.5 py-2 rounded-sm border border-gold-500/25 bg-black/70 hover:border-cyan-neon hover:bg-cyan-neon/10 transition-all duration-200 group cursor-default"
-              >
-                <span className="text-xs font-mono font-medium text-white group-hover:text-cyan-200">
-                  {tech.name}
+          {/* Data & AI Libraries */}
+          <Card3D glowColor="purple" className="p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Database className="w-4 h-4 text-purple-400" />
+              <h3 className="text-xs font-mono text-purple-400 tracking-widest uppercase">
+                DATA & AI LIBRARIES
+              </h3>
+            </div>
+            <div className="space-y-2">
+              {SKILLS_DATA.dataAndAI.map((skill, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center justify-between p-2 rounded bg-black/60 border border-zinc-800 text-xs"
+                >
+                  <span className="font-mono text-white font-medium">{skill.name}</span>
+                  <span className="text-[10px] font-mono text-gray-400">[{skill.category}]</span>
+                </div>
+              ))}
+            </div>
+          </Card3D>
+
+          {/* Design & Workflows */}
+          <Card3D glowColor="gold" className="p-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Layers className="w-4 h-4 text-gold-400" />
+              <h3 className="text-xs font-mono text-gold-400 tracking-widest uppercase">
+                DESIGN & WORKFLOWS
+              </h3>
+            </div>
+            <div className="space-y-2">
+              {SKILLS_DATA.designAndWorkflows.map((skill, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center justify-between p-2 rounded bg-black/60 border border-zinc-800 text-xs"
+                >
+                  <span className="font-mono text-white font-medium">{skill.name}</span>
+                  <span className="text-[10px] font-mono text-gray-400">[{skill.category}]</span>
+                </div>
+              ))}
+            </div>
+          </Card3D>
+        </div>
+
+        {/* Domain Interests Pill Bar */}
+        <Card3D glowColor="amber" className="p-5 sm:p-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className="flex items-center gap-2">
+              <Compass className="w-4 h-4 text-amber-400" />
+              <span className="text-xs font-mono text-amber-400 tracking-widest uppercase">
+                DOMAIN INTERESTS & INTELLECTUAL PURSUITS:
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {SKILLS_DATA.interests.map((interest, i) => (
+                <span
+                  key={i}
+                  className="text-xs font-mono text-gray-300 bg-black/70 px-3 py-1 rounded-full border border-amber-500/20"
+                >
+                  • {interest}
                 </span>
-                <span className="text-[10px] text-gray-500 ml-2 font-mono group-hover:text-gray-400">
-                  [{tech.cat}]
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </Card3D>
       </div>

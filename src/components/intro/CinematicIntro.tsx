@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { audioEngine } from "@/components/audio/AudioEngine";
-import { Sparkles, Play, FastForward, Volume2 } from "lucide-react";
+import { Sparkles, Play, FastForward, Volume2, ArrowRight } from "lucide-react";
 
 interface Snapshot {
   title: string;
@@ -19,8 +19,8 @@ interface Snapshot {
 const SNAPSHOTS: Snapshot[] = [
   {
     title: "THE STRATEGIST",
-    tagline: "District U-19 Chess · Tactical Calculation",
-    subtitle: "3 Consecutive Years DSO Chess & Football Representation",
+    tagline: "3 Consecutive Years DSO Chess & Football",
+    subtitle: "National Rank 2 & 5 — CBSE Heritage India Quiz (50,000+ Viewers)",
     year: "EST. 2022",
     category: "STRATEGY // COGNITION",
     accent: "#D4AF37",
@@ -28,14 +28,14 @@ const SNAPSHOTS: Snapshot[] = [
     rotation: -4,
   },
   {
-    title: "THE RESEARCHER",
+    title: "THE SCIENTIST",
     tagline: "Chief Science Officer & ML Researcher",
     subtitle: "The Walnut Initiative & STEMinate · Co-Authoring AI Papers",
     year: "EST. 2024",
     category: "RESEARCH // COMPUTATION",
     accent: "#00F0FF",
     icon: "🧬",
-    rotation: 5,
+    rotation: 4,
   },
   {
     title: "THE ARCHITECT",
@@ -44,18 +44,18 @@ const SNAPSHOTS: Snapshot[] = [
     year: "EST. 2025",
     category: "DESIGN // HARDWARE",
     accent: "#E5C06E",
-    icon: "⚡",
+    icon: "👓",
     rotation: -3,
   },
   {
     title: "THE CATALYST",
-    tagline: "Head of Tech & Operations · ThinkEconomics",
-    subtitle: "Leading 50+ members & National Finalist Top 3% at TGELF",
+    tagline: "Growth Associate & Operations Lead",
+    subtitle: "bits&bytes (1,400+ Students) · ThinkEconomics (50+ Members)",
     year: "EST. 2026",
-    category: "LEADERSHIP // IMPACT",
+    category: "LEADERSHIP // OUTREACH",
     accent: "#FFB703",
-    icon: "🏛️",
-    rotation: 4,
+    icon: "⚡",
+    rotation: 5,
   },
 ];
 
@@ -64,7 +64,7 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
   const [hasStarted, setHasStarted] = useState<boolean>(false);
   const [isFinishing, setIsFinishing] = useState<boolean>(false);
 
-  // Auto-play the sequence once started
+  // Snappy HIMYM-style tempo once started
   useEffect(() => {
     if (!hasStarted) return;
 
@@ -81,7 +81,7 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
           return prev;
         }
       });
-    }, 750); // Snappy HIMYM-style tempo (0.75s per frame)
+    }, 750);
 
     return () => clearInterval(interval);
   }, [hasStarted]);
@@ -96,7 +96,7 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
     audioEngine.playWarp();
     setTimeout(() => {
       onComplete();
-    }, 900);
+    }, 850);
   };
 
   const handleSkip = () => {
@@ -108,9 +108,12 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
     <AnimatePresence>
       {!isFinishing && (
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Cinematic Portfolio Intro"
           className="fixed inset-0 z-[10000] bg-[#030305] flex flex-col items-center justify-center overflow-hidden select-none px-4"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
+          exit={{ opacity: 0, scale: 1.08, filter: "blur(20px)" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           {/* Background Radial Glow */}
@@ -120,7 +123,8 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
           <div className="absolute top-6 right-6 z-20">
             <button
               onClick={handleSkip}
-              className="flex items-center gap-2 px-4 py-2 rounded-full border border-gold-500/30 bg-black/60 text-gold-300 text-xs font-mono tracking-widest uppercase hover:bg-gold-500/20 hover:border-gold-400 transition-all duration-200"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-gold-500/30 bg-black/70 text-gold-300 text-xs font-mono tracking-widest uppercase hover:bg-gold-500/20 hover:border-gold-400 transition-all min-h-[44px] focus:outline-none focus:ring-2 focus:ring-gold-400"
+              aria-label="Skip cinematic introduction"
             >
               Skip Intro <FastForward className="w-3.5 h-3.5" />
             </button>
@@ -132,10 +136,10 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
               className="relative z-10 text-center max-w-xl flex flex-col items-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.5 }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 text-gold-400 text-xs font-mono tracking-widest uppercase mb-6 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
-                <Sparkles className="w-3.5 h-3.5 animate-spin-slow" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-gold-500/30 bg-gold-500/10 text-gold-400 text-xs font-mono tracking-widest uppercase mb-6 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+                <Sparkles className="w-3.5 h-3.5" />
                 <span>Cinematic Experience</span>
               </div>
 
@@ -143,31 +147,41 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
                 SHOURYA <span className="text-gold-400 font-sans">SHARAN</span>
               </h1>
 
-              <p className="text-sm sm:text-base text-gray-400 font-sans tracking-wide leading-relaxed mb-8 max-w-md">
-                A 3D spatial experience in cognitive science, computation, and tactical systems design.
+              <p className="text-sm sm:text-base text-gray-300 font-sans tracking-wide leading-relaxed mb-8 max-w-md">
+                3D spatial portfolio bridging cognitive science, machine computation, and tactile visual systems.
               </p>
 
-              <button
-                onClick={handleStart}
-                className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-amber-500 text-black font-semibold text-sm tracking-wider uppercase shadow-[0_0_30px_rgba(212,175,55,0.5)] hover:shadow-[0_0_50px_rgba(212,175,55,0.8)] hover:scale-105 transition-all duration-300"
-              >
-                <Play className="w-4 h-4 fill-black group-hover:translate-x-0.5 transition-transform" />
-                <span>Launch Experience</span>
-                <Volume2 className="w-4 h-4 ml-1 opacity-75" />
-              </button>
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full justify-center">
+                <button
+                  onClick={handleStart}
+                  className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-amber-500 text-black font-semibold text-sm tracking-wider uppercase shadow-[0_0_30px_rgba(212,175,55,0.5)] hover:shadow-[0_0_50px_rgba(212,175,55,0.8)] hover:scale-105 transition-all min-h-[48px] focus:outline-none focus:ring-2 focus:ring-gold-400"
+                >
+                  <Play className="w-4 h-4 fill-black group-hover:translate-x-0.5 transition-transform" />
+                  <span>Launch Experience</span>
+                  <Volume2 className="w-4 h-4 ml-1 opacity-75" />
+                </button>
 
-              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-widest mt-4">
-                Audio enabled · Best with sound
+                <button
+                  onClick={handleSkip}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border border-zinc-700 bg-black/60 text-gray-300 hover:text-white hover:border-zinc-500 transition-all text-xs font-mono tracking-widest uppercase min-h-[48px] focus:outline-none focus:ring-2 focus:ring-zinc-400"
+                >
+                  <span>Enter Portfolio Directly</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              <span className="text-[11px] font-mono text-gray-500 uppercase tracking-widest mt-6">
+                Audio optional · Toggle sound anytime in the top HUD
               </span>
             </motion.div>
           ) : (
-            /* HIMYM-Style Rapid Snapshot Reel */
+            /* HIMYM-Style Snapshot Reel */
             <div className="relative z-10 w-full max-w-2xl flex flex-col items-center justify-center min-h-[480px]">
               {step < SNAPSHOTS.length ? (
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={step}
-                    className="relative w-[320px] sm:w-[420px] bg-white p-5 sm:p-6 rounded-sm shadow-[0_20px_60px_rgba(0,0,0,0.9)] border-4 border-white"
+                    className="relative w-[320px] sm:w-[420px] bg-white p-5 sm:p-6 rounded-sm shadow-[0_20px_60px_rgba(0,0,0,0.95)] border-4 border-white"
                     initial={{
                       scale: 0.7,
                       opacity: 0,
@@ -190,7 +204,7 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
                       ease: [0.175, 0.885, 0.32, 1.275],
                     }}
                   >
-                    {/* Retro Yellowish Tint Photo Card */}
+                    {/* Retro Photo Card */}
                     <div className="relative aspect-[4/3] bg-gradient-to-br from-amber-950 via-obsidian-950 to-black rounded-sm overflow-hidden flex flex-col items-center justify-center p-6 border border-amber-500/20 text-center">
                       <div className="text-5xl sm:text-6xl mb-3 drop-shadow-md">
                         {SNAPSHOTS[step].icon}
@@ -233,7 +247,7 @@ export function CinematicIntro({ onComplete }: { onComplete: () => void }) {
                     WE BUILD <span className="text-gold-400">THE FUTURE.</span>
                   </h1>
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-neon/40 bg-cyan-neon/10 text-cyan-neon font-mono text-xs tracking-widest animate-pulse">
-                    ENTERING 3D DOMAIN...
+                    INITIALIZING 3D ECOSYSTEM...
                   </div>
                 </motion.div>
               )}

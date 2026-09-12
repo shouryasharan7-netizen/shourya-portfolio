@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { audioEngine } from "@/components/audio/AudioEngine";
 
@@ -8,14 +8,17 @@ interface MainSceneProps {
   scrollProgress: number;
   isHologramMode: boolean;
   empTriggerCount: number;
+  isRecruiterMode?: boolean;
 }
 
 export function MainScene({
   scrollProgress = 0,
   isHologramMode = false,
   empTriggerCount = 0,
+  isRecruiterMode = false,
 }: MainSceneProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [webGlSupported, setWebGlSupported] = useState<boolean>(true);
   const sceneStateRef = useRef<{
     kingGroup: THREE.Group;
     ring1: THREE.Mesh;
@@ -51,14 +54,12 @@ export function MainScene({
       sceneStateRef.current.scrollProgress = scrollProgress;
       sceneStateRef.current.isHologramMode = isHologramMode;
 
-      // Update material modes between Solid Cyber-Imperial and JARVIS Hologram CAD
       const { kingGroup, materials } = sceneStateRef.current;
       kingGroup.traverse((child) => {
         if (child instanceof THREE.Mesh && child !== sceneStateRef.current?.arcReactor) {
           if (isHologramMode) {
             child.material = materials.holoWireframe;
           } else {
-            // Restore original material by name / tag
             const matType = child.userData.matType;
             if (matType === "gold") child.material = materials.gold;
             else if (matType === "chrome") child.material = materials.chrome;
@@ -70,7 +71,7 @@ export function MainScene({
     }
   }, [scrollProgress, isHologramMode]);
 
-  // Trigger EMP Shockwave explosion in WebGL particle field
+  // EMP Shockwave Trigger
   useEffect(() => {
     if (empTriggerCount > 0 && sceneStateRef.current) {
       sceneStateRef.current.empActive = true;
@@ -80,11 +81,29 @@ export function MainScene({
   }, [empTriggerCount]);
 
   useEffect(() => {
+    // If user is in recruiter mode, we can skip WebGL setup or keep it minimal
+    if (isRecruiterMode) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    // Check WebGL support
+    try {
+      const gl = canvas.getContext("webgl2") || canvas.getContext("webgl");
+      if (!gl) {
+        setWebGlSupported(false);
+        return;
+      }
+    } catch {
+      setWebGlSupported(false);
+      return;
+    }
+
     const width = window.innerWidth;
     const height = window.innerHeight;
+
+    // Check prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     // 1. Scene & Camera
     const scene = new THREE.Scene();
@@ -94,16 +113,22 @@ export function MainScene({
     camera.position.set(0, 0, 7.5);
 
     // 2. High-Performance WebGL Renderer
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+      });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    } catch {
+      setWebGlSupported(false);
+      return;
+    }
 
-    // 3. Cinematic Studio & Laser Lighting
+    // 3. Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.45);
     scene.add(ambientLight);
 
@@ -157,7 +182,7 @@ export function MainScene({
       opacity: 0.85,
     });
 
-    // 5. Build Procedural Cybernetic King with ARC REACTOR
+    // 5. Procedural Cybernetic King with Arc Reactor
     const kingGroup = new THREE.Group();
     kingGroup.position.set(0, -0.4, 0);
     kingGroup.scale.set(1.2, 1.2, 1.2);
@@ -193,12 +218,12 @@ export function MainScene({
     ped2.position.y = -0.65;
     kingGroup.add(ped2);
 
-    // Fluted Waist Body
+    // Waist Body
     const waist = createMesh(new THREE.CylinderGeometry(0.55, 0.7, 1.2, 32), chromeMat, "chrome");
     waist.position.y = 0.2;
     kingGroup.add(waist);
 
-    // ARC REACTOR Core: Concentric Glowing Plasma Rings
+    // Arc Reactor Core
     const arcReactor = createMesh(new THREE.SphereGeometry(0.35, 24, 24), cyanGlowMat, "cyanGlow");
     arcReactor.position.y = 0.2;
     kingGroup.add(arcReactor);
@@ -242,7 +267,7 @@ export function MainScene({
     headCap.position.y = 2.05;
     kingGroup.add(headCap);
 
-    // Floating Crown & Cross
+    // Crown & Cross
     const crown = new THREE.Group();
     crown.position.y = 2.45;
 
@@ -267,7 +292,7 @@ export function MainScene({
 
     kingGroup.add(crown);
 
-    // Counter-Rotating Holographic Gyro Rings with Vector Ticks
+    // Counter-Rotating Gyro Rings
     const ring1 = new THREE.Mesh(
       new THREE.TorusGeometry(1.25, 0.02, 16, 64),
       new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.75 })
@@ -284,7 +309,7 @@ export function MainScene({
 
     scene.add(kingGroup);
 
-    // 6. JARVIS Laser Scanner Ring (Sweeping vertically)
+    // Laser Scanner Ring
     const scannerRing = new THREE.Mesh(
       new THREE.TorusGeometry(1.35, 0.015, 16, 64),
       new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.85 })
@@ -293,7 +318,7 @@ export function MainScene({
     scannerRing.position.y = 0;
     scene.add(scannerRing);
 
-    // 7. EMP Shockwave Expansion Ring
+    // EMP Shockwave Ring
     const empWave = new THREE.Mesh(
       new THREE.RingGeometry(0.1, 0.2, 64),
       new THREE.MeshBasicMaterial({
@@ -307,7 +332,7 @@ export function MainScene({
     empWave.position.y = -0.4;
     scene.add(empWave);
 
-    // 8. Tactical Infinite Grid Floor
+    // Tactical Grid Floor
     const grid = new THREE.GridHelper(40, 40, 0xd4af37, 0x181812);
     grid.position.y = -2.6;
     scene.add(grid);
@@ -320,8 +345,8 @@ export function MainScene({
     floorPlate.rotation.x = -Math.PI / 2;
     scene.add(floorPlate);
 
-    // 9. GPU Particle Nebula with Kinetic Shockwave Physics
-    const particleCount = 2500;
+    // GPU Particle Nebula
+    const particleCount = prefersReducedMotion ? 400 : 2000;
     const particleGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const basePositions = new Float32Array(particleCount * 3);
@@ -367,7 +392,7 @@ export function MainScene({
       size: 0.045,
       vertexColors: true,
       transparent: true,
-      opacity: 0.88,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending,
       depthWrite: false,
     });
@@ -375,7 +400,7 @@ export function MainScene({
     const particles = new THREE.Points(particleGeo, particleMat);
     scene.add(particles);
 
-    // 10. Store State
+    // Store state
     const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
     sceneStateRef.current = {
       kingGroup,
@@ -406,7 +431,7 @@ export function MainScene({
       empActive: false,
     };
 
-    // 11. Interactive Listeners
+    // Pointer & Keyboard Controls
     let isDragging = false;
     let previousMousePosition = { x: 0, y: 0 };
 
@@ -441,17 +466,26 @@ export function MainScene({
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
 
+    // Pause rendering when tab is hidden to save energy
+    let isTabVisible = true;
+    const onVisibilityChange = () => {
+      isTabVisible = document.visibilityState === "visible";
+    };
+
     window.addEventListener("mousemove", onPointerMove);
     window.addEventListener("mousedown", onPointerDown);
     window.addEventListener("mouseup", onPointerUp);
     window.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
-    // 12. High-Performance 60-120 FPS WebGL Render Loop
+    // Render loop
     let animId: number;
     const clock = new THREE.Clock();
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
+      if (!isTabVisible) return;
+
       const state = sceneStateRef.current;
       if (!state) return;
 
@@ -461,7 +495,7 @@ export function MainScene({
       state.mouse.x = THREE.MathUtils.lerp(state.mouse.x, state.mouse.targetX, 0.08);
       state.mouse.y = THREE.MathUtils.lerp(state.mouse.y, state.mouse.targetY, 0.08);
 
-      if (!isDragging) {
+      if (!isDragging && !prefersReducedMotion) {
         const targetRotY = state.mouse.x * 0.65 + t * 0.15 + state.scrollProgress * Math.PI * 2;
         const targetRotX = -state.mouse.y * 0.35 + Math.sin(t * 0.8) * 0.05;
         const targetRotZ = state.mouse.x * 0.15;
@@ -476,25 +510,22 @@ export function MainScene({
         kingGroup.position.y = THREE.MathUtils.lerp(kingGroup.position.y, targetY, 0.05);
       }
 
-      // Gyro Rings Spin
-      ring1.rotation.x = t * 0.9;
-      ring1.rotation.y = t * 0.6;
-      ring2.rotation.x = -t * 0.7;
-      ring2.rotation.z = t * 1.1;
+      if (!prefersReducedMotion) {
+        ring1.rotation.x = t * 0.9;
+        ring1.rotation.y = t * 0.6;
+        ring2.rotation.x = -t * 0.7;
+        ring2.rotation.z = t * 1.1;
 
-      // Arc Reactor Pulsing
-      const reactorScale = 1 + Math.sin(t * 4) * 0.14;
-      arcReactor.scale.set(reactorScale, reactorScale, reactorScale);
-      plasmaRing.rotation.z = t * 2;
+        const reactorScale = 1 + Math.sin(t * 4) * 0.14;
+        arcReactor.scale.set(reactorScale, reactorScale, reactorScale);
+        plasmaRing.rotation.z = t * 2;
 
-      // Floating Crown Breathing
-      crown.position.y = 2.45 + Math.sin(t * 2) * 0.06;
+        crown.position.y = 2.45 + Math.sin(t * 2) * 0.06;
+        scannerRing.position.y = Math.sin(t * 2) * 2.2;
+        scannerRing.rotation.z = t * 1.5;
+      }
 
-      // JARVIS Laser Scanner Vertical Sweep
-      scannerRing.position.y = Math.sin(t * 2) * 2.2;
-      scannerRing.rotation.z = t * 1.5;
-
-      // EMP Shockwave Animation
+      // EMP Shockwave physics
       if (state.empActive) {
         state.empRadius += 0.35;
         const mat = empWave.material as THREE.MeshBasicMaterial;
@@ -507,7 +538,7 @@ export function MainScene({
         }
       }
 
-      // GPU Particle Nebula Physics
+      // Particle physics
       const posAttr = particles.geometry.attributes.position as THREE.BufferAttribute;
       const pPos = posAttr.array as Float32Array;
       const basePos = state.particleBasePositions;
@@ -516,7 +547,6 @@ export function MainScene({
       for (let i = 0; i < particleCount; i++) {
         const idx = i * 3;
 
-        // EMP force push
         if (state.empActive) {
           const dx = pPos[idx];
           const dy = pPos[idx + 1];
@@ -530,12 +560,10 @@ export function MainScene({
           }
         }
 
-        // Spring restoration back to base
         vels[idx] += (basePos[idx] - pPos[idx]) * 0.04;
         vels[idx + 1] += (basePos[idx + 1] - pPos[idx + 1]) * 0.04;
         vels[idx + 2] += (basePos[idx + 2] - pPos[idx + 2]) * 0.04;
 
-        // Damping
         vels[idx] *= 0.88;
         vels[idx + 1] *= 0.88;
         vels[idx + 2] *= 0.88;
@@ -546,34 +574,54 @@ export function MainScene({
       }
       posAttr.needsUpdate = true;
 
-      // Particle Nebula Slow Orbital Rotation
-      particles.rotation.y = t * 0.035 + state.mouse.x * 0.25;
-      particles.rotation.x = -state.mouse.y * 0.15;
+      if (!prefersReducedMotion) {
+        particles.rotation.y = t * 0.035 + state.mouse.x * 0.25;
+        particles.rotation.x = -state.mouse.y * 0.15;
+      }
 
       renderer.render(scene, camera);
     };
 
     animate();
 
-    // 13. Cleanup on unmount
     return () => {
       window.removeEventListener("mousemove", onPointerMove);
       window.removeEventListener("mousedown", onPointerDown);
       window.removeEventListener("mouseup", onPointerUp);
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       cancelAnimationFrame(animId);
       renderer.dispose();
       scene.clear();
       sceneStateRef.current = null;
     };
-  }, []);
+  }, [isRecruiterMode]);
+
+  // Graceful 2D Fallback if WebGL is unsupported or disabled
+  if (!webGlSupported) {
+    return (
+      <div
+        className="fixed inset-0 w-full h-full pointer-events-none z-0 flex items-center justify-center opacity-30"
+        aria-hidden="true"
+      >
+        <div className="w-96 h-96 rounded-full border border-gold-500/20 flex items-center justify-center">
+          <div className="text-8xl font-serif text-gold-400 select-none">♟</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isRecruiterMode) {
+    return null;
+  }
 
   return (
     <canvas
       ref={canvasRef}
       className="fixed inset-0 w-full h-full pointer-events-auto z-0"
       role="img"
-      aria-label="JARVIS Holographic 3D Spatial Domain. Drag to rotate and explore."
+      aria-label="Interactive 3D Cybernetic King with Arc Reactor and kinetic particle field. Mouse drag rotates the model."
+      tabIndex={-1}
     />
   );
 }
