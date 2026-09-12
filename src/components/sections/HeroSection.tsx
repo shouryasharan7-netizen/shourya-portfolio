@@ -1,211 +1,157 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { audioEngine } from "@/components/audio/AudioEngine";
-import { Card3D } from "@/components/ui/Card3D";
+import React, { useState } from "react";
 import {
   ArrowUpRight,
-  Briefcase,
-  Layers,
-  Sparkles,
-  Zap,
-  Download,
   Mail,
-  Award,
-  ChevronDown,
+  Copy,
+  Check,
+  Github,
+  MapPin,
+  Sparkles,
+  Command,
+  ChevronRight,
+  GraduationCap,
 } from "lucide-react";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 
 interface HeroSectionProps {
-  onTriggerEMP?: () => void;
-  isRecruiterMode?: boolean;
+  onOpenCommandPalette: () => void;
 }
 
-export function HeroSection({ onTriggerEMP, isRecruiterMode }: HeroSectionProps) {
-  const [glitchText, setGlitchText] = useState("SHOURYA SHARAN");
-  const subtitle = "I don't think in disciplines. I think in problems.";
-  const [typedText, setTypedText] = useState("");
+export function HeroSection({ onOpenCommandPalette }: HeroSectionProps) {
+  const [copiedEmail, setCopiedEmail] = useState(false);
 
-  useEffect(() => {
-    let index = 0;
-    const interval = setInterval(() => {
-      if (index < subtitle.length) {
-        setTypedText(subtitle.substring(0, index + 1));
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 40);
-    return () => clearInterval(interval);
-  }, []);
-
-  const triggerGlitch = () => {
-    audioEngine.playHover();
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let iterations = 0;
-    const target = "SHOURYA SHARAN";
-
-    const interval = setInterval(() => {
-      setGlitchText(
-        target
-          .split("")
-          .map((char, index) => {
-            if (index < iterations) return target[index];
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join("")
-      );
-
-      if (iterations >= target.length) {
-        clearInterval(interval);
-      }
-      iterations += 1 / 2;
-    }, 30);
+  const copyEmail = () => {
+    navigator.clipboard.writeText(PERSONAL_INFO.email);
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
   };
 
   return (
     <section
       id="hero"
-      aria-label="Introduction & Overview"
-      className="min-h-screen w-full flex flex-col justify-center items-center text-center px-4 sm:px-6 relative z-10 pt-28 pb-16"
+      aria-label="Introduction & Highlights"
+      className="pt-32 pb-16 px-4 sm:px-6 relative z-10 max-w-6xl mx-auto"
     >
-      <div className="max-w-4xl mx-auto flex flex-col items-center">
-        {/* Tactical Signal Pill */}
-        <motion.div
-          initial={{ opacity: 0, y: -15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-gold-500/30 bg-black/80 backdrop-blur-md mb-6 shadow-[0_0_25px_rgba(212,175,55,0.2)]"
-        >
+      {/* Top Status Badge & Location */}
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 text-emerald-400 text-xs font-medium tracking-tight">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[11px] font-mono tracking-widest text-gold-300 uppercase">
-            CHIEF SCIENCE OFFICER // COMPUTATIONAL RESEARCHER // UI ARCHITECT
-          </span>
-        </motion.div>
-
-        {/* Semantic H1 with Glitch Decryption on Hover */}
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.7, delay: 0.15 }}
-          onMouseEnter={triggerGlitch}
-          className="text-4xl sm:text-7xl md:text-8xl font-black font-serif tracking-tight text-white mb-4 select-none cursor-pointer group"
-          title="Hover to trigger cryptographic decode"
-        >
-          <span className="bg-gradient-to-b from-white via-zinc-100 to-zinc-400 bg-clip-text text-transparent group-hover:from-gold-200 group-hover:via-gold-400 group-hover:to-amber-500 transition-all duration-300 drop-shadow-[0_10px_40px_rgba(0,0,0,0.9)]">
-            {glitchText}
-          </span>
-        </motion.h1>
-
-        {/* Dynamic Core Thesis Subtitle */}
-        <div className="min-h-[32px] mb-6">
-          <p className="text-base sm:text-xl text-gold-400 font-mono tracking-wider font-medium">
-            &ldquo;{typedText}&rdquo;
-            <span className="animate-pulse text-cyan-neon">_</span>
-          </p>
+          <span>Available for research & engineering collaborations</span>
         </div>
 
-        {/* Direct, Credible Bio Paragraph */}
-        <motion.p
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-sm sm:text-base text-gray-300 max-w-2xl leading-relaxed mb-8 font-sans"
+        <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
+          <MapPin className="w-3.5 h-3.5 text-zinc-500" />
+          <span>Nagpur, India</span>
+          <span className="text-zinc-600">·</span>
+          <span className="text-zinc-400">Top 1% CBSE Cohort</span>
+        </div>
+      </div>
+
+      {/* Main Punchy Linear Headline */}
+      <div className="mb-8">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-5 leading-[1.1] font-sans">
+          &ldquo;I don&apos;t think in disciplines. <br />
+          <span className="bg-gradient-to-r from-amber-400 via-amber-200 to-yellow-500 bg-clip-text text-transparent">
+            I think in problems.&rdquo;
+          </span>
+        </h1>
+
+        <p className="text-base sm:text-lg text-zinc-400 max-w-3xl leading-relaxed font-sans">
+          I&apos;m <span className="text-zinc-100 font-semibold">Shourya Sharan</span>—a 17-year-old researcher, builder, and UI architect working at the intersection of cognitive science, machine computation, and accessible visual systems. Currently serving as{" "}
+          <span className="text-amber-300 font-medium">Chief Science Officer</span> at The Walnut Initiative,{" "}
+          <span className="text-sky-300 font-medium">Computational Researcher</span> at STEMinate, and{" "}
+          <span className="text-zinc-200 font-medium">Freelance Web Developer</span> at Descreened.
+        </p>
+      </div>
+
+      {/* Action Row */}
+      <div className="flex flex-wrap items-center gap-3 mb-12">
+        {/* Explore Work */}
+        <a
+          href="#projects"
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-white text-black font-semibold text-xs hover:bg-zinc-200 transition-all shadow-sm"
         >
-          Operating at the intersection of <strong className="text-white font-semibold">cognitive science</strong>,{" "}
-          <strong className="text-white font-semibold">machine computation</strong>, and{" "}
-          <strong className="text-white font-semibold">tactile UI architecture</strong>. Currently serving as{" "}
-          <span className="text-gold-300 font-medium">Chief Science Officer</span> at The Walnut Initiative,{" "}
-          <span className="text-cyan-neon font-medium">Computational Researcher</span> at STEMinate, and{" "}
-          <span className="text-white font-medium">Freelance UI Architect</span> at Descreened.
-        </motion.p>
+          <span>Explore selected craft</span>
+          <ArrowUpRight className="w-3.5 h-3.5" />
+        </a>
 
-        {/* Primary Action Row: Immediate Value & Fast Navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.45 }}
-          className="flex flex-wrap items-center justify-center gap-3.5 mb-14"
+        {/* Copy Email Button */}
+        <button
+          onClick={copyEmail}
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-zinc-900 border border-white/10 hover:border-white/20 text-zinc-200 text-xs font-medium transition-all"
+          title="Copy email to clipboard"
         >
-          {/* Primary CTA: Selected Work */}
-          <a
-            href="#projects"
-            onClick={() => audioEngine.playClick()}
-            onMouseEnter={() => audioEngine.playHover()}
-            className="px-6 py-3.5 rounded-full bg-gradient-to-r from-gold-500 via-gold-400 to-amber-500 text-black font-semibold text-xs font-mono tracking-widest uppercase shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:shadow-[0_0_45px_rgba(212,175,55,0.75)] hover:scale-105 transition-all min-h-[44px] flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-gold-400"
-          >
-            <span>EXPLORE WORK</span>
-            <ArrowUpRight className="w-4 h-4" />
-          </a>
-
-          {/* Secondary CTA: Experience Dossier */}
-          <a
-            href="#experience"
-            onClick={() => audioEngine.playClick()}
-            onMouseEnter={() => audioEngine.playHover()}
-            className="px-6 py-3.5 rounded-full border border-gold-500/40 bg-black/70 text-gold-300 font-semibold text-xs font-mono tracking-widest uppercase hover:bg-gold-500/10 hover:border-gold-400 transition-all min-h-[44px] flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-gold-400"
-          >
-            <Briefcase className="w-4 h-4 text-gold-400" />
-            <span>VIEW EXPERIENCE</span>
-          </a>
-
-          {/* Contact CTA */}
-          <a
-            href="#contact"
-            onClick={() => audioEngine.playClick()}
-            onMouseEnter={() => audioEngine.playHover()}
-            className="px-5 py-3.5 rounded-full border border-zinc-700 bg-black/60 text-gray-300 font-semibold text-xs font-mono tracking-widest uppercase hover:border-zinc-500 hover:text-white transition-all min-h-[44px] flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-zinc-400"
-          >
-            <Mail className="w-4 h-4 text-gray-400" />
-            <span>CONTACT</span>
-          </a>
-
-          {/* EMP Kinetic Shockwave (Only in visual mode) */}
-          {onTriggerEMP && !isRecruiterMode && (
-            <button
-              onClick={onTriggerEMP}
-              onMouseEnter={() => audioEngine.playHover()}
-              className="px-4 py-3.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs font-mono tracking-widest uppercase hover:bg-amber-500/20 transition-all min-h-[44px] flex items-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-amber-400"
-              title="Discharge 3D particle kinetic pulse"
-            >
-              <Zap className="w-3.5 h-3.5 text-amber-400" />
-              <span>EMP</span>
-            </button>
+          {copiedEmail ? (
+            <>
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-emerald-300">Copied to clipboard</span>
+            </>
+          ) : (
+            <>
+              <Copy className="w-3.5 h-3.5 text-zinc-400" />
+              <span>Copy Email</span>
+            </>
           )}
-        </motion.div>
+        </button>
 
-        {/* 4 Multi-Layer Verified Metric Cards (Grounded strictly in resume) */}
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.6 }}
-          className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 w-full max-w-4xl"
+        {/* GitHub */}
+        <a
+          href={PERSONAL_INFO.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-zinc-900 border border-white/10 hover:border-white/20 text-zinc-200 text-xs font-medium transition-all"
         >
-          {PERSONAL_INFO.stats.map((stat, i) => (
-            <Card3D
-              key={i}
-              glowColor={i === 0 ? "gold" : i === 1 ? "cyan" : i === 2 ? "purple" : "amber"}
-              className="p-4 sm:p-5 flex flex-col items-center justify-center text-center"
-            >
-              <span className="text-2xl sm:text-3xl font-bold font-mono text-white group-hover:text-gold-400 transition-colors">
-                {stat.value}
-              </span>
-              <span className="text-[10px] font-mono tracking-wider text-gold-400/90 font-semibold mt-1">
+          <Github className="w-3.5 h-3.5 text-zinc-400" />
+          <span>GitHub</span>
+        </a>
+
+        {/* Command Palette Trigger */}
+        <button
+          onClick={onOpenCommandPalette}
+          className="hidden sm:inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg bg-zinc-900/60 border border-white/10 hover:border-white/20 text-zinc-400 text-xs font-mono transition-all"
+        >
+          <Command className="w-3.5 h-3.5" />
+          <span>Press ⌘K</span>
+        </button>
+      </div>
+
+      {/* 4 Verified Metric Bento Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+        {PERSONAL_INFO.stats.map((stat, i) => (
+          <SpotlightCard
+            key={i}
+            spotlightColor={
+              i === 0
+                ? "rgba(245, 158, 11, 0.12)"
+                : i === 1
+                ? "rgba(56, 189, 248, 0.12)"
+                : i === 2
+                ? "rgba(168, 85, 247, 0.12)"
+                : "rgba(16, 185, 129, 0.12)"
+            }
+            className="p-4 sm:p-5 flex flex-col justify-between"
+          >
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
                 {stat.label}
               </span>
-              <span className="text-[9px] text-gray-400 font-sans mt-0.5">
-                {stat.sub}
-              </span>
-            </Card3D>
-          ))}
-        </motion.div>
+              <span className="w-1.5 h-1.5 rounded-full bg-zinc-600" />
+            </div>
 
-        {/* Gentle Scroll Hint */}
-        <div className="mt-12 flex flex-col items-center text-gray-500 text-[11px] font-mono tracking-widest uppercase animate-bounce">
-          <span>Scroll to inspect trajectory</span>
-          <ChevronDown className="w-4 h-4 mt-1 text-gold-400/60" />
-        </div>
+            <div className="my-1">
+              <span className="text-2xl sm:text-3xl font-bold font-mono tracking-tight text-white">
+                {stat.value}
+              </span>
+            </div>
+
+            <p className="text-[11px] text-zinc-400 font-sans mt-1">
+              {stat.sub}
+            </p>
+          </SpotlightCard>
+        ))}
       </div>
     </section>
   );

@@ -3,12 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #030305;
-  --foreground: #F8F9FA;
-  --gold-primary: #D4AF37;
-  --gold-glow: rgba(212, 175, 55, 0.4);
-  --cyan-neon: #00F0FF;
-  --cyan-glow: rgba(0, 240, 255, 0.35);
+  --background: #08080A;
+  --foreground: #F4F4F6;
+  --card-bg: #0E0E12;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --accent-amber: #F59E0B;
+  --accent-sky: #38BDF8;
 }
 
 * {
@@ -23,136 +23,60 @@ body {
   overflow-x: hidden;
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-space), system-ui, -apple-system, sans-serif;
+  font-family: var(--font-space), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   scroll-behavior: smooth;
   cursor: default;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Custom Tactical Scrollbar */
+/* Minimalist Precision Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #07070B;
+  background: #08080A;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2A2412;
-  border-radius: 3px;
-  border: 1px solid rgba(212, 175, 55, 0.3);
+  background: #27272A;
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D4AF37;
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+  background: #3F3F46;
 }
 
 ::selection {
-  background: #D4AF37;
-  color: #030305;
+  background: #F4F4F6;
+  color: #08080A;
 }
 
-/* Film Grain Overlay */
-.film-grain {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+/* Command Palette & Modal Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-/* Vignette */
-.cinematic-vignette {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-  background: radial-gradient(circle at center, transparent 40%, rgba(3, 3, 5, 0.85) 100%);
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-/* Glassmorphism Classes */
-.glass-card {
-  background: rgba(14, 14, 22, 0.65);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 175, 55, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.animate-fadeIn {
+  animation: fadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.glass-card:hover {
-  border-color: rgba(212, 175, 55, 0.5);
-  box-shadow: 0 12px 40px 0 rgba(212, 175, 55, 0.15);
-}
-
-.glass-card-cyan {
-  background: rgba(10, 15, 25, 0.7);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 240, 255, 0.2);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-}
-
-.glass-card-cyan:hover {
-  border-color: rgba(0, 240, 255, 0.6);
-  box-shadow: 0 12px 40px 0 rgba(0, 240, 255, 0.2);
-}
-
-/* Tactical HUD borders */
-.hud-corner {
-  position: relative;
-}
-
-.hud-corner::before,
-.hud-corner::after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border-color: #D4AF37;
-  pointer-events: none;
-}
-
-.hud-corner::before {
-  top: -1px;
-  left: -1px;
-  border-top: 2px solid;
-  border-left: 2px solid;
-}
-
-.hud-corner::after {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: 2px solid;
-  border-right: 2px solid;
-}
-
-/* Gold Text Glow */
-.text-gold-glow {
-  color: #F7F0D6;
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-}
-
-.text-cyan-glow {
-  color: #E0F7FA;
-  text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
-}
-
-/* Scanline Effect */
-.scanline {
-  position: relative;
-  overflow: hidden;
-}
-
-.scanline::after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-  background-size: 100% 4px;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.3;
+.animate-scaleUp {
+  animation: scaleUp 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

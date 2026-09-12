@@ -1,77 +1,48 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { MusicPlayer } from "@/components/audio/MusicPlayer";
-import { audioEngine } from "@/components/audio/AudioEngine";
 import {
-  Zap,
-  Cpu,
+  Search,
   Menu,
   X,
-  ChevronRight,
   FileText,
-  Compass,
-  Layers,
+  Mail,
+  Github,
+  ChevronRight,
+  ExternalLink,
 } from "lucide-react";
+import { PERSONAL_INFO } from "@/data/portfolioData";
 
 interface SpatialHUDProps {
-  isHologramMode: boolean;
-  onToggleHologram: () => void;
-  onTriggerEMP: () => void;
+  onOpenCommandPalette: () => void;
   activeSection: string;
-  isRecruiterMode: boolean;
-  onToggleRecruiterMode: () => void;
 }
 
 const NAV_LINKS = [
-  { label: "01. ABOUT", href: "#about" },
-  { label: "02. EXPERIENCE", href: "#experience" },
-  { label: "03. PROJECTS", href: "#projects" },
-  { label: "04. HONORS", href: "#recognitions" },
-  { label: "05. CONTACT", href: "#contact" },
+  { label: "Overview", href: "#hero" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Honors", href: "#recognitions" },
+  { label: "Skills", href: "#about" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function SpatialHUD({
-  isHologramMode,
-  onToggleHologram,
-  onTriggerEMP,
+  onOpenCommandPalette,
   activeSection,
-  isRecruiterMode,
-  onToggleRecruiterMode,
 }: SpatialHUDProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [currentTime, setCurrentTime] = useState("");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const updateTimer = () => {
-      const now = new Date();
-      setCurrentTime(
-        now.toLocaleTimeString("en-US", {
-          hour12: false,
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
     };
-    updateTimer();
-    const timer = setInterval(updateTimer, 1000);
-    return () => clearInterval(timer);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Handle escape key to close mobile menu
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileMenuOpen) {
-        setMobileMenuOpen(false);
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [mobileMenuOpen]);
-
   const handleLinkClick = (href: string) => {
-    audioEngine.playClick();
     setMobileMenuOpen(false);
     const element = document.querySelector(href);
     if (element) {
@@ -80,172 +51,119 @@ export function SpatialHUD({
   };
 
   return (
-    <>
-      {/* Fixed Top Spatial HUD Bar */}
-      <header
-        role="banner"
-        className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-8 py-3 pointer-events-none"
+    <header
+      role="banner"
+      className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3.5 transition-all duration-300 pointer-events-none"
+    >
+      <div
+        className={`max-w-6xl mx-auto flex items-center justify-between px-4 py-2.5 rounded-full border transition-all duration-300 pointer-events-auto ${
+          scrolled
+            ? "bg-[#08080A]/85 backdrop-blur-xl border-white/[0.12] shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+            : "bg-[#08080A]/40 backdrop-blur-md border-white/[0.06]"
+        }`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Brand & Identity Link */}
-          <div className="flex items-center gap-3 pointer-events-auto">
-            <a
-              href="#hero"
-              onClick={(e) => {
-                e.preventDefault();
-                handleLinkClick("#hero");
-              }}
-              className="flex items-center gap-2 group min-h-[44px] min-w-[44px] focus:outline-none focus:ring-2 focus:ring-gold-400 rounded-sm"
-              aria-label="Shourya Sharan — Return to top"
-            >
-              <div className="w-8 h-8 rounded-sm bg-black/90 border border-gold-500/40 flex items-center justify-center text-gold-400 font-serif text-sm font-bold shadow-[0_0_15px_rgba(212,175,55,0.25)] group-hover:border-gold-400 group-hover:scale-105 transition-all">
-                ♟
-              </div>
-              <div className="flex flex-col text-left">
-                <span className="font-serif font-bold text-sm text-white tracking-widest group-hover:text-gold-400 transition-colors">
-                  SHOURYA<span className="text-gold-400">.</span>
-                </span>
-                <span className="text-[9px] font-mono text-gray-400 tracking-wider hidden sm:block">
-                  NAGPUR · {currentTime || "00:00:00"}
-                </span>
-              </div>
-            </a>
+        {/* Brand Logo & Name */}
+        <a
+          href="#hero"
+          onClick={(e) => {
+            e.preventDefault();
+            handleLinkClick("#hero");
+          }}
+          className="flex items-center gap-2.5 group focus:outline-none"
+          aria-label="Shourya Sharan — Home"
+        >
+          <div className="w-7 h-7 rounded-lg bg-zinc-900 border border-white/15 flex items-center justify-center text-zinc-100 font-serif text-xs font-bold group-hover:border-amber-400 group-hover:text-amber-400 transition-colors">
+            ♟
           </div>
+          <div className="flex items-center gap-1.5 font-medium text-xs tracking-tight text-zinc-200">
+            <span className="font-semibold text-white">Shourya Sharan</span>
+            <span className="text-zinc-500 hidden sm:inline">/</span>
+            <span className="text-zinc-400 text-[11px] font-mono hidden sm:inline">
+              CSO & ML Researcher
+            </span>
+          </div>
+        </a>
 
-          {/* Desktop Navigation Links */}
-          <nav
-            role="navigation"
-            aria-label="Primary navigation"
-            className="hidden lg:flex items-center gap-1 px-4 py-1.5 rounded-full border border-gold-500/20 bg-black/80 backdrop-blur-md pointer-events-auto shadow-[0_4px_20px_rgba(0,0,0,0.6)]"
-          >
-            {NAV_LINKS.map((link) => (
+        {/* Desktop Navigation Links */}
+        <nav
+          role="navigation"
+          aria-label="Main navigation"
+          className="hidden md:flex items-center gap-1"
+        >
+          {NAV_LINKS.map((link) => {
+            const sectionId = link.href.substring(1);
+            const isActive = activeSection === sectionId;
+            return (
               <button
                 key={link.label}
                 onClick={() => handleLinkClick(link.href)}
-                onMouseEnter={() => audioEngine.playHover()}
-                className={`px-3 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all duration-200 min-h-[32px] focus:outline-none focus:ring-2 focus:ring-gold-400 ${
-                  activeSection === link.href.substring(1)
-                    ? "text-black bg-gold-400 font-semibold shadow-[0_0_12px_#D4AF37]"
-                    : "text-gray-300 hover:text-gold-400 hover:bg-gold-500/10"
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
+                  isActive
+                    ? "text-white bg-white/10 font-semibold shadow-sm"
+                    : "text-zinc-400 hover:text-zinc-200 hover:bg-white/5"
                 }`}
               >
                 {link.label}
               </button>
-            ))}
-          </nav>
+            );
+          })}
+        </nav>
 
-          {/* Right Action Tools: Recruiter Mode + EMP + Hologram + Music */}
-          <div className="flex items-center gap-2 pointer-events-auto">
-            {/* Recruiter / Focused Reading Mode Toggle */}
-            <button
-              onClick={() => {
-                audioEngine.playClick();
-                onToggleRecruiterMode();
-              }}
-              onMouseEnter={() => audioEngine.playHover()}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-full border text-xs font-mono tracking-wider transition-all min-h-[44px] focus:outline-none focus:ring-2 focus:ring-gold-400 ${
-                isRecruiterMode
-                  ? "border-gold-400 bg-gold-400 text-black font-semibold shadow-[0_0_15px_#D4AF37]"
-                  : "border-zinc-700 bg-black/70 text-gray-300 hover:border-gold-400 hover:text-white"
-              }`}
-              title={
-                isRecruiterMode
-                  ? "Switch to 3D Tactical Cinematic Mode"
-                  : "Switch to Clean Recruiter Fast-Reading Mode"
-              }
-              aria-label={
-                isRecruiterMode
-                  ? "Disable Recruiter Mode"
-                  : "Enable Recruiter Mode"
-              }
-            >
-              <FileText className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">
-                {isRecruiterMode ? "RECRUITER MODE ON" : "RECRUITER BRIEF"}
-              </span>
-            </button>
+        {/* Right Tools: Cmd+K Trigger + Contact CTA */}
+        <div className="flex items-center gap-2.5">
+          {/* Command Palette Trigger Pill */}
+          <button
+            onClick={onOpenCommandPalette}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-zinc-900/80 border border-white/10 hover:border-white/20 text-zinc-400 hover:text-zinc-200 text-xs transition-all shadow-inner focus:outline-none focus:ring-2 focus:ring-amber-400/50"
+            aria-label="Open Command Palette"
+            title="Search or press Cmd+K"
+          >
+            <Search className="w-3.5 h-3.5 text-zinc-400" />
+            <span className="text-[11px] hidden sm:inline">Search</span>
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.2 text-[9px] font-mono font-medium text-zinc-400 bg-zinc-800/80 border border-zinc-700/60 rounded">
+              ⌘K
+            </kbd>
+          </button>
 
-            {/* EMP Shockwave Trigger (Cinematic mode only) */}
-            {!isRecruiterMode && (
-              <button
-                onClick={() => {
-                  onTriggerEMP();
-                }}
-                onMouseEnter={() => audioEngine.playHover()}
-                className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-full border border-amber-500/30 bg-black/60 text-amber-300 text-xs font-mono tracking-wider hover:border-amber-400 hover:bg-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.15)] transition-all min-h-[44px] focus:outline-none focus:ring-2 focus:ring-amber-400"
-                title="Discharge 3D EMP Kinetic Shockwave"
-                aria-label="Discharge 3D EMP Shockwave"
-              >
-                <Zap className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
-                <span>EMP</span>
-              </button>
-            )}
+          {/* Quick Contact Button */}
+          <a
+            href={`mailto:${PERSONAL_INFO.email}`}
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white text-black font-semibold text-xs hover:bg-zinc-200 transition-colors shadow-sm"
+          >
+            <Mail className="w-3 h-3 text-black" />
+            <span>Get in touch</span>
+          </a>
 
-            {/* Hologram CAD Mode Toggle */}
-            {!isRecruiterMode && (
-              <button
-                onClick={() => {
-                  audioEngine.playHoloToggle();
-                  onToggleHologram();
-                }}
-                onMouseEnter={() => audioEngine.playHover()}
-                className={`hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-full border text-xs font-mono tracking-wider transition-all min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-neon ${
-                  isHologramMode
-                    ? "border-cyan-neon bg-cyan-neon/20 text-cyan-neon shadow-[0_0_20px_rgba(0,240,255,0.5)]"
-                    : "border-cyan-neon/30 bg-black/60 text-cyan-300 hover:border-cyan-neon hover:bg-cyan-neon/10"
-                }`}
-                title={
-                  isHologramMode
-                    ? "Switch to Solid Cybernetic King"
-                    : "Switch to Hologram CAD Wireframe"
-                }
-                aria-label="Toggle Hologram CAD Mode"
-              >
-                <Cpu className="w-3.5 h-3.5" />
-                <span>{isHologramMode ? "CAD ON" : "CAD"}</span>
-              </button>
-            )}
-
-            {/* Audio Player Widget */}
-            <MusicPlayer />
-
-            {/* Mobile Hamburger Toggle */}
-            <button
-              onClick={() => {
-                audioEngine.playClick();
-                setMobileMenuOpen(!mobileMenuOpen);
-              }}
-              className="lg:hidden w-11 h-11 rounded-full border border-gold-500/30 bg-black/80 flex items-center justify-center text-gold-400 hover:bg-gold-500/20 focus:outline-none focus:ring-2 focus:ring-gold-400"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-navigation"
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-          </div>
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden w-8 h-8 rounded-full border border-white/10 bg-zinc-900/80 flex items-center justify-center text-zinc-300 hover:text-white"
+            aria-label={mobileMenuOpen ? "Close navigation" : "Open navigation"}
+          >
+            {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+          </button>
         </div>
-      </header>
+      </div>
 
-      {/* Mobile Navigation Dialog */}
+      {/* Mobile Navigation Dropdown Modal */}
       {mobileMenuOpen && (
         <div
-          id="mobile-navigation"
           role="dialog"
           aria-modal="true"
-          aria-label="Site Navigation"
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex flex-col justify-center px-6 lg:hidden"
+          aria-label="Mobile Navigation"
+          className="fixed inset-0 z-50 bg-[#08080A]/95 backdrop-blur-2xl flex flex-col justify-center px-6 md:hidden pointer-events-auto"
         >
           <div className="flex flex-col gap-5 max-w-sm mx-auto w-full">
-            <div className="flex items-center justify-between pb-3 border-b border-gold-500/30">
-              <span className="text-xs font-mono text-gold-400 tracking-widest uppercase">
-                // SYSTEM DIRECTORY
+            <div className="flex items-center justify-between pb-3 border-b border-zinc-800">
+              <span className="text-xs font-mono text-zinc-400 tracking-wider uppercase">
+                Navigation
               </span>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-2 text-gray-400 hover:text-white"
-                aria-label="Close navigation dialog"
+                className="p-1 text-zinc-400 hover:text-white"
+                aria-label="Close navigation"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
@@ -253,41 +171,35 @@ export function SpatialHUD({
               <button
                 key={link.label}
                 onClick={() => handleLinkClick(link.href)}
-                className="flex items-center justify-between text-left py-3 border-b border-zinc-800 text-lg font-serif text-white hover:text-gold-400 transition-colors min-h-[44px]"
+                className="flex items-center justify-between text-left py-2.5 border-b border-zinc-900 text-base text-zinc-200 hover:text-white transition-colors"
               >
                 <span>{link.label}</span>
-                <ChevronRight className="w-4 h-4 text-gold-400" />
+                <ChevronRight className="w-4 h-4 text-zinc-500" />
               </button>
             ))}
 
-            <div className="pt-4 flex flex-col gap-3">
+            <div className="pt-4 flex flex-col gap-2.5">
               <button
                 onClick={() => {
-                  onToggleRecruiterMode();
                   setMobileMenuOpen(false);
+                  onOpenCommandPalette();
                 }}
-                className="w-full py-3.5 rounded-md border border-gold-500/40 bg-gold-500/10 text-gold-300 font-mono text-xs tracking-widest uppercase flex items-center justify-center gap-2 min-h-[44px]"
+                className="w-full py-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-medium flex items-center justify-center gap-2"
               >
-                <FileText className="w-4 h-4" />
-                <span>
-                  {isRecruiterMode ? "DISABLE RECRUITER VIEW" : "ENABLE RECRUITER VIEW"}
-                </span>
+                <Search className="w-3.5 h-3.5" />
+                <span>Search Commands (Cmd + K)</span>
               </button>
 
-              <button
-                onClick={() => {
-                  onToggleHologram();
-                  setMobileMenuOpen(false);
-                }}
-                className="w-full py-3 rounded-md border border-cyan-neon/40 bg-cyan-neon/10 text-cyan-neon font-mono text-xs tracking-widest uppercase flex items-center justify-center gap-2 min-h-[44px]"
+              <a
+                href={`mailto:${PERSONAL_INFO.email}`}
+                className="w-full py-2.5 rounded-lg bg-white text-black text-xs font-semibold text-center"
               >
-                <Cpu className="w-4 h-4" />
-                <span>{isHologramMode ? "DISABLE HOLOGRAM" : "ENABLE HOLOGRAM CAD"}</span>
-              </button>
+                Email Shourya
+              </a>
             </div>
           </div>
         </div>
       )}
-    </>
+    </header>
   );
 }

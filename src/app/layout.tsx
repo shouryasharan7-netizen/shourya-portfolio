@@ -1,20 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Cinzel, JetBrains_Mono } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { CyberCursor } from "@/components/ui/CyberCursor";
 import { PERSONAL_INFO } from "@/data/portfolioData";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const cinzel = Cinzel({
-  variable: "--font-cinzel",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -26,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#030305",
+  themeColor: "#08080A",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -34,7 +26,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.shouryasharan.xyz"),
-  title: "Shourya Sharan // Researcher · Builder · UI Architect",
+  title: "Shourya Sharan — Researcher, Builder, UI Architect",
   description:
     "Official portfolio of Shourya Sharan. Chief Science Officer at The Walnut Initiative, Computational Researcher at STEMinate, and Freelance UI Architect.",
   keywords: [
@@ -57,9 +49,9 @@ export const metadata: Metadata = {
     canonical: "https://www.shouryasharan.xyz",
   },
   openGraph: {
-    title: "Shourya Sharan // Researcher · Builder · UI Architect",
+    title: "Shourya Sharan — Researcher, Builder, UI Architect",
     description:
-      "I don't think in disciplines — I think in problems. Explore research, platforms, inventions, and leadership initiatives.",
+      "I don't think in disciplines — I think in problems. Explore computational research, open-source platforms, inventions, and leadership initiatives.",
     url: "https://www.shouryasharan.xyz",
     siteName: "Shourya Sharan Portfolio",
     locale: "en_US",
@@ -67,7 +59,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Shourya Sharan // Researcher · Builder · UI Architect",
+    title: "Shourya Sharan — Researcher, Builder, UI Architect",
     description:
       "Chief Science Officer at The Walnut Initiative, Computational Researcher at STEMinate, Freelance UI Architect.",
   },
@@ -123,18 +115,16 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${cinzel.variable} ${jetbrainsMono.variable} antialiased bg-[#030305] text-[#F8F9FA] min-h-screen selection:bg-gold-500 selection:text-black overflow-x-hidden`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#08080A] text-[#F4F4F6] min-h-screen selection:bg-white selection:text-black overflow-x-hidden`}
       >
         {/* Accessible Skip Link */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[10001] focus:px-4 focus:py-2 focus:bg-gold-400 focus:text-black focus:font-mono focus:text-xs focus:font-bold focus:rounded-sm focus:shadow-[0_0_20px_#D4AF37] focus:outline-none"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[10001] focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:font-mono focus:text-xs focus:font-bold focus:rounded-md focus:shadow-lg focus:outline-none"
         >
           Skip to main content
         </a>
 
-        <div className="film-grain" aria-hidden="true" />
-        <CyberCursor />
         {children}
       </body>
     </html>

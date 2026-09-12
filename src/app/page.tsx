@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-import { CinematicIntro } from "@/components/intro/CinematicIntro";
 import { SpatialHUD } from "@/components/ui/SpatialHUD";
+import { CommandPalette } from "@/components/ui/CommandPalette";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ExperienceSection } from "@/components/sections/ExperienceSection";
@@ -11,43 +10,31 @@ import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { RecognitionsSection } from "@/components/sections/RecognitionsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 
-// Dynamically import 3D WebGL Canvas for client-side rendering
-const MainScene = dynamic(
-  () => import("@/components/3d/MainScene").then((mod) => mod.MainScene),
-  { ssr: false }
-);
-
 export default function Home() {
-  const [introFinished, setIntroFinished] = useState(false);
-  const [isHologramMode, setIsHologramMode] = useState(false);
-  const [isRecruiterMode, setIsRecruiterMode] = useState(false);
-  const [empTriggerCount, setEmpTriggerCount] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("hero");
 
-  const triggerEMP = () => {
-    setEmpTriggerCount((prev) => prev + 1);
-  };
+  // Global Cmd+K / Ctrl+K keyboard shortcut listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setCommandPaletteOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
-  const toggleRecruiterMode = () => {
-    setIsRecruiterMode((prev) => !prev);
-  };
-
+  // Track active section for navbar highlight
   useEffect(() => {
     const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const progress = Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
-        setScrollProgress(progress);
-      }
-
-      // Detect active section
-      const sections = ["hero", "about", "experience", "projects", "recognitions", "contact"];
+      const sections = ["hero", "experience", "projects", "recognitions", "about", "contact"];
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.2) {
+          if (rect.top <= window.innerHeight * 0.35 && rect.bottom >= window.innerHeight * 0.15) {
             setActiveSection(sectionId);
             break;
           }
@@ -63,60 +50,34 @@ export default function Home() {
     <main
       id="main-content"
       role="main"
-      className={`relative min-h-screen w-full bg-[#030305] text-[#F8F9FA] overflow-x-hidden selection:bg-gold-500 selection:text-black ${
-        isRecruiterMode ? "recruiter-mode-active" : ""
-      }`}
+      className="relative min-h-screen w-full bg-[#08080A] text-[#F4F4F6] overflow-x-hidden selection:bg-white selection:text-black font-sans"
     >
-      {/* HIMYM-Style Cinematic Snapshot Opening Intro (Only if not in Recruiter Mode) */}
-      {!introFinished && !isRecruiterMode && (
-        <CinematicIntro onComplete={() => setIntroFinished(true)} />
-      )}
+      {/* Subtle Linear Grid Background Pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#16161c_1px,transparent_1px),linear-gradient(to_bottom,#16161c_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-40 pointer-events-none" />
 
-      {/* Full-Screen JARVIS 3D WebGL Canvas Layer */}
-      <MainScene
-        scrollProgress={scrollProgress}
-        isHologramMode={isHologramMode}
-        empTriggerCount={empTriggerCount}
-        isRecruiterMode={isRecruiterMode}
-      />
+      {/* Top Ambient Light Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-gradient-to-b from-amber-500/10 via-sky-500/5 to-transparent blur-3xl pointer-events-none" />
 
-      {/* Cinematic Vignette */}
-      {!isRecruiterMode && <div className="cinematic-vignette" aria-hidden="true" />}
-
-      {/* Fixed Spatial Tactical HUD Bar */}
+      {/* Sleek Floating Navbar */}
       <SpatialHUD
-        isHologramMode={isHologramMode}
-        onToggleHologram={() => setIsHologramMode(!isHologramMode)}
-        onTriggerEMP={triggerEMP}
+        onOpenCommandPalette={() => setCommandPaletteOpen(true)}
         activeSection={activeSection}
-        isRecruiterMode={isRecruiterMode}
-        onToggleRecruiterMode={toggleRecruiterMode}
       />
 
-      {/* Recruiter Mode Active Banner */}
-      {isRecruiterMode && (
-        <div className="fixed top-16 left-0 right-0 z-40 bg-gold-400 text-black px-4 py-1.5 text-center text-xs font-mono font-bold flex items-center justify-center gap-2 shadow-lg">
-          <span>RECRUITER BRIEF MODE ACTIVE — 3D WebGL paused for fast scanning.</span>
-          <button
-            onClick={toggleRecruiterMode}
-            className="underline hover:text-white transition-colors ml-2"
-          >
-            [Switch to 3D Mode]
-          </button>
-        </div>
-      )}
+      {/* Command Palette Modal (Cmd + K) */}
+      <CommandPalette
+        isOpen={commandPaletteOpen}
+        onClose={() => setCommandPaletteOpen(false)}
+      />
 
-      {/* Interactive 3D Spatial Content Overlays */}
+      {/* Content Stream */}
       <div className="relative z-10 w-full">
-        <HeroSection onTriggerEMP={triggerEMP} isRecruiterMode={isRecruiterMode} />
-        <AboutSection />
+        <HeroSection onOpenCommandPalette={() => setCommandPaletteOpen(true)} />
         <ExperienceSection />
         <ProjectsSection />
+        <AboutSection />
         <RecognitionsSection />
-        <ContactSection
-          onToggleHologram={() => setIsHologramMode(!isHologramMode)}
-          onTriggerEMP={triggerEMP}
-        />
+        <ContactSection />
       </div>
     </main>
   );
