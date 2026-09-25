@@ -48,31 +48,20 @@ export function MotoCard3D({ onClose, isWindow = false }: MotoCard3DProps) {
   return (
     <div className="flex flex-col h-full w-full bg-[#0D0D12] text-zinc-100 rounded-lg overflow-hidden select-none font-sans shadow-2xl border border-white/10">
       {/* Title Bar */}
-      {isWindow && (
-        <div className="h-10 bg-[#1A1A22] border-b border-white/10 flex items-center justify-between px-3.5 select-none flex-shrink-0">
-          <div className="flex items-center gap-2">
-            {onClose && (
-              <button
-                onClick={onClose}
-                className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:opacity-80"
-                aria-label="Close"
-              />
-            )}
-            <span className="text-xs font-semibold text-white tracking-tight ml-2 flex items-center gap-1.5">
-              <span>💳</span>
-              <span>MOTO Stainless Steel Identity Card — 3D Physical Material</span>
-            </span>
-          </div>
+      {/* Card Inspector Secondary Sub-strip */}
+      <div className="h-8 bg-[#181822] border-b border-white/5 flex items-center justify-between px-3.5 select-none flex-shrink-0">
+        <span className="text-[11px] font-mono text-zinc-400">
+          Material: 316L Surgical Stainless Steel • Anisotropic Specular
+        </span>
 
-          <button
-            onClick={toggleFlip}
-            className="flex items-center gap-1 px-3 py-1 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[11px] font-mono transition-colors"
-          >
-            <RotateCw className="w-3 h-3" />
-            <span>Flip Card</span>
-          </button>
-        </div>
-      )}
+        <button
+          onClick={toggleFlip}
+          className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[10px] font-mono transition-colors cursor-pointer"
+        >
+          <RotateCw className="w-3 h-3 text-amber-400" />
+          <span>{isFlipped ? "View Front" : "Flip to Back"}</span>
+        </button>
+      </div>
 
       {/* Main 3D Card Stage */}
       <div className="flex-1 p-8 flex flex-col items-center justify-center overflow-hidden perspective-[1400px]">

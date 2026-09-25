@@ -325,13 +325,26 @@ export function LiveWallpaper({ theme = "ironman", onSnapTriggered }: LiveWallpa
         ctx.restore();
       });
 
-      animId = requestAnimationFrame(render);
+      if (!document.hidden) {
+        animId = requestAnimationFrame(render);
+      }
     };
+
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animId);
+      } else {
+        cancelAnimationFrame(animId);
+        animId = requestAnimationFrame(render);
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     render();
 
     return () => {
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       cancelAnimationFrame(animId);
     };
   }, [theme, isSnapping]);

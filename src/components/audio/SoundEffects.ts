@@ -4,12 +4,16 @@
 class SoundEffectsEngine {
   private ctx: AudioContext | null = null;
   private soundEnabled: boolean = true;
+  private masterVolume: number = 0.85;
+  private masterGain: GainNode | null = null;
 
   private getContext(): AudioContext | null {
     if (!this.soundEnabled || typeof window === "undefined") return null;
     try {
       if (!this.ctx) {
-        const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+        const AudioCtx =
+          window.AudioContext ||
+          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
         if (AudioCtx) {
           this.ctx = new AudioCtx();
         }
@@ -31,11 +35,32 @@ class SoundEffectsEngine {
     return this.soundEnabled;
   }
 
+  public setMasterVolume(volume: number) {
+    this.masterVolume = Math.max(0, Math.min(1, volume));
+    if (this.masterGain && this.ctx) {
+      this.masterGain.gain.setValueAtTime(this.masterVolume, this.ctx.currentTime);
+    }
+  }
+
+  public getMasterVolume(): number {
+    return this.masterVolume;
+  }
+
+  private getMasterDestination(ctx: AudioContext): AudioNode {
+    if (!this.masterGain) {
+      this.masterGain = ctx.createGain();
+      this.masterGain.gain.setValueAtTime(this.masterVolume, ctx.currentTime);
+      this.masterGain.connect(ctx.destination);
+    }
+    return this.masterGain;
+  }
+
   // macOS Iconic Startup Chime (F# Major Chord)
   public playBootChime() {
     const ctx = this.getContext();
     if (!ctx) return;
     const now = ctx.currentTime;
+    const dest = this.getMasterDestination(ctx);
 
     // F# Maj chord notes: F#2, C#3, F#3, A#3, C#4, F#4
     const notes = [92.5, 138.59, 185.0, 233.08, 277.18, 369.99];
@@ -52,7 +77,7 @@ class SoundEffectsEngine {
       gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.8);
 
       osc.connect(gain);
-      gain.connect(ctx.destination);
+      gain.connect(dest);
 
       osc.start(now);
       osc.stop(now + 2.9);
@@ -64,6 +89,7 @@ class SoundEffectsEngine {
     const ctx = this.getContext();
     if (!ctx) return;
     const now = ctx.currentTime;
+    const dest = this.getMasterDestination(ctx);
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -76,7 +102,7 @@ class SoundEffectsEngine {
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+    gain.connect(dest);
 
     osc.start(now);
     osc.stop(now + 0.05);
@@ -87,6 +113,7 @@ class SoundEffectsEngine {
     const ctx = this.getContext();
     if (!ctx) return;
     const now = ctx.currentTime;
+    const dest = this.getMasterDestination(ctx);
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -99,7 +126,7 @@ class SoundEffectsEngine {
     gain.gain.exponentialRampToValueAtTime(0.0005, now + 0.02);
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+    gain.connect(dest);
 
     osc.start(now);
     osc.stop(now + 0.025);
@@ -110,6 +137,7 @@ class SoundEffectsEngine {
     const ctx = this.getContext();
     if (!ctx) return;
     const now = ctx.currentTime;
+    const dest = this.getMasterDestination(ctx);
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -122,7 +150,7 @@ class SoundEffectsEngine {
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+    gain.connect(dest);
 
     osc.start(now);
     osc.stop(now + 0.11);
@@ -134,11 +162,11 @@ class SoundEffectsEngine {
     const ctx = this.getContext();
     if (!ctx) return;
     const now = ctx.currentTime;
+    const dest = this.getMasterDestination(ctx);
 
     const frequencies = [82.41, 110.0, 146.83, 196.0, 246.94, 329.63];
     const baseFreq = frequencies[stringIndex] || 196.0;
 
-    // Pluck has fundamental + 2nd & 3rd harmonics with rapid initial attack and exponential ring decay
     const harmonics = [
       { mult: 1, gain: 0.14, decay: 1.8 },
       { mult: 2, gain: 0.08, decay: 1.2 },
@@ -150,7 +178,6 @@ class SoundEffectsEngine {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
 
-      // Triangle + Sine combination replicates nylon/steel guitar string timbre
       osc.type = mult === 1 ? "triangle" : "sine";
       osc.frequency.setValueAtTime(baseFreq * mult, now);
 
@@ -159,7 +186,7 @@ class SoundEffectsEngine {
       gain.gain.exponentialRampToValueAtTime(0.0001, now + decay);
 
       osc.connect(gain);
-      gain.connect(ctx.destination);
+      gain.connect(dest);
 
       osc.start(now);
       osc.stop(now + decay + 0.05);
@@ -180,6 +207,7 @@ class SoundEffectsEngine {
     const ctx = this.getContext();
     if (!ctx) return;
     const now = ctx.currentTime;
+    const dest = this.getMasterDestination(ctx);
 
     // 1. Cosmic Power Surge (Sub rumble rising to energy peak)
     const subOsc = ctx.createOscillator();
@@ -193,7 +221,7 @@ class SoundEffectsEngine {
     subGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45);
 
     subOsc.connect(subGain);
-    subGain.connect(ctx.destination);
+    subGain.connect(dest);
     subOsc.start(now);
     subOsc.stop(now + 0.45);
 
@@ -202,7 +230,6 @@ class SoundEffectsEngine {
       if (!ctx) return;
       const snapTime = ctx.currentTime;
 
-      // Noise burst for mechanical snap impact
       const bufferSize = ctx.sampleRate * 0.15;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
@@ -223,7 +250,7 @@ class SoundEffectsEngine {
 
       noise.connect(filter);
       filter.connect(noiseGain);
-      noiseGain.connect(ctx.destination);
+      noiseGain.connect(dest);
 
       noise.start(snapTime);
 
@@ -238,7 +265,7 @@ class SoundEffectsEngine {
       chimeGain.gain.exponentialRampToValueAtTime(0.0001, snapTime + 1.2);
 
       chime.connect(chimeGain);
-      chimeGain.connect(ctx.destination);
+      chimeGain.connect(dest);
 
       chime.start(snapTime);
       chime.stop(snapTime + 1.2);
@@ -250,6 +277,7 @@ class SoundEffectsEngine {
     const ctx = this.getContext();
     if (!ctx) return;
     const now = ctx.currentTime;
+    const dest = this.getMasterDestination(ctx);
 
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
@@ -262,7 +290,7 @@ class SoundEffectsEngine {
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
 
     osc.connect(gain);
-    gain.connect(ctx.destination);
+    gain.connect(dest);
 
     osc.start(now);
     osc.stop(now + 0.045);

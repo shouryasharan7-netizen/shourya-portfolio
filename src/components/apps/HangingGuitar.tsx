@@ -47,31 +47,21 @@ export function HangingGuitar({ onClose, isWindow = false }: HangingGuitarProps)
   return (
     <div className="flex flex-col h-full w-full bg-[#120E0F] text-zinc-200 rounded-lg overflow-hidden select-none font-sans shadow-2xl border border-red-950/40">
       {/* Window Header */}
-      {isWindow && (
-        <div className="h-10 bg-[#1F171A] border-b border-white/10 flex items-center justify-between px-3.5 select-none flex-shrink-0">
-          <div className="flex items-center gap-2">
-            {onClose && (
-              <button
-                onClick={onClose}
-                className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:opacity-80"
-                aria-label="Close"
-              />
-            )}
-            <span className="text-xs font-semibold text-white tracking-tight flex items-center gap-1.5 ml-2">
-              <Music className="w-3.5 h-3.5 text-amber-400" />
-              <span>Acoustic Guitar Studio — 6-String Physical Modeling</span>
-            </span>
-          </div>
-
-          <button
-            onClick={handleStrum}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-600 hover:bg-amber-500 text-black text-[11px] font-bold font-mono transition-transform active:scale-95 cursor-pointer shadow-md"
-          >
-            <Sparkles className="w-3 h-3" />
-            <span>STRUM CHORD</span>
-          </button>
+      {/* Studio Preset Control Strip */}
+      <div className="h-8 bg-[#1B1214] border-b border-white/5 flex items-center justify-between px-3.5 select-none flex-shrink-0">
+        <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-400">
+          <Music className="w-3.5 h-3.5 text-amber-400" />
+          <span>Dreadnought Acoustic • Web Audio Physical Model</span>
         </div>
-      )}
+
+        <button
+          onClick={handleStrum}
+          className="flex items-center gap-1 px-3 py-0.5 rounded-full bg-amber-500 hover:bg-amber-400 text-black text-[10px] font-bold font-mono transition-transform active:scale-95 cursor-pointer shadow-md"
+        >
+          <Sparkles className="w-3 h-3" />
+          <span>STRUM HARMONIC</span>
+        </button>
+      </div>
 
       {/* Main Guitar Hanging Body & Strumming Area */}
       <div className="flex-1 p-6 flex flex-col md:flex-row items-center justify-center gap-6 overflow-y-auto relative">

@@ -150,21 +150,13 @@ export function TerminalApp({ onClose, onOpenApp }: TerminalAppProps) {
 
   return (
     <div className="flex flex-col h-full w-full bg-[#0C0C10] text-zinc-100 rounded-lg overflow-hidden select-none font-mono shadow-2xl border border-white/10">
-      {/* Title Bar */}
-      <div className="h-10 bg-[#16161D] border-b border-black/40 flex items-center justify-between px-3.5 select-none flex-shrink-0">
-        <div className="flex items-center gap-2">
-          {onClose && (
-            <button
-              onClick={onClose}
-              className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:opacity-80"
-              aria-label="Close"
-            />
-          )}
-          <span className="text-xs font-semibold text-white tracking-tight ml-2 flex items-center gap-1.5">
-            <Terminal className="w-3.5 h-3.5 text-zinc-400" />
-            <span>shourya@macbook-pro — zsh — 80x24</span>
-          </span>
-        </div>
+      {/* Terminal Status Sub-strip */}
+      <div className="h-6 bg-[#16161D] border-b border-white/5 flex items-center justify-between px-3 text-[10px] text-zinc-400 font-mono select-none flex-shrink-0">
+        <span className="flex items-center gap-1.5 text-zinc-400">
+          <Terminal className="w-3 h-3 text-emerald-400" />
+          <span>zsh • UTF-8 • 80x24</span>
+        </span>
+        <span className="text-zinc-400">Type 'help' for commands</span>
       </div>
 
       {/* Terminal Body */}

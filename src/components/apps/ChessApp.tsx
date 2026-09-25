@@ -85,31 +85,20 @@ export function ChessApp({ onClose }: ChessAppProps) {
 
   return (
     <div className="flex flex-col h-full w-full bg-[#18181F] text-zinc-200 rounded-lg overflow-hidden select-none font-sans shadow-2xl border border-white/10">
-      {/* Title Bar */}
-      <div className="h-10 bg-[#252530] border-b border-black/40 flex items-center justify-between px-3.5 select-none flex-shrink-0">
-        <div className="flex items-center gap-2">
-          {onClose && (
-            <button
-              onClick={onClose}
-              className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:opacity-80"
-              aria-label="Close"
-            />
-          )}
-          <span className="text-xs font-semibold text-white tracking-tight ml-2 flex items-center gap-1.5">
-            <span>♟️</span>
-            <span>Apple Chess — U-19 DSO Strategic Engine</span>
-          </span>
+      {/* Tournament Game Control Strip */}
+      <div className="h-8 bg-[#20202A] border-b border-black/40 flex items-center justify-between px-3 select-none flex-shrink-0">
+        <div className="flex items-center gap-2 text-[11px] font-mono text-zinc-400">
+          <span className="w-2 h-2 rounded-full bg-emerald-400" />
+          <span>U-19 DSO Championship • Round 5 (Tactical Mate)</span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleReset}
-            className="flex items-center gap-1 px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-[11px] font-mono transition-colors"
-          >
-            <RotateCcw className="w-3 h-3" />
-            <span>Reset</span>
-          </button>
-        </div>
+        <button
+          onClick={handleReset}
+          className="flex items-center gap-1 px-2.5 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white text-[11px] font-mono transition-colors cursor-pointer"
+        >
+          <RotateCcw className="w-3 h-3 text-amber-400" />
+          <span>Reset Board</span>
+        </button>
       </div>
 
       {/* Main Chess Arena */}

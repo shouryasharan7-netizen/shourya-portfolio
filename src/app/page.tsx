@@ -41,6 +41,8 @@ export default function Home() {
   const [wallpaperTheme, setWallpaperTheme] = useState<WallpaperTheme>("ironman");
   const [controlCenterOpen, setControlCenterOpen] = useState(false);
   const [spotlightOpen, setSpotlightOpen] = useState(false);
+  const [displayBrightness, setDisplayBrightness] = useState<number>(100);
+  const [soundVolume, setSoundVolume] = useState<number>(85);
   const [topZIndex, setTopZIndex] = useState(10);
   const [activeAppId, setActiveAppId] = useState<string>("preview");
 
@@ -158,18 +160,32 @@ export default function Home() {
     },
   });
 
-  // Global Cmd+K / Ctrl+K listener for Spotlight
+  // Global Keyboard Listeners: Cmd+K / Ctrl+K for Spotlight, Escape to close active modal
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setSpotlightOpen((prev) => !prev);
         soundEngine.playWindowClick();
+        return;
+      }
+
+      if (e.key === "Escape") {
+        if (spotlightOpen) {
+          setSpotlightOpen(false);
+          soundEngine.playWindowClick();
+          return;
+        }
+        if (controlCenterOpen) {
+          setControlCenterOpen(false);
+          soundEngine.playWindowClick();
+          return;
+        }
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [spotlightOpen, controlCenterOpen]);
 
   const bringToFront = (appId: string) => {
     setActiveAppId(appId);
@@ -266,6 +282,10 @@ export default function Home() {
     <main
       id="main-content"
       role="main"
+      style={{
+        filter: displayBrightness < 100 ? `brightness(${displayBrightness}%)` : "none",
+        transition: "filter 0.15s ease-out",
+      }}
       className="relative h-screen w-screen bg-black text-white overflow-hidden select-none font-sans"
     >
       {/* 1. Luxury Architectural Welcome Preloader (era-residence.com inspired) */}
@@ -499,6 +519,10 @@ export default function Home() {
         onClose={() => setControlCenterOpen(false)}
         currentTheme={wallpaperTheme}
         onChangeTheme={(th) => setWallpaperTheme(th)}
+        brightness={displayBrightness}
+        onChangeBrightness={(b) => setDisplayBrightness(b)}
+        volume={soundVolume}
+        onChangeVolume={(v) => setSoundVolume(v)}
       />
 
       {/* 8. Spotlight Search Modal */}

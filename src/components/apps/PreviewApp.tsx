@@ -56,52 +56,27 @@ export function PreviewApp({ onClose, onMinimize }: PreviewAppProps) {
 
   return (
     <div className="flex flex-col h-full w-full bg-[#1A1A22] text-zinc-100 rounded-lg overflow-hidden select-none font-sans shadow-2xl border border-white/10">
-      {/* macOS Preview Window Titlebar & Toolbar */}
-      <div className="h-11 bg-[#262630] border-b border-black/40 flex items-center justify-between px-3.5 select-none flex-shrink-0">
-        {/* Left: Window Controls + Sidebar Toggle */}
-        <div className="flex items-center gap-3">
-          {/* Traffic Light Buttons */}
-          <div className="flex items-center gap-1.5">
-            <button
-              onClick={onClose}
-              className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:opacity-80 transition-opacity"
-              title="Close"
-              aria-label="Close"
-            />
-            <button
-              onClick={onMinimize}
-              className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123] hover:opacity-80 transition-opacity"
-              title="Minimize"
-              aria-label="Minimize"
-            />
-            <button
-              className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29] hover:opacity-80 transition-opacity"
-              title="Zoom"
-              aria-label="Zoom"
-            />
-          </div>
-
-          <div className="h-4 w-[1px] bg-white/10 mx-1" />
-
-          {/* Sidebar Toggle */}
+      {/* Native macOS Secondary Toolbar Strip */}
+      <div className="h-9 bg-[#202028] border-b border-black/40 flex items-center justify-between px-3 select-none flex-shrink-0">
+        {/* Left: Sidebar Toggle & Document Metadata */}
+        <div className="flex items-center gap-2.5">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className={`p-1 rounded hover:bg-white/10 transition-colors ${
-              sidebarOpen ? "text-amber-400 bg-white/5" : "text-zinc-400"
+            className={`p-1 rounded hover:bg-white/10 transition-colors cursor-pointer ${
+              sidebarOpen ? "text-amber-400 bg-white/10" : "text-zinc-400"
             }`}
             title="Toggle Thumbnails Sidebar"
           >
             <Sidebar className="w-3.5 h-3.5" />
           </button>
-        </div>
 
-        {/* Center: Window Title */}
-        <div className="flex items-center gap-1.5 text-xs text-zinc-300 font-medium truncate max-w-xs sm:max-w-md">
-          <FileText className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
-          <span className="truncate">
-            {customPdfUploaded ? "Custom_Resume.pdf" : "Shourya_Sharan_Resume_Official.pdf"}
-          </span>
-          <span className="text-[10px] text-zinc-500 font-mono">({zoomLevel}%)</span>
+          <div className="flex items-center gap-1.5 text-xs text-zinc-300 font-medium">
+            <FileText className="w-3.5 h-3.5 text-red-400 flex-shrink-0" />
+            <span className="truncate hidden sm:inline">
+              {customPdfUploaded ? "Custom_Resume.pdf" : "Shourya_Sharan_Resume_Official.pdf"}
+            </span>
+            <span className="text-[10px] text-zinc-400 font-mono">({zoomLevel}%)</span>
+          </div>
         </div>
 
         {/* Right Toolbar Tools */}

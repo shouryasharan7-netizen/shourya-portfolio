@@ -35,19 +35,24 @@ export function SafariApp({ onClose, onOpenApp }: SafariAppProps) {
     <div className="flex flex-col h-full w-full bg-[#1A1A22] text-zinc-100 rounded-lg overflow-hidden select-none font-sans shadow-2xl border border-white/10">
       {/* Safari Titlebar & Tabs Bar */}
       <div className="bg-[#24242F] border-b border-black/40 flex flex-col select-none flex-shrink-0">
-        {/* Top Window Chrome */}
-        <div className="h-10 flex items-center justify-between px-3.5">
-          {/* Traffic Lights */}
-          <div className="flex items-center gap-1.5">
-            {onClose && (
-              <button
-                onClick={onClose}
-                className="w-3 h-3 rounded-full bg-[#FF5F56] border border-[#E0443E] hover:opacity-80"
-                aria-label="Close"
-              />
-            )}
-            <button className="w-3 h-3 rounded-full bg-[#FFBD2E] border border-[#DEA123] hover:opacity-80" />
-            <button className="w-3 h-3 rounded-full bg-[#27C93F] border border-[#1AAB29] hover:opacity-80" />
+        {/* Safari Navigation & Omnibar */}
+        <div className="h-10 flex items-center justify-between px-3.5 gap-3">
+          {/* Back / Forward / Refresh Navigation */}
+          <div className="flex items-center gap-1.5 text-zinc-400">
+            <button
+              onClick={() => soundEngine.playWindowClick()}
+              className="p-1 rounded hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
+              title="Back"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+            </button>
+            <button
+              onClick={() => soundEngine.playWindowClick()}
+              className="p-1 rounded hover:bg-white/10 hover:text-white transition-colors cursor-pointer"
+              title="Forward"
+            >
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
 
           {/* Safari Omnibar / URL Search Box */}
