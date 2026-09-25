@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Image from "next/image";
 import { soundEngine } from "@/components/audio/SoundEffects";
 
 export interface DockItem {
   id: string;
   name: string;
-  icon: string | React.ReactNode;
+  iconSrc: string;
   badge?: number;
   isOpen: boolean;
   isSpecial?: boolean;
@@ -26,122 +27,117 @@ export function MacDock({ openAppIds, onOpenApp }: MacDockProps) {
     {
       id: "finder",
       name: "Finder",
-      icon: "📁",
+      iconSrc: "/icons/mac/finder.png",
       isOpen: openAppIds.includes("finder"),
     },
     {
       id: "preview",
-      name: "Preview (Resume.pdf)",
-      icon: "🔍",
+      name: "Preview (Shourya_Resume.pdf)",
+      iconSrc: "/icons/mac/preview.png",
       isOpen: openAppIds.includes("preview"),
       isSpecial: true,
     },
     {
       id: "safari",
-      name: "Safari",
-      icon: "🧭",
+      name: "Safari (Projects & Lab)",
+      iconSrc: "/icons/mac/safari.png",
       isOpen: openAppIds.includes("safari"),
     },
     {
       id: "chrome",
       name: "Google Chrome",
-      icon: "🌐",
+      iconSrc: "/icons/mac/chrome.png",
       isOpen: openAppIds.includes("chrome"),
     },
     {
       id: "guitar",
-      name: "Acoustic Guitar Studio",
-      icon: "🎸",
+      name: "GarageBand (Acoustic Studio)",
+      iconSrc: "/icons/mac/garageband.png",
       isOpen: openAppIds.includes("guitar"),
       isSpecial: true,
     },
     {
       id: "chess",
-      name: "Apple Chess (DSO)",
-      icon: "♟️",
+      name: "Chess (U-19 DSO Engine)",
+      iconSrc: "/icons/mac/chess.png",
       isOpen: openAppIds.includes("chess"),
       isSpecial: true,
     },
     {
       id: "motocard",
-      name: "3D Stainless Steel Card",
-      icon: "💳",
+      name: "Wallet (316L Stainless Card)",
+      iconSrc: "/icons/mac/wallet.png",
       isOpen: openAppIds.includes("motocard"),
       isSpecial: true,
     },
     {
-      id: "maps",
-      name: "Maps (Nagpur, India)",
-      icon: "🗺️",
-      isOpen: openAppIds.includes("maps"),
+      id: "flag",
+      name: "Grapher (Liquid Silk Shader)",
+      iconSrc: "/icons/mac/grapher.png",
+      isOpen: openAppIds.includes("flag"),
+      isSpecial: true,
+    },
+    {
+      id: "terminal",
+      name: "Terminal (zsh)",
+      iconSrc: "/icons/mac/terminal.png",
+      isOpen: openAppIds.includes("terminal"),
+    },
+    {
+      id: "notes",
+      name: "Notes (Engineering Logs)",
+      iconSrc: "/icons/mac/notes.png",
+      isOpen: openAppIds.includes("notes"),
     },
     {
       id: "photos",
       name: "Photos & Honors",
-      icon: "🖼️",
+      iconSrc: "/icons/mac/photos.png",
       isOpen: openAppIds.includes("photos"),
     },
     {
-      id: "notes",
-      name: "Notes & Thesis",
-      icon: "📝",
-      isOpen: openAppIds.includes("notes"),
+      id: "messages",
+      name: "Messages",
+      iconSrc: "/icons/mac/messages.png",
+      isOpen: openAppIds.includes("messages"),
     },
     {
-      id: "numbers",
-      name: "Numbers (Metrics)",
-      icon: "📊",
-      isOpen: openAppIds.includes("numbers"),
-    },
-    {
-      id: "keynote",
-      name: "Keynote (Inventions)",
-      icon: "💡",
-      isOpen: openAppIds.includes("keynote"),
+      id: "mail",
+      name: "Mail (Contact Shourya)",
+      iconSrc: "/icons/mac/mail.png",
+      isOpen: openAppIds.includes("mail"),
     },
     {
       id: "settings",
       name: "System Settings",
-      icon: "⚙️",
+      iconSrc: "/icons/mac/settings.png",
       badge: 1,
       isOpen: openAppIds.includes("settings"),
     },
     {
       id: "appstore",
       name: "App Store (Tech Stack)",
-      icon: "🛍️",
+      iconSrc: "/icons/mac/appstore.png",
       isOpen: openAppIds.includes("appstore"),
     },
     {
-      id: "whatsapp",
-      name: "WhatsApp (Contact)",
-      icon: "💬",
-      badge: 49,
-      isOpen: openAppIds.includes("whatsapp"),
-    },
-    {
-      id: "terminal",
-      name: "Terminal",
-      icon: "💻",
-      isOpen: openAppIds.includes("terminal"),
-    },
-    {
       id: "chatgpt",
-      name: "ChatGPT AI",
-      icon: "🤖",
+      name: "ChatGPT",
+      iconSrc: "/icons/mac/chatgpt.png",
       isOpen: openAppIds.includes("chatgpt"),
     },
     {
-      id: "audio",
-      name: "Music (HIMYM OST)",
-      icon: "🎵",
-      isOpen: openAppIds.includes("audio"),
+      id: "claude",
+      name: "Claude AI",
+      iconSrc: "/icons/mac/claude.png",
+      isOpen: openAppIds.includes("claude"),
     },
     {
-      id: "trash",
-      name: "Trash",
-      icon: "🗑️",
-      isOpen: false,
+      id: "whatsapp",
+      name: "WhatsApp",
+      iconSrc: "/icons/mac/whatsapp.png",
+      badge: 49,
+      isOpen: openAppIds.includes("whatsapp"),
     },
   ];
 
@@ -156,26 +152,26 @@ export function MacDock({ openAppIds, onOpenApp }: MacDockProps) {
   };
 
   return (
-    <div className="fixed bottom-2.5 left-0 right-0 z-50 flex justify-center pointer-events-none px-2">
-      {/* Red/Crimson Ambient Underglow as in screenshot */}
+    <div className="fixed bottom-2 left-0 right-0 z-50 flex justify-center pointer-events-none px-2">
+      {/* Ambient Glass Dock Shelf */}
       <div className="relative pointer-events-auto">
-        {/* Glow backdrop matching user's red dock bar */}
-        <div className="absolute -inset-1.5 rounded-[26px] bg-gradient-to-r from-red-600/30 via-red-500/40 to-red-700/30 blur-xl opacity-80 pointer-events-none" />
+        {/* Subtle Ambient Underglow */}
+        <div className="absolute -inset-1 rounded-[26px] bg-gradient-to-r from-red-600/20 via-amber-500/20 to-red-600/20 blur-xl opacity-70 pointer-events-none" />
 
-        {/* Translucent Glass Dock Shelf */}
+        {/* Authentic Glass Shelf */}
         <div
           ref={dockRef}
           onMouseLeave={() => setHoveredIndex(null)}
-          className="relative flex items-end gap-1.5 sm:gap-2 px-3 py-2 rounded-[22px] bg-[#16080B]/80 backdrop-blur-2xl border border-red-500/30 shadow-[0_12px_45px_rgba(220,38,38,0.35),0_0_25px_rgba(185,28,28,0.2)] max-w-full overflow-x-auto scrollbar-none transition-all"
+          className="relative flex items-end gap-1.5 sm:gap-2 px-3 py-2 rounded-[24px] bg-[#14141A]/75 backdrop-blur-3xl border border-white/[0.15] shadow-[0_16px_50px_rgba(0,0,0,0.7),0_0_20px_rgba(255,255,255,0.05)] max-w-full overflow-x-auto scrollbar-none transition-all"
         >
           {DOCK_ITEMS.map((item, index) => {
-            // Parabolic magnification effect on hover
+            // macOS Parabolic Magnification curve
             let scale = 1;
             if (hoveredIndex !== null) {
               const distance = Math.abs(hoveredIndex - index);
-              if (distance === 0) scale = 1.35;
-              else if (distance === 1) scale = 1.18;
-              else if (distance === 2) scale = 1.07;
+              if (distance === 0) scale = 1.38;
+              else if (distance === 1) scale = 1.2;
+              else if (distance === 2) scale = 1.08;
             }
 
             const isBouncing = bouncingAppId === item.id;
@@ -190,37 +186,35 @@ export function MacDock({ openAppIds, onOpenApp }: MacDockProps) {
                 onClick={() => handleItemClick(item)}
                 style={{
                   transform: isBouncing
-                    ? "translateY(-16px) scale(1.2)"
-                    : `scale(${scale}) translateY(${scale > 1 ? -(scale - 1) * 14 : 0}px)`,
+                    ? "translateY(-18px) scale(1.25)"
+                    : `scale(${scale}) translateY(${scale > 1 ? -(scale - 1) * 16 : 0}px)`,
                   transition: isBouncing
-                    ? "transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+                    ? "transform 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
                     : "transform 0.16s cubic-bezier(0.2, 0.8, 0.4, 1)",
                 }}
                 className="relative group flex flex-col items-center cursor-pointer select-none py-0.5 flex-shrink-0"
               >
-                {/* Tooltip Label */}
+                {/* Tooltip Bubble */}
                 {hoveredIndex === index && (
-                  <div className="absolute -top-9 px-2.5 py-1 rounded-md bg-[#16161D]/95 border border-white/15 text-white text-[11px] font-sans font-medium whitespace-nowrap shadow-xl pointer-events-none z-50">
+                  <div className="absolute -top-10 px-2.5 py-1 rounded-md bg-[#16161E]/95 border border-white/20 text-white text-[11px] font-sans font-medium whitespace-nowrap shadow-2xl pointer-events-none z-50 filter drop-shadow">
                     {item.name}
                   </div>
                 )}
 
-                {/* App Icon Container */}
-                <div
-                  className={`w-9 h-9 sm:w-11 sm:h-11 rounded-2xl flex items-center justify-center text-lg sm:text-2xl shadow-md transition-shadow relative overflow-hidden ${
-                    item.isSpecial
-                      ? "ring-1 ring-amber-400/40 bg-gradient-to-b from-zinc-800 to-zinc-900"
-                      : "bg-gradient-to-b from-white/10 to-white/5 border border-white/10 hover:border-white/20"
-                  }`}
-                >
-                  <span className="drop-shadow-sm">{item.icon}</span>
+                {/* Original macOS App Icon */}
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+                  <Image
+                    src={item.iconSrc}
+                    alt={item.name}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)] select-none pointer-events-none"
+                    priority
+                  />
 
-                  {/* Specular glass sheen highlight */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-white/25 via-transparent to-transparent pointer-events-none" />
-
-                  {/* Notification Badge (e.g. Settings: 1, WhatsApp: 49) */}
+                  {/* Notification Badge */}
                   {item.badge !== undefined && (
-                    <div className="absolute -top-1 -right-1 min-w-4 h-4 px-1 rounded-full bg-red-500 border border-white/40 text-white text-[9px] font-bold flex items-center justify-center shadow-lg font-mono">
+                    <div className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full bg-[#FF3B30] border border-white/60 text-white text-[10px] font-bold flex items-center justify-center shadow-lg font-mono">
                       {item.badge}
                     </div>
                   )}
@@ -229,12 +223,51 @@ export function MacDock({ openAppIds, onOpenApp }: MacDockProps) {
                 {/* Active Running App Dot Indicator */}
                 <div className="h-1 mt-1 flex items-center justify-center">
                   {item.isOpen && (
-                    <span className="w-1 h-1 rounded-full bg-white/90 shadow-[0_0_6px_rgba(255,255,255,0.8)]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/95 shadow-[0_0_8px_rgba(255,255,255,0.9)]" />
                   )}
                 </div>
               </div>
             );
           })}
+
+          {/* Dock Separator Bar */}
+          <div className="w-[1px] h-9 bg-white/20 mx-1 self-center rounded-full" />
+
+          {/* Trash Icon */}
+          <div
+            onMouseEnter={() => {
+              setHoveredIndex(DOCK_ITEMS.length);
+              soundEngine.playDockTick();
+            }}
+            onClick={() => {
+              soundEngine.playWindowClick();
+              alert("Trash is empty — Clean Architecture preserved.");
+            }}
+            style={{
+              transform:
+                hoveredIndex === DOCK_ITEMS.length
+                  ? "scale(1.35) translateY(-6px)"
+                  : "scale(1)",
+              transition: "transform 0.16s cubic-bezier(0.2, 0.8, 0.4, 1)",
+            }}
+            className="relative group flex flex-col items-center cursor-pointer select-none py-0.5 flex-shrink-0"
+          >
+            {hoveredIndex === DOCK_ITEMS.length && (
+              <div className="absolute -top-10 px-2.5 py-1 rounded-md bg-[#16161E]/95 border border-white/20 text-white text-[11px] font-sans font-medium whitespace-nowrap shadow-2xl pointer-events-none z-50">
+                Trash
+              </div>
+            )}
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center">
+              <Image
+                src="/icons/mac/trash.png"
+                alt="Trash"
+                width={48}
+                height={48}
+                className="w-full h-full object-contain filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.6)] select-none pointer-events-none"
+              />
+            </div>
+            <div className="h-1 mt-1" />
+          </div>
         </div>
       </div>
     </div>

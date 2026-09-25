@@ -8,6 +8,7 @@ import { MacDock } from "@/components/desktop/MacDock";
 import { MacWindow } from "@/components/desktop/MacWindow";
 import { ControlCenter } from "@/components/desktop/ControlCenter";
 import { SpotlightModal } from "@/components/desktop/SpotlightModal";
+import { DesktopHangingGuitar } from "@/components/desktop/DesktopHangingGuitar";
 
 // Native macOS Applications
 import { PreviewApp } from "@/components/apps/PreviewApp";
@@ -48,7 +49,7 @@ export default function Home() {
     preview: {
       id: "preview",
       title: "Shourya_Sharan_Resume.pdf — Preview",
-      isOpen: true, // Default open for recruiters!
+      isOpen: true, // Default open for recruiters & visitors!
       isMinimized: false,
       zIndex: 10,
       initialX: 90,
@@ -58,7 +59,7 @@ export default function Home() {
     },
     guitar: {
       id: "guitar",
-      title: "Acoustic Guitar Studio — 6-String Physical Modeling",
+      title: "GarageBand — Acoustic Guitar Physical Modeling Studio",
       isOpen: false,
       isMinimized: false,
       zIndex: 9,
@@ -69,7 +70,7 @@ export default function Home() {
     },
     chess: {
       id: "chess",
-      title: "Apple Chess — U-19 DSO Championship Engine",
+      title: "Apple Chess — U-19 DSO Strategic Engine",
       isOpen: false,
       isMinimized: false,
       zIndex: 8,
@@ -80,7 +81,7 @@ export default function Home() {
     },
     motocard: {
       id: "motocard",
-      title: "MOTO Stainless Steel Identity Card — 3D Physical Material",
+      title: "Wallet — 316L Stainless Steel Identity Card",
       isOpen: false,
       isMinimized: false,
       zIndex: 7,
@@ -91,7 +92,7 @@ export default function Home() {
     },
     flag: {
       id: "flag",
-      title: "Fluid Ripple Flag Shader — Pensatori Irrazionali Engine",
+      title: "Grapher — Liquid Silk Wave Shader (Pensatori Irrazionali)",
       isOpen: false,
       isMinimized: false,
       zIndex: 6,
@@ -189,17 +190,19 @@ export default function Home() {
   const handleOpenApp = (appId: string) => {
     soundEngine.playWindowClick();
 
-    // Mapping dock generic IDs to window targets
+    // Map dock IDs to window targets
     let targetId = appId;
     if (appId === "finder" || appId === "keynote" || appId === "numbers") targetId = "safari";
     if (appId === "chrome") targetId = "safari";
-    if (appId === "chatgpt") targetId = "terminal";
+    if (appId === "chatgpt" || appId === "claude") targetId = "terminal";
     if (appId === "photos") targetId = "video";
-    if (appId === "maps") targetId = "settings";
-    if (appId === "appstore") targetId = "settings";
-    if (appId === "audio") targetId = "guitar";
+    if (appId === "maps" || appId === "appstore") targetId = "settings";
+    if (appId === "mail" || appId === "messages") {
+      window.location.href = "mailto:shouryasharan27@gmail.com?subject=Inquiry%20from%20Portfolio";
+      return;
+    }
     if (appId === "whatsapp") {
-      window.location.href = "mailto:shouryasharan27@gmail.com?subject=Inquiry%20via%20Portfolio";
+      window.open("https://wa.me/919322830883?text=Hi%20Shourya,%20saw%20your%20portfolio!", "_blank");
       return;
     }
 
@@ -246,10 +249,10 @@ export default function Home() {
     }
     const map: Record<string, string> = {
       preview: "Preview",
-      guitar: "Guitar Studio",
+      guitar: "GarageBand",
       chess: "Chess",
-      motocard: "Moto 3D",
-      flag: "Ripple Flag",
+      motocard: "Wallet",
+      flag: "Grapher",
       video: "Hobro Cinema",
       safari: "Safari",
       terminal: "Terminal",
@@ -268,11 +271,11 @@ export default function Home() {
       {/* 1. Luxury Architectural Welcome Preloader (era-residence.com inspired) */}
       {showPreloader && <EraPreloader onComplete={() => setShowPreloader(false)} />}
 
-      {/* 2. Live Dynamic Iron Man Wallpaper ("I am Iron Man" Infinity Snap) */}
+      {/* 2. Authentic Original Live Iron Man Wallpaper ("I am Iron Man" Avengers: Endgame) */}
       <LiveWallpaper
         theme={wallpaperTheme}
         onSnapTriggered={() => {
-          // Bring all windows to attention or create cosmic ripple!
+          // Snap triggered
         }}
       />
 
@@ -284,61 +287,8 @@ export default function Home() {
         onOpenSpotlight={() => setSpotlightOpen(true)}
       />
 
-      {/* 4. Desktop Hanging Guitar Widget (Accessible on Desktop directly) */}
-      <div className="absolute top-12 right-6 hidden lg:flex flex-col items-center pointer-events-auto z-10 group">
-        <button
-          onClick={() => handleOpenApp("guitar")}
-          className="flex flex-col items-center cursor-pointer p-2 rounded-xl bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md transition-all group-hover:scale-105 shadow-2xl"
-          title="Click to open Acoustic Guitar Studio"
-        >
-          <div className="w-16 h-28 flex items-center justify-center text-4xl filter drop-shadow">
-            🎸
-          </div>
-          <span className="text-[10px] font-mono text-amber-300 font-bold tracking-wider uppercase mt-1">
-            Acoustic Studio
-          </span>
-          <span className="text-[9px] font-mono text-zinc-400">6 Strings</span>
-        </button>
-      </div>
-
-      {/* Desktop Quick Shortcuts (Chess & 3D Card) */}
-      <div className="absolute top-48 right-6 hidden lg:flex flex-col gap-3 pointer-events-auto z-10">
-        <button
-          onClick={() => handleOpenApp("chess")}
-          className="flex flex-col items-center cursor-pointer p-2 rounded-xl bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md transition-all hover:scale-105 shadow-xl w-24"
-          title="Play Apple Chess"
-        >
-          <span className="text-3xl">♟️</span>
-          <span className="text-[10px] font-mono text-white font-semibold mt-1">
-            Apple Chess
-          </span>
-          <span className="text-[8px] font-mono text-zinc-400">U-19 DSO</span>
-        </button>
-
-        <button
-          onClick={() => handleOpenApp("motocard")}
-          className="flex flex-col items-center cursor-pointer p-2 rounded-xl bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md transition-all hover:scale-105 shadow-xl w-24"
-          title="Inspect 3D Stainless Steel Moto Card"
-        >
-          <span className="text-3xl">💳</span>
-          <span className="text-[10px] font-mono text-white font-semibold mt-1">
-            MOTO 3D
-          </span>
-          <span className="text-[8px] font-mono text-zinc-400">316L Steel</span>
-        </button>
-
-        <button
-          onClick={() => handleOpenApp("flag")}
-          className="flex flex-col items-center cursor-pointer p-2 rounded-xl bg-black/40 hover:bg-black/60 border border-white/10 backdrop-blur-md transition-all hover:scale-105 shadow-xl w-24"
-          title="Fluid Ripple Flag Shader"
-        >
-          <span className="text-3xl">🌊</span>
-          <span className="text-[10px] font-mono text-white font-semibold mt-1">
-            Ripple Flag
-          </span>
-          <span className="text-[8px] font-mono text-zinc-400">Silk Shader</span>
-        </button>
-      </div>
+      {/* 4. Realistic Suspended Hanging Guitar (Interactive on Desktop) */}
+      <DesktopHangingGuitar onOpenStudio={() => handleOpenApp("guitar")} />
 
       {/* 5. Window Manager (Active Applications Layer) */}
       <div className="absolute inset-0 pt-7 pb-16 pointer-events-none z-20">
@@ -364,7 +314,7 @@ export default function Home() {
           />
         </MacWindow>
 
-        {/* Acoustic Guitar Studio */}
+        {/* Acoustic Guitar Studio (GarageBand) */}
         <MacWindow
           id="guitar"
           title={windows.guitar.title}
@@ -540,7 +490,7 @@ export default function Home() {
         </MacWindow>
       </div>
 
-      {/* 6. Pixel-Perfect macOS Dock (Red Ambient Illuminated Glass Shelf) */}
+      {/* 6. Genuine macOS Dock with Official App PNG Icons & Magnification */}
       <MacDock openAppIds={openAppIds} onOpenApp={handleOpenApp} />
 
       {/* 7. macOS Control Center Dropdown */}
