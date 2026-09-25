@@ -1,21 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { PERSONAL_INFO } from "@/data/portfolioData";
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  display: "swap",
-});
 
 export const viewport: Viewport = {
   themeColor: "#08080A",
@@ -115,7 +100,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased bg-[#08080A] text-[#F4F4F6] min-h-screen selection:bg-white selection:text-black overflow-x-hidden`}
+        className="antialiased bg-[#08080A] text-[#F4F4F6] min-h-screen selection:bg-white selection:text-black overflow-hidden"
       >
         {/* Accessible Skip Link */}
         <a
