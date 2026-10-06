@@ -1,536 +1,447 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { EraPreloader } from "@/components/intro/EraPreloader";
-import { LiveWallpaper, WallpaperTheme } from "@/components/desktop/LiveWallpaper";
-import { MacMenuBar } from "@/components/desktop/MacMenuBar";
-import { MacDock } from "@/components/desktop/MacDock";
-import { MacWindow } from "@/components/desktop/MacWindow";
-import { ControlCenter } from "@/components/desktop/ControlCenter";
-import { SpotlightModal } from "@/components/desktop/SpotlightModal";
-import { DesktopHangingGuitar } from "@/components/desktop/DesktopHangingGuitar";
+import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import {
+  Wrench,
+  Sparkles,
+  ArrowRight,
+  Copy,
+  Check,
+  Github,
+  Mail,
+  Layers,
+  Cpu,
+  Clock,
+  ShieldCheck,
+  ExternalLink,
+  Laptop,
+  Terminal,
+  Activity,
+} from "lucide-react";
+import { PERSONAL_INFO } from "@/data/portfolioData";
 
-// Native macOS Applications
-import { PreviewApp } from "@/components/apps/PreviewApp";
-import { HangingGuitar } from "@/components/apps/HangingGuitar";
-import { ChessApp } from "@/components/apps/ChessApp";
-import { MotoCard3D } from "@/components/apps/MotoCard3D";
-import { RippleFlagCanvas } from "@/components/apps/RippleFlagCanvas";
-import { VideoHeroApp } from "@/components/apps/VideoHeroApp";
-import { SafariApp } from "@/components/apps/SafariApp";
-import { TerminalApp } from "@/components/apps/TerminalApp";
-import { NotesApp } from "@/components/apps/NotesApp";
-import { SettingsApp } from "@/components/apps/SettingsApp";
+export default function UnderConstructionPage() {
+  const [copied, setCopied] = useState(false);
+  const [currentTime, setCurrentTime] = useState("");
+  const [currentUtc, setCurrentUtc] = useState("");
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-import { soundEngine } from "@/components/audio/SoundEffects";
-
-interface WindowState {
-  id: string;
-  title: string;
-  isOpen: boolean;
-  isMinimized: boolean;
-  zIndex: number;
-  initialX: number;
-  initialY: number;
-  initialWidth: number;
-  initialHeight: number;
-}
-
-export default function Home() {
-  const [showPreloader, setShowPreloader] = useState(true);
-  const [wallpaperTheme, setWallpaperTheme] = useState<WallpaperTheme>("ironman");
-  const [controlCenterOpen, setControlCenterOpen] = useState(false);
-  const [spotlightOpen, setSpotlightOpen] = useState(false);
-  const [displayBrightness, setDisplayBrightness] = useState<number>(100);
-  const [soundVolume, setSoundVolume] = useState<number>(85);
-  const [topZIndex, setTopZIndex] = useState(10);
-  const [activeAppId, setActiveAppId] = useState<string>("preview");
-
-  // Window State Registry
-  const [windows, setWindows] = useState<Record<string, WindowState>>({
-    preview: {
-      id: "preview",
-      title: "Shourya_Sharan_Resume.pdf — Preview",
-      isOpen: true, // Default open for recruiters & visitors!
-      isMinimized: false,
-      zIndex: 10,
-      initialX: 90,
-      initialY: 55,
-      initialWidth: 920,
-      initialHeight: 620,
-    },
-    guitar: {
-      id: "guitar",
-      title: "GarageBand — Acoustic Guitar Physical Modeling Studio",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 9,
-      initialX: 180,
-      initialY: 70,
-      initialWidth: 780,
-      initialHeight: 560,
-    },
-    chess: {
-      id: "chess",
-      title: "Apple Chess — U-19 DSO Strategic Engine",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 8,
-      initialX: 220,
-      initialY: 85,
-      initialWidth: 760,
-      initialHeight: 540,
-    },
-    motocard: {
-      id: "motocard",
-      title: "Wallet — 316L Stainless Steel Identity Card",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 7,
-      initialX: 260,
-      initialY: 95,
-      initialWidth: 720,
-      initialHeight: 520,
-    },
-    flag: {
-      id: "flag",
-      title: "Grapher — Liquid Silk Wave Shader (Pensatori Irrazionali)",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 6,
-      initialX: 150,
-      initialY: 80,
-      initialWidth: 740,
-      initialHeight: 500,
-    },
-    video: {
-      id: "video",
-      title: "Hobro Cinema Reel — Creative Engineering",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 5,
-      initialX: 120,
-      initialY: 60,
-      initialWidth: 880,
-      initialHeight: 580,
-    },
-    safari: {
-      id: "safari",
-      title: "Safari — Inventions & Systems Showcase",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 4,
-      initialX: 140,
-      initialY: 65,
-      initialWidth: 860,
-      initialHeight: 580,
-    },
-    terminal: {
-      id: "terminal",
-      title: "shourya@macbook-pro — zsh — 80x24",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 3,
-      initialX: 200,
-      initialY: 100,
-      initialWidth: 700,
-      initialHeight: 460,
-    },
-    notes: {
-      id: "notes",
-      title: "Notes — iCloud",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 2,
-      initialX: 240,
-      initialY: 90,
-      initialWidth: 740,
-      initialHeight: 500,
-    },
-    settings: {
-      id: "settings",
-      title: "System Settings — MacBook Pro",
-      isOpen: false,
-      isMinimized: false,
-      zIndex: 1,
-      initialX: 280,
-      initialY: 110,
-      initialWidth: 640,
-      initialHeight: 480,
-    },
-  });
-
-  // Global Keyboard Listeners: Cmd+K / Ctrl+K for Spotlight, Escape to close active modal
+  // Live clocks for IST (Nagpur, India) and UTC
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        setSpotlightOpen((prev) => !prev);
-        soundEngine.playWindowClick();
-        return;
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(
+        now.toLocaleTimeString("en-US", {
+          timeZone: "Asia/Kolkata",
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
+      setCurrentUtc(
+        now.toLocaleTimeString("en-US", {
+          timeZone: "UTC",
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
+    };
+
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Subtle interactive particle constellation background
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
+    window.addEventListener("resize", handleResize);
+
+    // Particle nodes
+    const particleCount = Math.min(65, Math.floor((width * height) / 18000));
+    const particles = Array.from({ length: particleCount }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      radius: Math.random() * 1.5 + 0.8,
+      alpha: Math.random() * 0.5 + 0.25,
+    }));
+
+    let mouseX = -1000;
+    let mouseY = -1000;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      // Render drifting particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        if (p.x < 0) p.x = width;
+        else if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+        else if (p.y > height) p.y = 0;
+
+        // Draw particle
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(212, 175, 55, ${p.alpha * 0.7})`;
+        ctx.fill();
+
+        // Connect nearby particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 110) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - dist / 110)})`;
+            ctx.lineWidth = 0.6;
+            ctx.stroke();
+          }
+        }
+
+        // Mouse interaction line
+        const mdx = p.x - mouseX;
+        const mdy = p.y - mouseY;
+        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (mdist < 140) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(mouseX, mouseY);
+          ctx.strokeStyle = `rgba(0, 240, 255, ${0.2 * (1 - mdist / 140)})`;
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
       }
 
-      if (e.key === "Escape") {
-        if (spotlightOpen) {
-          setSpotlightOpen(false);
-          soundEngine.playWindowClick();
-          return;
-        }
-        if (controlCenterOpen) {
-          setControlCenterOpen(false);
-          soundEngine.playWindowClick();
-          return;
-        }
-      }
+      animationFrameId = requestAnimationFrame(render);
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [spotlightOpen, controlCenterOpen]);
 
-  const bringToFront = (appId: string) => {
-    setActiveAppId(appId);
-    setTopZIndex((prev) => {
-      const nextZ = prev + 1;
-      setWindows((w) => ({
-        ...w,
-        [appId]: {
-          ...w[appId],
-          zIndex: nextZ,
-          isMinimized: false,
-        },
-      }));
-      return nextZ;
-    });
-  };
+    render();
 
-  const handleOpenApp = (appId: string) => {
-    soundEngine.playWindowClick();
-
-    // Map dock IDs to window targets
-    let targetId = appId;
-    if (appId === "finder" || appId === "keynote" || appId === "numbers") targetId = "safari";
-    if (appId === "chrome") targetId = "safari";
-    if (appId === "chatgpt" || appId === "claude") targetId = "terminal";
-    if (appId === "photos") targetId = "video";
-    if (appId === "maps" || appId === "appstore") targetId = "settings";
-    if (appId === "mail" || appId === "messages") {
-      window.location.href = "mailto:shouryasharan27@gmail.com?subject=Inquiry%20from%20Portfolio";
-      return;
-    }
-    if (appId === "whatsapp") {
-      window.open("https://wa.me/919322830883?text=Hi%20Shourya,%20saw%20your%20portfolio!", "_blank");
-      return;
-    }
-
-    if (windows[targetId]) {
-      setWindows((w) => ({
-        ...w,
-        [targetId]: {
-          ...w[targetId],
-          isOpen: true,
-          isMinimized: false,
-        },
-      }));
-      bringToFront(targetId);
-    }
-  };
-
-  const handleCloseApp = (appId: string) => {
-    soundEngine.playWindowClick();
-    setWindows((w) => ({
-      ...w,
-      [appId]: {
-        ...w[appId],
-        isOpen: false,
-      },
-    }));
-  };
-
-  const handleMinimizeApp = (appId: string) => {
-    soundEngine.playWindowClick();
-    setWindows((w) => ({
-      ...w,
-      [appId]: {
-        ...w[appId],
-        isMinimized: true,
-      },
-    }));
-  };
-
-  const openAppIds = Object.keys(windows).filter((k) => windows[k].isOpen && !windows[k].isMinimized);
-
-  const getActiveTitle = () => {
-    if (!windows[activeAppId]?.isOpen || windows[activeAppId]?.isMinimized) {
-      return "Finder";
-    }
-    const map: Record<string, string> = {
-      preview: "Preview",
-      guitar: "GarageBand",
-      chess: "Chess",
-      motocard: "Wallet",
-      flag: "Grapher",
-      video: "Hobro Cinema",
-      safari: "Safari",
-      terminal: "Terminal",
-      notes: "Notes",
-      settings: "System Settings",
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(animationFrameId);
     };
-    return map[activeAppId] || "Finder";
+  }, []);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(PERSONAL_INFO.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2400);
   };
+
+  const milestones = [
+    {
+      id: "engine",
+      title: "Workstation Architecture",
+      subtitle: "Next.js 15 & React 19 Core",
+      status: "Verified",
+      progress: "92%",
+      color: "border-emerald-500/30 text-emerald-400 bg-emerald-500/10",
+      icon: Cpu,
+    },
+    {
+      id: "graphics",
+      title: "Interactive 3D Physics",
+      subtitle: "Three.js Shaders & Audio Rig",
+      status: "Optimizing",
+      progress: "85%",
+      color: "border-sky-500/30 text-sky-400 bg-sky-500/10",
+      icon: Layers,
+    },
+    {
+      id: "research",
+      title: "Research & Archive Hub",
+      subtitle: "The Walnut Initiative & STEMinate",
+      status: "Compiling",
+      progress: "90%",
+      color: "border-amber-500/30 text-amber-400 bg-amber-500/10",
+      icon: ShieldCheck,
+    },
+  ];
 
   return (
     <main
-      id="main-content"
-      role="main"
-      style={{
-        filter: displayBrightness < 100 ? `brightness(${displayBrightness}%)` : "none",
-        transition: "filter 0.15s ease-out",
+      className="relative min-h-screen w-full bg-[#070709] text-[#F4F4F6] flex flex-col justify-between selection:bg-white selection:text-black overflow-hidden font-sans"
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        setMousePos({
+          x: ((e.clientX - rect.left) / rect.width) * 100,
+          y: ((e.clientY - rect.top) / rect.height) * 100,
+        });
       }}
-      className="relative h-screen w-screen bg-black text-white overflow-hidden select-none font-sans"
     >
-      {/* 1. Luxury Architectural Welcome Preloader (era-residence.com inspired) */}
-      {showPreloader && <EraPreloader onComplete={() => setShowPreloader(false)} />}
+      {/* Background canvas for constellation particles */}
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 z-0 opacity-70"
+      />
 
-      {/* 2. Authentic Original Live Iron Man Wallpaper ("I am Iron Man" Avengers: Endgame) */}
-      <LiveWallpaper
-        theme={wallpaperTheme}
-        onSnapTriggered={() => {
-          // Snap triggered
+      {/* Ambient Lighting Gradients */}
+      <div
+        className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[720px] h-[480px] rounded-full blur-[140px] opacity-25"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(212, 175, 55, 0.15) 60%, transparent 100%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute -bottom-32 -left-20 w-[500px] h-[450px] rounded-full blur-[130px] opacity-15"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        className="pointer-events-none absolute -bottom-40 -right-20 w-[550px] h-[500px] rounded-full blur-[140px] opacity-15"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, transparent 70%)",
         }}
       />
 
-      {/* 3. macOS Top Menu Bar */}
-      <MacMenuBar
-        activeAppTitle={getActiveTitle()}
-        onOpenApp={handleOpenApp}
-        onToggleControlCenter={() => setControlCenterOpen(!controlCenterOpen)}
-        onOpenSpotlight={() => setSpotlightOpen(true)}
+      {/* Refined Fine Grid Overlay */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 opacity-[0.035]"
+        style={{
+          backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+        }}
       />
 
-      {/* 4. Realistic Suspended Hanging Guitar (Interactive on Desktop) */}
-      <DesktopHangingGuitar onOpenStudio={() => handleOpenApp("guitar")} />
+      {/* Top Header / Status Bar */}
+      <header className="relative z-10 w-full max-w-6xl mx-auto px-6 pt-6 md:pt-8 flex items-center justify-between">
+        {/* Monogram / Domain Pill */}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.1] backdrop-blur-md shadow-inner text-amber-300 font-mono font-bold text-sm tracking-wider">
+            SS
+          </div>
+          <div className="flex flex-col">
+            <span className="text-xs font-mono uppercase tracking-widest text-zinc-400">
+              Personal Domain
+            </span>
+            <span className="text-sm font-semibold tracking-tight text-white flex items-center gap-2">
+              shouryasharan.xyz
+              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-mono font-medium bg-amber-500/15 border border-amber-500/30 text-amber-300">
+                Live Edge
+              </span>
+            </span>
+          </div>
+        </div>
 
-      {/* 5. Window Manager (Active Applications Layer) */}
-      <div className="absolute inset-0 pt-7 pb-16 pointer-events-none z-20">
-        {/* Preview App (Resume.pdf Viewer Placeholder) */}
-        <MacWindow
-          id="preview"
-          title={windows.preview.title}
-          isOpen={windows.preview.isOpen}
-          isMinimized={windows.preview.isMinimized}
-          isActive={activeAppId === "preview"}
-          zIndex={windows.preview.zIndex}
-          initialX={windows.preview.initialX}
-          initialY={windows.preview.initialY}
-          initialWidth={windows.preview.initialWidth}
-          initialHeight={windows.preview.initialHeight}
-          onClose={() => handleCloseApp("preview")}
-          onMinimize={() => handleMinimizeApp("preview")}
-          onFocus={() => bringToFront("preview")}
-        >
-          <PreviewApp
-            onClose={() => handleCloseApp("preview")}
-            onMinimize={() => handleMinimizeApp("preview")}
-          />
-        </MacWindow>
+        {/* Action Links & Clocks */}
+        <div className="flex items-center gap-3 md:gap-4">
+          {/* Live Node Clock (Desktop) */}
+          <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-zinc-400">
+            <Clock className="w-3.5 h-3.5 text-zinc-500" />
+            <span>IST: {currentTime || "Loading..."}</span>
+            <span className="text-zinc-600">|</span>
+            <span>UTC: {currentUtc || "Loading..."}</span>
+          </div>
 
-        {/* Acoustic Guitar Studio (GarageBand) */}
-        <MacWindow
-          id="guitar"
-          title={windows.guitar.title}
-          isOpen={windows.guitar.isOpen}
-          isMinimized={windows.guitar.isMinimized}
-          isActive={activeAppId === "guitar"}
-          zIndex={windows.guitar.zIndex}
-          initialX={windows.guitar.initialX}
-          initialY={windows.guitar.initialY}
-          initialWidth={windows.guitar.initialWidth}
-          initialHeight={windows.guitar.initialHeight}
-          onClose={() => handleCloseApp("guitar")}
-          onMinimize={() => handleMinimizeApp("guitar")}
-          onFocus={() => bringToFront("guitar")}
-        >
-          <HangingGuitar onClose={() => handleCloseApp("guitar")} isWindow={true} />
-        </MacWindow>
+          {/* GitHub Link */}
+          <a
+            href={PERSONAL_INFO.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub Profile"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] hover:border-white/[0.2] text-xs font-medium text-zinc-300 hover:text-white transition-all duration-200"
+          >
+            <Github className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">GitHub</span>
+          </a>
 
-        {/* Apple Chess Game */}
-        <MacWindow
-          id="chess"
-          title={windows.chess.title}
-          isOpen={windows.chess.isOpen}
-          isMinimized={windows.chess.isMinimized}
-          isActive={activeAppId === "chess"}
-          zIndex={windows.chess.zIndex}
-          initialX={windows.chess.initialX}
-          initialY={windows.chess.initialY}
-          initialWidth={windows.chess.initialWidth}
-          initialHeight={windows.chess.initialHeight}
-          onClose={() => handleCloseApp("chess")}
-          onMinimize={() => handleMinimizeApp("chess")}
-          onFocus={() => bringToFront("chess")}
-        >
-          <ChessApp onClose={() => handleCloseApp("chess")} />
-        </MacWindow>
+          {/* Dev Mode Sneak Peek Button */}
+          <Link
+            href="/workstation"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/25 hover:border-amber-500/40 text-xs font-medium text-amber-300 hover:text-amber-200 transition-all duration-200 group"
+          >
+            <Laptop className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Preview Workstation</span>
+            <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+        </div>
+      </header>
 
-        {/* 3D Stainless Steel Moto Card */}
-        <MacWindow
-          id="motocard"
-          title={windows.motocard.title}
-          isOpen={windows.motocard.isOpen}
-          isMinimized={windows.motocard.isMinimized}
-          isActive={activeAppId === "motocard"}
-          zIndex={windows.motocard.zIndex}
-          initialX={windows.motocard.initialX}
-          initialY={windows.motocard.initialY}
-          initialWidth={windows.motocard.initialWidth}
-          initialHeight={windows.motocard.initialHeight}
-          onClose={() => handleCloseApp("motocard")}
-          onMinimize={() => handleMinimizeApp("motocard")}
-          onFocus={() => bringToFront("motocard")}
-        >
-          <MotoCard3D onClose={() => handleCloseApp("motocard")} isWindow={true} />
-        </MacWindow>
+      {/* Main Center Stage */}
+      <section className="relative z-10 w-full max-w-4xl mx-auto px-6 py-12 md:py-16 my-auto flex flex-col items-center text-center">
+        {/* Pulsing Status Badge */}
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.1] backdrop-blur-xl mb-8 shadow-glass animate-fadeIn">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-400"></span>
+          </span>
+          <span className="text-xs font-mono font-medium tracking-wide text-zinc-300">
+            WEBSITE UNDER CONSTRUCTION · WILL BE BACK SOON
+          </span>
+        </div>
 
-        {/* Fluid Ripple Flag Shader */}
-        <MacWindow
-          id="flag"
-          title={windows.flag.title}
-          isOpen={windows.flag.isOpen}
-          isMinimized={windows.flag.isMinimized}
-          isActive={activeAppId === "flag"}
-          zIndex={windows.flag.zIndex}
-          initialX={windows.flag.initialX}
-          initialY={windows.flag.initialY}
-          initialWidth={windows.flag.initialWidth}
-          initialHeight={windows.flag.initialHeight}
-          onClose={() => handleCloseApp("flag")}
-          onMinimize={() => handleMinimizeApp("flag")}
-          onFocus={() => bringToFront("flag")}
-        >
-          <RippleFlagCanvas onClose={() => handleCloseApp("flag")} isWindow={true} />
-        </MacWindow>
+        {/* Hero Headline */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1] max-w-3xl">
+          Under Construction.
+          <span className="block mt-2 bg-gradient-to-r from-amber-200 via-amber-400 to-amber-100 bg-clip-text text-transparent">
+            Rebuilding something exceptional.
+          </span>
+        </h1>
 
-        {/* Hobro Video Hero Reel */}
-        <MacWindow
-          id="video"
-          title={windows.video.title}
-          isOpen={windows.video.isOpen}
-          isMinimized={windows.video.isMinimized}
-          isActive={activeAppId === "video"}
-          zIndex={windows.video.zIndex}
-          initialX={windows.video.initialX}
-          initialY={windows.video.initialY}
-          initialWidth={windows.video.initialWidth}
-          initialHeight={windows.video.initialHeight}
-          onClose={() => handleCloseApp("video")}
-          onMinimize={() => handleMinimizeApp("video")}
-          onFocus={() => bringToFront("video")}
-        >
-          <VideoHeroApp
-            onClose={() => handleCloseApp("video")}
-            onOpenApp={handleOpenApp}
-            isWindow={true}
-          />
-        </MacWindow>
+        {/* Subtitle Message */}
+        <p className="text-base sm:text-lg md:text-xl text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed mb-10">
+          <strong className="text-zinc-200 font-medium">shouryasharan.xyz</strong> is
+          currently undergoing an architectural rebuild. We are polishing an
+          interactive digital workstation, updated research publications, and 3D
+          computational showcases. We will be back online shortly.
+        </p>
 
-        {/* Safari Browser */}
-        <MacWindow
-          id="safari"
-          title={windows.safari.title}
-          isOpen={windows.safari.isOpen}
-          isMinimized={windows.safari.isMinimized}
-          isActive={activeAppId === "safari"}
-          zIndex={windows.safari.zIndex}
-          initialX={windows.safari.initialX}
-          initialY={windows.safari.initialY}
-          initialWidth={windows.safari.initialWidth}
-          initialHeight={windows.safari.initialHeight}
-          onClose={() => handleCloseApp("safari")}
-          onMinimize={() => handleMinimizeApp("safari")}
-          onFocus={() => bringToFront("safari")}
-        >
-          <SafariApp onClose={() => handleCloseApp("safari")} onOpenApp={handleOpenApp} />
-        </MacWindow>
+        {/* Progress & Telemetry Cockpit */}
+        <div className="w-full max-w-2xl bg-[#0E0E14]/70 border border-white/[0.08] backdrop-blur-2xl rounded-2xl p-6 md:p-8 shadow-2xl text-left mb-10 transition-all hover:border-white/[0.14]">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <Activity className="w-4 h-4 text-amber-400" />
+              <span className="text-xs font-mono uppercase tracking-wider text-zinc-300">
+                System Rebuild Telemetry
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono text-amber-400 font-semibold">
+                88% Complete
+              </span>
+            </div>
+          </div>
 
-        {/* Terminal App */}
-        <MacWindow
-          id="terminal"
-          title={windows.terminal.title}
-          isOpen={windows.terminal.isOpen}
-          isMinimized={windows.terminal.isMinimized}
-          isActive={activeAppId === "terminal"}
-          zIndex={windows.terminal.zIndex}
-          initialX={windows.terminal.initialX}
-          initialY={windows.terminal.initialY}
-          initialWidth={windows.terminal.initialWidth}
-          initialHeight={windows.terminal.initialHeight}
-          onClose={() => handleCloseApp("terminal")}
-          onMinimize={() => handleMinimizeApp("terminal")}
-          onFocus={() => bringToFront("terminal")}
-        >
-          <TerminalApp onClose={() => handleCloseApp("terminal")} onOpenApp={handleOpenApp} />
-        </MacWindow>
+          {/* Animated Glowing Progress Bar */}
+          <div className="w-full h-2 rounded-full bg-white/[0.05] overflow-hidden p-0.5 border border-white/[0.06] mb-6">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-sky-400 via-amber-400 to-amber-300 transition-all duration-1000 relative overflow-hidden"
+              style={{ width: "88%" }}
+            >
+              <div className="absolute inset-0 bg-white/20 animate-pulse" />
+            </div>
+          </div>
 
-        {/* Notes App */}
-        <MacWindow
-          id="notes"
-          title={windows.notes.title}
-          isOpen={windows.notes.isOpen}
-          isMinimized={windows.notes.isMinimized}
-          isActive={activeAppId === "notes"}
-          zIndex={windows.notes.zIndex}
-          initialX={windows.notes.initialX}
-          initialY={windows.notes.initialY}
-          initialWidth={windows.notes.initialWidth}
-          initialHeight={windows.notes.initialHeight}
-          onClose={() => handleCloseApp("notes")}
-          onMinimize={() => handleMinimizeApp("notes")}
-          onFocus={() => bringToFront("notes")}
-        >
-          <NotesApp onClose={() => handleCloseApp("notes")} />
-        </MacWindow>
+          {/* Milestone Columns */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {milestones.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.id}
+                  className="p-3.5 rounded-xl bg-white/[0.02] border border-white/[0.05] hover:border-white/[0.1] transition-all"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <Icon className="w-4 h-4 text-zinc-400" />
+                    <span
+                      className={`text-[10px] font-mono px-1.5 py-0.5 rounded border ${item.color}`}
+                    >
+                      {item.status}
+                    </span>
+                  </div>
+                  <div className="text-xs font-semibold text-zinc-200">
+                    {item.title}
+                  </div>
+                  <div className="text-[11px] text-zinc-500 font-mono mt-0.5">
+                    {item.subtitle}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
 
-        {/* System Settings App */}
-        <MacWindow
-          id="settings"
-          title={windows.settings.title}
-          isOpen={windows.settings.isOpen}
-          isMinimized={windows.settings.isMinimized}
-          isActive={activeAppId === "settings"}
-          zIndex={windows.settings.zIndex}
-          initialX={windows.settings.initialX}
-          initialY={windows.settings.initialY}
-          initialWidth={windows.settings.initialWidth}
-          initialHeight={windows.settings.initialHeight}
-          onClose={() => handleCloseApp("settings")}
-          onMinimize={() => handleMinimizeApp("settings")}
-          onFocus={() => bringToFront("settings")}
-        >
-          <SettingsApp onClose={() => handleCloseApp("settings")} />
-        </MacWindow>
-      </div>
+        {/* Action Row: Contact & Copy Email */}
+        <div className="flex flex-wrap items-center justify-center gap-4 w-full">
+          {/* Copy Email Button */}
+          <button
+            onClick={handleCopyEmail}
+            className="flex items-center gap-2.5 px-5 py-3 rounded-xl bg-white text-black hover:bg-zinc-200 font-medium text-sm transition-all shadow-lg active:scale-95"
+            aria-label="Copy Email Address"
+          >
+            {copied ? (
+              <>
+                <Check className="w-4 h-4 text-emerald-600" />
+                <span className="text-emerald-700 font-semibold">
+                  Email Copied to Clipboard!
+                </span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4" />
+                <span>Copy Direct Email ({PERSONAL_INFO.email})</span>
+              </>
+            )}
+          </button>
 
-      {/* 6. Genuine macOS Dock with Official App PNG Icons & Magnification */}
-      <MacDock openAppIds={openAppIds} onOpenApp={handleOpenApp} />
+          {/* Mailto Direct */}
+          <a
+            href={`mailto:${PERSONAL_INFO.email}?subject=Inquiry%20from%20shouryasharan.xyz`}
+            className="flex items-center gap-2 px-5 py-3 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.1] hover:border-white/[0.2] text-sm font-medium text-white transition-all active:scale-95"
+          >
+            <Mail className="w-4 h-4 text-amber-400" />
+            <span>Send Direct Message</span>
+          </a>
 
-      {/* 7. macOS Control Center Dropdown */}
-      <ControlCenter
-        isOpen={controlCenterOpen}
-        onClose={() => setControlCenterOpen(false)}
-        currentTheme={wallpaperTheme}
-        onChangeTheme={(th) => setWallpaperTheme(th)}
-        brightness={displayBrightness}
-        onChangeBrightness={(b) => setDisplayBrightness(b)}
-        volume={soundVolume}
-        onChangeVolume={(v) => setSoundVolume(v)}
-      />
+          {/* Workstation Deep Link */}
+          <Link
+            href="/workstation"
+            className="flex items-center gap-2 px-5 py-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/[0.08] text-sm font-medium text-zinc-300 hover:text-white transition-all"
+          >
+            <Terminal className="w-4 h-4 text-sky-400" />
+            <span>Access Workstation (Internal Dev)</span>
+            <ArrowRight className="w-3.5 h-3.5 text-zinc-500" />
+          </Link>
+        </div>
+      </section>
 
-      {/* 8. Spotlight Search Modal */}
-      <SpotlightModal
-        isOpen={spotlightOpen}
-        onClose={() => setSpotlightOpen(false)}
-        onSelectApp={handleOpenApp}
-      />
+      {/* Footer Telemetry & Copyright */}
+      <footer className="relative z-10 w-full max-w-6xl mx-auto px-6 pb-6 md:pb-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500 border-t border-white/[0.04] pt-6">
+        <div className="flex items-center gap-4">
+          <span className="flex items-center gap-1.5 text-zinc-400">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+            Vercel Global Edge (BOM)
+          </span>
+          <span className="text-zinc-600">·</span>
+          <span>SSL 256-bit Encrypted</span>
+        </div>
+
+        <div className="flex items-center gap-4 text-zinc-400">
+          <span>{PERSONAL_INFO.location}</span>
+          <span className="text-zinc-600">·</span>
+          <span>© 2026 {PERSONAL_INFO.name}. All rights reserved.</span>
+        </div>
+      </footer>
     </main>
   );
 }

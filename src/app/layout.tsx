@@ -11,9 +11,9 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.shouryasharan.xyz"),
-  title: "Shourya Sharan — Researcher, Builder, UI Architect",
+  title: "Shourya Sharan — Under Construction · shouryasharan.xyz",
   description:
-    "Official portfolio of Shourya Sharan. Chief Science Officer at The Walnut Initiative, Computational Researcher at STEMinate, and Freelance UI Architect.",
+    "shouryasharan.xyz is currently under construction. A newly architected digital workstation and research portfolio will be back soon.",
   keywords: [
     "Shourya Sharan",
     "Portfolio",
@@ -100,7 +100,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className="antialiased bg-[#08080A] text-[#F4F4F6] min-h-screen selection:bg-white selection:text-black overflow-hidden"
+        className="antialiased bg-[#08080A] text-[#F4F4F6] min-h-screen selection:bg-white selection:text-black overflow-x-hidden"
       >
         {/* Accessible Skip Link */}
         <a
