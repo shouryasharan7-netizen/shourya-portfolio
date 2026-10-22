@@ -1,36 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+/* ─────────────────────────────────────────────────────────────
+   globals.css
+   Dark by default. Light on [data-theme="light"].
+   Intentionally minimal — if you need a token, add it here.
+───────────────────────────────────────────────────────────── */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ============================================================
-   CSS CUSTOM PROPERTIES — CHRONO-CYBERNETIC THEME
-   ============================================================ */
+/* ── Design tokens ───────────────────────────────────────── */
 :root {
-  --bg-obsidian: #050508;
-  --bg-charcoal: #0B0C10;
-  --bg-card: #0e0f14;
-  --border: rgba(255, 255, 255, 0.07);
-  --border-active: rgba(0, 245, 212, 0.25);
+  /* dark — default */
+  --bg:          #111110;
+  --surface:     #1a1a18;
+  --surface-2:   #222220;
+  --border:      #2e2e2b;
+  --border-soft: #252523;
+  --text:        #e8e6e3;
+  --muted:       #6b6966;
+  --muted-2:     #4a4845;
+  --accent:      #22c55e;
+  --accent-dim:  rgba(34, 197, 94, 0.10);
+  --accent-line: rgba(34, 197, 94, 0.30);
 
-  --gold: #F59E0B;
-  --terracotta: #EA580C;
-  --cyan: #00F5D4;
-  --violet: #7B2CBF;
-  --emerald: #10B981;
-
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  --cursor-size: 12px;
-  --cursor-ring-size: 40px;
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, monospace;
 }
 
-/* ============================================================
-   BASE RESETS
-   ============================================================ */
+[data-theme="light"] {
+  --bg:          #fafaf9;
+  --surface:     #f0efed;
+  --surface-2:   #e8e6e3;
+  --border:      #dcdad7;
+  --border-soft: #e5e3e0;
+  --text:        #1c1917;
+  --muted:       #78716c;
+  --muted-2:     #a8a29e;
+  --accent:      #16a34a;
+  --accent-dim:  rgba(22, 163, 74, 0.08);
+  --accent-line: rgba(22, 163, 74, 0.25);
+}
+
+/* ── Resets & base ───────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -38,435 +49,138 @@
 }
 
 html {
-  background: var(--bg-obsidian);
-  color: #E8E8F0;
-  font-family: var(--font-body);
+  font-size: 16px;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  scroll-behavior: auto; /* Lenis handles smooth scroll */
-  cursor: none;
-  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--bg-obsidian);
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter);
+  line-height: 1.6;
   min-height: 100vh;
-  overflow-x: hidden;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* ============================================================
-   CUSTOM CURSOR
-   ============================================================ */
-.cursor-dot {
-  position: fixed;
-  top: 0; left: 0;
-  width: var(--cursor-size);
-  height: var(--cursor-size);
-  border-radius: 50%;
-  background: var(--cyan);
-  pointer-events: none;
-  z-index: 99999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background 0.2s, opacity 0.2s;
-  mix-blend-mode: screen;
+/* ── Typography ──────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 600;
 }
 
-.cursor-ring {
-  position: fixed;
-  top: 0; left: 0;
-  width: var(--cursor-ring-size);
-  height: var(--cursor-ring-size);
-  border-radius: 50%;
-  border: 1px solid rgba(0, 245, 212, 0.5);
-  pointer-events: none;
-  z-index: 99998;
-  transform: translate(-50%, -50%);
-  transition: width 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              height 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-              border-color 0.2s, opacity 0.2s;
+p {
+  color: var(--muted);
+  line-height: 1.75;
 }
 
-.cursor-ring.hover {
-  width: 64px;
-  height: 64px;
-  border-color: rgba(0, 245, 212, 0.8);
-  background: rgba(0, 245, 212, 0.05);
+strong { color: var(--text); font-weight: 500; }
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-.cursor-label {
-  position: fixed;
-  top: 0; left: 0;
-  pointer-events: none;
-  z-index: 99997;
+/* underline style for inline links */
+.link {
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1px;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── Selection ───────────────────────────────────────────── */
+::selection {
+  background: var(--accent-dim);
+  color: var(--text);
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ── Focus ───────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ── Mono utility ────────────────────────────────────────── */
+.mono {
   font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.15em;
-  color: var(--cyan);
-  transform: translate(14px, 14px);
-  opacity: 0;
-  transition: opacity 0.2s;
+  font-variant-numeric: tabular-nums lining-nums;
 }
 
-.cursor-label.visible {
-  opacity: 1;
-}
-
-/* ============================================================
-   FILM GRAIN OVERLAY
-   ============================================================ */
-.film-grain {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 200px 200px;
-  animation: grain 0.3s steps(1) infinite;
-}
-
-@keyframes grain {
-  0%, 100% { transform: translate(0, 0); }
-  10% { transform: translate(-2%, -3%); }
-  20% { transform: translate(2%, 1%); }
-  30% { transform: translate(-1%, 3%); }
-  40% { transform: translate(3%, -1%); }
-  50% { transform: translate(-3%, 2%); }
-  60% { transform: translate(1%, -2%); }
-  70% { transform: translate(-2%, 3%); }
-  80% { transform: translate(2%, -3%); }
-  90% { transform: translate(-1%, 1%); }
-}
-
-/* ============================================================
-   HUD OVERLAY
-   ============================================================ */
-.hud-frame {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9000;
-}
-
-.hud-corner {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  opacity: 0.45;
-}
-
-.hud-corner.tl { top: 20px; left: 20px; border-top: 1px solid var(--cyan); border-left: 1px solid var(--cyan); }
-.hud-corner.tr { top: 20px; right: 20px; border-top: 1px solid var(--cyan); border-right: 1px solid var(--cyan); }
-.hud-corner.bl { bottom: 20px; left: 20px; border-bottom: 1px solid var(--cyan); border-left: 1px solid var(--cyan); }
-.hud-corner.br { bottom: 20px; right: 20px; border-bottom: 1px solid var(--cyan); border-right: 1px solid var(--cyan); }
-
-.hud-info-left {
-  position: absolute;
-  bottom: 32px;
-  left: 32px;
+/* ── Label (small caps label above sections) ─────────────── */
+.label {
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  color: rgba(0, 245, 212, 0.55);
-  line-height: 1.8;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
-.hud-info-right {
-  position: absolute;
-  bottom: 32px;
-  right: 32px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.12em;
-  color: rgba(0, 245, 212, 0.55);
-  line-height: 1.8;
-  text-align: right;
-}
-
-.hud-progress-bar {
-  position: absolute;
-  top: 0; left: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--cyan), var(--violet));
-  transition: width 0.1s linear;
-  box-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
-}
-
-/* ============================================================
-   TYPOGRAPHY UTILITIES
-   ============================================================ */
-.font-display {
-  font-family: var(--font-display);
-}
-
-.font-mono-custom {
-  font-family: var(--font-mono);
-}
-
-.text-gradient-gold {
-  background: linear-gradient(135deg, #F59E0B 0%, #EA580C 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-cyber {
-  background: linear-gradient(135deg, #00F5D4 0%, #7B2CBF 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-emerald {
-  background: linear-gradient(135deg, #10B981 0%, #00F5D4 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ============================================================
-   GLASS CARDS
-   ============================================================ */
-.glass-card {
-  background: rgba(14, 15, 20, 0.7);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.glass-card-hover {
-  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
-}
-
-.glass-card-hover:hover {
-  border-color: var(--border-active);
-  box-shadow: 0 0 30px rgba(0, 245, 212, 0.08), 0 20px 60px rgba(0, 0, 0, 0.5);
-}
-
-/* ============================================================
-   SPOTLIGHT BORDER (follows mouse)
-   ============================================================ */
-.spotlight-card {
-  position: relative;
-  overflow: hidden;
-}
-
-.spotlight-card::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: radial-gradient(
-    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    rgba(0, 245, 212, 0.15),
-    transparent 60%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  z-index: 1;
-}
-
-/* ============================================================
-   TERMINAL BLINK
-   ============================================================ */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.terminal-cursor {
-  display: inline-block;
-  width: 8px;
-  height: 1.1em;
-  background: var(--cyan);
-  vertical-align: text-bottom;
-  animation: blink 1s steps(1) infinite;
-}
-
-/* ============================================================
-   SCRAMBLE TEXT
-   ============================================================ */
-.scramble-text {
-  font-family: var(--font-mono);
-}
-
-/* ============================================================
-   HORIZONTAL SCROLL CONTAINER
-   ============================================================ */
-.horizontal-track {
-  display: flex;
-  gap: 24px;
-  width: max-content;
-  will-change: transform;
-}
-
-/* ============================================================
-   3D PERSPECTIVE CARD
-   ============================================================ */
-.perspective-card {
-  transform-style: preserve-3d;
-  will-change: transform;
-  transition: transform 0.15s ease-out;
-}
-
-/* ============================================================
-   SKILL NODE GRAPH
-   ============================================================ */
-.skill-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* ============================================================
-   PRELOADER
-   ============================================================ */
-.preloader {
-  position: fixed;
-  inset: 0;
-  z-index: 99990;
-  background: #020204;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-}
-
-.preloader-line {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  color: #00F5D4;
-  opacity: 0;
-}
-
-.preloader-mandala {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-/* ============================================================
-   SECTION DIVIDERS
-   ============================================================ */
-.act-divider {
+/* ── Divider ─────────────────────────────────────────────── */
+.divider {
   width: 100%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 245, 212, 0.3) 50%, transparent);
-  margin: 0;
+  background: var(--border-soft);
 }
 
-/* ============================================================
-   GLOW EFFECTS
-   ============================================================ */
-.glow-cyan {
-  box-shadow: 0 0 20px rgba(0, 245, 212, 0.25), 0 0 60px rgba(0, 245, 212, 0.08);
+/* ── Section fade-in ─────────────────────────────────────── */
+/* Applied via JS IntersectionObserver — no library needed */
+.fade-up {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: none;
 }
 
-.glow-gold {
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.25), 0 0 60px rgba(245, 158, 11, 0.08);
+/* delay helpers */
+.delay-1 { transition-delay: 0.08s; }
+.delay-2 { transition-delay: 0.16s; }
+.delay-3 { transition-delay: 0.24s; }
+.delay-4 { transition-delay: 0.32s; }
+.delay-5 { transition-delay: 0.40s; }
+
+/* ── Button reset ────────────────────────────────────────── */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
 }
 
-.glow-violet {
-  box-shadow: 0 0 20px rgba(123, 44, 191, 0.25), 0 0 60px rgba(123, 44, 191, 0.08);
-}
-
-/* ============================================================
-   SCROLLBAR
-   ============================================================ */
-::-webkit-scrollbar { width: 3px; }
-::-webkit-scrollbar-track { background: var(--bg-obsidian); }
-::-webkit-scrollbar-thumb { background: rgba(0, 245, 212, 0.3); border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0, 245, 212, 0.5); }
-
-/* ============================================================
-   SELECTION
-   ============================================================ */
-::selection {
-  background: rgba(0, 245, 212, 0.2);
-  color: #ffffff;
-}
-
-/* ============================================================
-   SECTION LABELS
-   ============================================================ */
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: rgba(0, 245, 212, 0.6);
-}
-
-/* ============================================================
-   NAV
-   ============================================================ */
-.nav-dot {
+/* ── Accent dot (status indicator) ──────────────────────── */
+.dot-live {
+  display: inline-block;
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.2);
-  transition: background 0.3s, transform 0.3s;
+  background: var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px var(--accent-dim);
 }
 
-.nav-dot.active {
-  background: var(--cyan);
-  transform: scale(1.4);
-  box-shadow: 0 0 8px rgba(0,245,212,0.6);
-}
-
-/* ============================================================
-   DOSSIER MODAL
-   ============================================================ */
-.dossier-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 9900;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(2, 2, 4, 0.85);
-  backdrop-filter: blur(16px);
-}
-
-/* ============================================================
-   ORBIT BADGE TICKER
-   ============================================================ */
-@keyframes tickerScroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.ticker-track {
-  animation: tickerScroll 35s linear infinite;
-  display: flex;
-  width: max-content;
-}
-
-.ticker-track:hover {
-  animation-play-state: paused;
-}
-
-/* ============================================================
-   REDUCED MOTION
-   ============================================================ */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  html { cursor: auto; }
-  .cursor-dot, .cursor-ring, .cursor-label { display: none; }
-  .film-grain { display: none; }
+/* ── Code / inline tag ───────────────────────────────────── */
+code, .tag {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 7px;
+  color: var(--muted);
 }
