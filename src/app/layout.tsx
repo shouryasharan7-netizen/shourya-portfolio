@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.shouryasharan.xyz"),
   title: "Shourya Sharan",
   description:
-    "17-year-old from Nagpur. I build things with React and Python, research LLM-based cybersecurity, run a city chapter of bits&bytes, and play chess.",
+    "18-year-old from Nagpur. I build things with React and Python, research LLM-based cybersecurity, run a city chapter of bits&bytes, and play chess.",
   openGraph: {
     title: "Shourya Sharan",
     description:

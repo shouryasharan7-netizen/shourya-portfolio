@@ -15,7 +15,7 @@ export default function Hero() {
 
       {/* One-liner */}
       <p className="text-lg sm:text-xl text-[--muted] max-w-[52ch] leading-relaxed mb-8 font-light">
-        I&apos;m 17, from Nagpur. I build things on the internet,
+        I&apos;m 18, from Nagpur. I build things on the internet,
         research LLM-based cybersecurity, and play chess obsessively.
       </p>
 
